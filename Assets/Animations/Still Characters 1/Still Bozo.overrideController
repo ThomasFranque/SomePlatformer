@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Still Bozo
+  m_Controller: {fileID: 9100000, guid: f88c587ba1c17b44bb84e1f6854b3fb9, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 6d4ed5de00847a9419cf1ae607d13474, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 451b705d1009f84418db38a06644b8b6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bb4c77453297209409b5c8f0ee5cf12b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0a80a3a6625c91b43b0fdd903da19e48, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: deea38e428151c24380933f5820ec878, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3735ae4ffb82f284f9373df8ceaa53a5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: effcafab089c27b43b5a694b47f21fe0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7d923a7626b35fd44a66d0f2699ae772, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 158a169757e142c429183aa6673b8432, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f7d9e0feeda843a43a930772df4a838e, type: 2}
