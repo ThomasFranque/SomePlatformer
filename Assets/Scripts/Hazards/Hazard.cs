@@ -8,6 +8,8 @@ public class Hazard : MonoBehaviour
 	[SerializeField] protected byte _damage = 1;
 	[SerializeField] protected float yHitDirection = 1.5f;
 	[SerializeField] protected float knockSpeed = 100.0f;
+	[SerializeField] protected bool _hitEnemies = true;
+	[SerializeField] private LayerMask _groundLayer;
 
 	protected virtual void OnEntityCollision(GameObject target)
 	{
@@ -21,6 +23,7 @@ public class Hazard : MonoBehaviour
 
 		e.Hit(cameFromRight, knockSpeed, _damage);
 	}
+
 
 	protected virtual void OnCollectableCollision(GameObject target)
 	{ Destroy(target); }
@@ -36,18 +39,26 @@ public class Hazard : MonoBehaviour
 		Destroy(gameObject);
 	}
 
-	private void OnTriggerEnter2D(Collider2D col)
+	private void TryInteractWith(GameObject hitGO)
 	{
-		switch (col.tag)
+		switch (hitGO.tag)
 		{
 			case "Player":
+					OnEntityCollision(hitGO);
+				break;
 			case "Enemy":
-				OnEntityCollision(col.gameObject);
+				if (_hitEnemies) OnEntityCollision(hitGO);
 				break;
 			case "Collectible":
-				OnCollectableCollision(col.gameObject);
+				OnCollectableCollision(hitGO);
+				break;
+			default:
 				break;
 		}
-		Debug.Log(col.name);
+	}
+
+	private void OnTriggerEnter2D(Collider2D col)
+	{
+		TryInteractWith(col.gameObject);
 	}
 }

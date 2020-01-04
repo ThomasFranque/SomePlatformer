@@ -60,7 +60,6 @@ public class MeleeWeapon : MonoBehaviour
 	{
 
 		ps.Emit(10);
-		CameraActions.ActiveCamera.Shake(10 * damage, 20 * damage, 0.1f);
 
 		StartCoroutine(CCooldown());
 
@@ -72,7 +71,7 @@ public class MeleeWeapon : MonoBehaviour
 		player.SetVelocity(
 			new Vector2(
 				xVel,
-				0));
+				currentPVelocity.y / 2));
 
 		Collider2D[] enemiesInRange =
 			Physics2D.OverlapBoxAll(

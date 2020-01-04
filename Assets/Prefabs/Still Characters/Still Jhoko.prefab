@@ -76,9 +76,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7664014441684772498}
+  - component: {fileID: 8394993583578458821}
   - component: {fileID: 7664014441684772525}
   - component: {fileID: 7664014441684772524}
-  - component: {fileID: 8394993583578458821}
   m_Layer: 9
   m_Name: Still Jhoko
   m_TagString: NPC
@@ -103,6 +103,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8394993583578458821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664014441684772526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58db287a56ea44b4e99b2cc66bc51ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputPopUpScript: {fileID: 8907822854561415347}
+  _dialogBoxScript: {fileID: 57448785004746538}
+  _firstDialog:
+  - \B \B \B \B \B \B \B \B \W0.2 .\W0.2 .\W0.2 .
+  - Oh, \W0.4 hi!
+  - <color="green"> Never have I seen you before</color> around here.
+  - 'So, \W0.4 I welcome you to '
+  - \B  \- AST\S \W0.4 ROP\S \W0.4 HEUS\S
+  _defaultDialog:
+  - ASTROPHEUS is my home asteroid.
+  - \L I Hope he likes my little asteroid.
+  _interactionCams: []
 --- !u!212 &7664014441684772525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -172,30 +196,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8394993583578458821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7664014441684772526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58db287a56ea44b4e99b2cc66bc51ab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputPopUpScript: {fileID: 8907822854561415347}
-  _dialogBoxScript: {fileID: 57448785004746538}
-  _firstDialog:
-  - \B \B \B \B \B \B \B \B \W0.2 .\W0.2 .\W0.2 .
-  - Oh, \W0.4 hi!
-  - <color="green"> Never have I seen you before</color> around here.
-  - 'So, \W0.4 I welcome you to '
-  - \B  \- AST\S \W0.4 ROP\S \W0.4 HEUS\S
-  _defaultDialog:
-  - ASTROPHEUS is my home asteroid.
-  - \L I Hope he likes my little asteroid.
-  _interactionCams: []
 --- !u!1 &8410232519960462782
 GameObject:
   m_ObjectHideFlags: 0

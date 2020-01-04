@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1082374825852913155}
+  - component: {fileID: 2279900108814108086}
   - component: {fileID: 8107180920625475356}
   - component: {fileID: 5973255004838063686}
-  - component: {fileID: 2279900108814108086}
   m_Layer: 0
   m_Name: Lazer
   m_TagString: Untagged
@@ -33,6 +33,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2279900108814108086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378241545689814757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893f5c215bdf68f4b831a32d1abecce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 2
+  yHitDirection: 2
+  knockSpeed: 50
+  _hitEnemies: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  image1: {fileID: -385687906828721642, guid: 4220d3532e454124fa9ef0c88a5a643d, type: 3}
+  image2: {fileID: -7903257195215590449, guid: 4220d3532e454124fa9ef0c88a5a643d, type: 3}
 --- !u!212 &8107180920625475356
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109,20 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.72, y: 117}
   m_EdgeRadius: 0
---- !u!114 &2279900108814108086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378241545689814757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 893f5c215bdf68f4b831a32d1abecce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 2
-  yHitDirection: 2
-  knockSpeed: 50
-  image1: {fileID: -385687906828721642, guid: 4220d3532e454124fa9ef0c88a5a643d, type: 3}
-  image2: {fileID: -7903257195215590449, guid: 4220d3532e454124fa9ef0c88a5a643d, type: 3}

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52d0b15b60419524e8cba52ce39374d9
+guid: 4220d3532e454124fa9ef0c88a5a643d
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -98,10 +98,10 @@ TextureImporter:
       name: Beam_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 251
-        width: 12
-        height: 8
+        width: 14
+        height: 10
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

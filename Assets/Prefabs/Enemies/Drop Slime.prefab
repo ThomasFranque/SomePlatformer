@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1689875623251710894}
+  - component: {fileID: 1689875623251710891}
   - component: {fileID: 1689875623251710895}
   - component: {fileID: 1689875623251710888}
   - component: {fileID: 1689875623251710889}
-  - component: {fileID: 1689875623251710891}
   - component: {fileID: 1689875623251710890}
   m_Layer: 11
   m_Name: Drop Slime
@@ -35,9 +35,33 @@ Transform:
   - {fileID: 1689875623489638884}
   - {fileID: 1689875624363446461}
   - {fileID: 8945804557472317517}
+  - {fileID: 3037658968173297305}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1689875623251710891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689875623251710900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf9985d4488be843995bbb70dd52e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hp: 1
+  deathParticle: {fileID: 1068026819939722858}
+  _selfKnockBackAmmount: {x: 0, y: 0}
+  _useColliderAsTrigger: 1
+  _knockIntensity: 40
+  _sightEndLeft: {fileID: 1689875623489638884}
+  _sightEndRight: {fileID: 1689875624363446461}
+  _autoGroundSights: 1
+  _doHangingBehaviour: 1
+  _doGroundBehaviour: 1
+  _startGrounded: 0
 --- !u!212 &1689875623251710895
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -128,25 +152,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1689875623251710891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689875623251710900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cf9985d4488be843995bbb70dd52e8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hp: 1
-  deathParticle: {fileID: 1068026819939722858}
-  _selfKnockBackAmmount: {x: 0, y: 0}
-  _useColliderAsTrigger: 1
-  _knockIntensity: 40
-  _sightEndLeft: {fileID: 1689875623489638884}
-  _sightEndRight: {fileID: 1689875624363446461}
 --- !u!70 &1689875623251710890
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -303,4 +308,79 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1846968801664755330, guid: 8e2db6e3de1572d4087e721cb8b01dc8,
     type: 3}
   m_PrefabInstance: {fileID: 1689875623199899880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4715738889059761724
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1689875623251710894}
+    m_Modifications:
+    - target: {fileID: 18443959471794047, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_Name
+      value: Thrust
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 404311cfde05adf4ba9a068af6c9abc6, type: 3}
+--- !u!4 &3037658968173297305 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7734445500054192293, guid: 404311cfde05adf4ba9a068af6c9abc6,
+    type: 3}
+  m_PrefabInstance: {fileID: 4715738889059761724}
   m_PrefabAsset: {fileID: 0}

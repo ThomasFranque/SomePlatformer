@@ -100,6 +100,8 @@ MonoBehaviour:
     type: 3}
   _beamChargingParticles: {fileID: 1304552954817365685}
   _beamShootingParticles: {fileID: 5697232862572136537}
+  _followSpeed: 7.5
+  _slowLookAtSpeed: 30
 --- !u!1001 &845397271014514743
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -57,7 +57,6 @@ public class DialogBox : MonoBehaviour
 
 	public void Exit()
 	{
-
 		if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("Hide"))
 			_anim.SetTrigger("Hide");
 	}
@@ -108,12 +107,16 @@ public class DialogBox : MonoBehaviour
 								break;
 							case _CAM_SHAKE_CHAR:
 								CameraActions.ActiveCamera?.Shake();
+								Debug.Log(CameraActions.ActiveCamera.gameObject.name);
 								break;
 							case _NEXT_CAM_CHAR:
 								NextCam();
 								break;
 							case _FIRST_CAM_CHAR:
 								ResetCam();
+								break;
+							default:
+								Debug.LogWarning($"UNKNOWN TEXT COMMAND: {_SPECIAL_CHAR}{words[j][(int)k + 1]}" );
 								break;
 						}
 
@@ -177,6 +180,7 @@ public class DialogBox : MonoBehaviour
 		else 
 			_cams[_activeCamIndex].enabled = true;
 	}
+
 	private void ResetCam()
 	{
 		_cams[_activeCamIndex].enabled = false;
@@ -206,6 +210,4 @@ public class DialogBox : MonoBehaviour
 			yield return null; // wait until next frame, then continue execution from here (loop continues)
 		}
 	}
-
-
 }

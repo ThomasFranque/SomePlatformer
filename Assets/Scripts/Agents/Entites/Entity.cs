@@ -94,7 +94,7 @@ public class Entity : MonoBehaviour
 		KnockBack(cameFromRight, knockSpeed);
 
 		if (HP <= 0)
-			OnDeath();
+			OnDeath(dmg);
 	}
 
 	protected virtual void OnPlayerCollision(Collider2D col) { }
@@ -107,10 +107,16 @@ public class Entity : MonoBehaviour
 			StartCoroutine(CSetInvulnerability(!active));
 	}
 
-	protected virtual void OnDeath()
+	protected virtual void OnDeath(byte dmg = 1)
 	{
 		transform.DetachChildren();
+		DeathCamShake(dmg);
 		gameObject.SetActive(false);
+	}
+
+	private void DeathCamShake(byte dmg)
+	{
+		CameraActions.ActiveCamera.Shake(20 * dmg, 30 * dmg, 0.1f);
 	}
 
 	private IEnumerator CSetInvulnerability(bool active)

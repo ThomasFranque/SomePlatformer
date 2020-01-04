@@ -3,7 +3,11 @@ guid: dd89fae1078875646ba9c0d9ec631b75
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _beamPrefab: {fileID: 1378241545689814757, guid: 2620d3f547ed432419d27025a9cc3538,
+      type: 3}
+  - _beamChargingParticles: {instanceID: 0}
+  - _beamShootingParticles: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

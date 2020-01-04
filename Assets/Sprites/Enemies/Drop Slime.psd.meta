@@ -164,6 +164,15 @@ TextureImporter:
   - first:
       213: 4022940649726390945
     second: Drop Slime_17
+  - first:
+      213: 5620280415709710757
+    second: Drop Slime_18
+  - first:
+      213: 2012489170429606813
+    second: Drop Slime_19
+  - first:
+      213: 9018857478086281028
+    second: Drop Slime_20
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -621,6 +630,69 @@ TextureImporter:
       bones: []
       spriteID: aa297ecea6badb5468a3cad4137e1ea0
       internalID: 4022940649726390945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_18
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 168
+        width: 8
+        height: 19
+      alignment: 9
+      pivot: {x: 0.5, y: 0.631542}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9dfb94f090392c469c21729044779e2
+      internalID: 5620280415709710757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_19
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 168
+        width: 8
+        height: 19
+      alignment: 9
+      pivot: {x: 0.5, y: 0.631542}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 283c153cc131a454484f9503c33e372e
+      internalID: 2012489170429606813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 168
+        width: 8
+        height: 19
+      alignment: 9
+      pivot: {x: 0.5, y: 0.631542}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c8f20aae75672b44aa494dda582f73b
+      internalID: 9018857478086281028
       vertices: []
       indices: 
       edges: []

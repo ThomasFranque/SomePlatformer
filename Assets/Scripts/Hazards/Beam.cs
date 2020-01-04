@@ -5,6 +5,7 @@ using UnityEngine;
 public class Beam : MonoBehaviour
 {
 	private const float _RANGE = 66.0f;
+	private const float _MIN_RANGE = 12.0f;
 
 	private const float _LOOK_AT_PLAYER_TIME = 4.0f;
 	private const float _CHARGE_TIME = 2.0f;
@@ -13,9 +14,13 @@ public class Beam : MonoBehaviour
 
 	private const float _Y_PLAYER_OFFSET = 3.5f;
 
+	[Header("Beam References")]
 	[SerializeField] private GameObject _beamPrefab = null;
 	[SerializeField] private ParticleSystem _beamChargingParticles = null;
 	[SerializeField] private ParticleSystem _beamShootingParticles = null;
+	[Header("Beam Variables")]
+	[SerializeField] private float _followSpeed = 7.5f;
+	[SerializeField] private float _slowLookAtSpeed = 5.0f;
 
 	private Vector3 randomExitPoint;
 	private Vector3 _playerOffset = new Vector3(0,_Y_PLAYER_OFFSET,0);
@@ -40,34 +45,34 @@ public class Beam : MonoBehaviour
 			if (Vector3.Distance(Player.Instance.transform.position, transform.position) < _RANGE)
 			{
 				spotted = true;
-				lookAt = true;
 				StartCoroutine(CLookAt());
 			}
+		} 
+		else if (spotted && moveToPlayer && Vector3.Distance(Player.Instance.transform.position, transform.position) > _MIN_RANGE)
+			MoveTowards(Player.Instance.transform.position + _playerOffset, _followSpeed);
+		else if (exit)
+		{
+			MoveTowards(randomExitPoint, _followSpeed * 10);
+			SoftLookAt(transform.position + new Vector3(0, -1,0), 1.4f);
 		}
-
-		if (spotted && moveToPlayer)
-			MoveTowards(Player.Instance.transform.position + _playerOffset, 10);
 
 		if (charge)
 			transform.localScale += new Vector3(0.1f * Time.deltaTime, 0.1f * Time.deltaTime, 0);
 
 		if (lookAt)
-			LookAt(Player.Instance.transform.position + _playerOffset);
-		if (exit)
-			MoveTowards(randomExitPoint, 70);
+			SoftLookAt(Player.Instance.transform.position + _playerOffset);
 	}
 
 	private IEnumerator CLookAt()
 	{
 		yield return new WaitForSeconds(_LOOK_AT_PLAYER_TIME);
-		lookAt = false;
 		StartCoroutine(CCharge());
 	}
 
 	private IEnumerator CCharge()
 	{
 		_beamChargingParticles.enableEmission = true;
-
+		lookAt = true;
 		charge = true;
 		moveToPlayer = false;
 		yield return new WaitForSeconds(_CHARGE_TIME);
@@ -78,6 +83,7 @@ public class Beam : MonoBehaviour
 
 	private IEnumerator CBeamSpawn()
 	{
+		lookAt = false;
 		_beamShootingParticles.enableEmission = true;
 		transform.localScale = new Vector3(1, 1, 1);
 		_beam = Instantiate(_beamPrefab, transform.position, transform.rotation, transform);
@@ -90,7 +96,6 @@ public class Beam : MonoBehaviour
 	private IEnumerator CTimeAfterDone()
 	{
 		yield return new WaitForSeconds(_TIME_WAITING_AFTER_SHOOTING);
-		LookAt(randomExitPoint);
 		exit = true;
 	}
 
@@ -102,15 +107,21 @@ public class Beam : MonoBehaviour
 		transform.position = Vector2.MoveTowards(transform.position, p, step);
 	}
 
-	private void LookAt(Vector3 target)
+	private void HardLookAt(Vector3 target)
 	{
 		Vector3 dir = target - transform.position;
 		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
 	}
 
-	private void Patrol()
+	private void SoftLookAt(Vector3 target, float lookMultiplier = 1.0f)
 	{
+		Vector3 dir = target - transform.position;
+		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+		// The step size is equal to speed times frame time.
+		float step = (_slowLookAtSpeed * lookMultiplier)* Time.deltaTime;
 
+		// Rotate our transform a step closer to the target's.
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.AngleAxis(angle + 90, Vector3.forward), step);
 	}
 }

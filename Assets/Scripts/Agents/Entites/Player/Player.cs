@@ -355,7 +355,7 @@ public class Player : Entity
 
 	private void Attack()
 	{
-		if (!GroundAttackAnimationPlaying)
+		if (!GroundAttackAnimationPlaying && !OnWall)
 		{
 			Vector2 currentVelocity = rb.velocity;
 
@@ -441,7 +441,7 @@ public class Player : Entity
 		SetInputReading(true);
 	}
 
-	protected override void OnDeath()
+	protected override void OnDeath(byte dmg = 1)
 	{
 		deathParticle.Emit(Random.Range(95, 105));
 		base.OnDeath();

@@ -1226,7 +1226,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166241009}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1238,7 +1238,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!19719996 &166241013
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -2806,6 +2806,7 @@ GameObject:
   - component: {fileID: 236733682}
   - component: {fileID: 236733684}
   - component: {fileID: 236733683}
+  - component: {fileID: 236733685}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -2880,6 +2881,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &236733685
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236733681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &238700491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3146,12 +3163,12 @@ PrefabInstance:
     - target: {fileID: 742330244151831373, guid: c7ac08a8dbf224846aac2ae5af08f692,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64
+      value: -66.8
       objectReference: {fileID: 0}
     - target: {fileID: 742330244151831373, guid: c7ac08a8dbf224846aac2ae5af08f692,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 82
+      value: 83.8
       objectReference: {fileID: 0}
     - target: {fileID: 742330244151831373, guid: c7ac08a8dbf224846aac2ae5af08f692,
         type: 3}
@@ -3502,6 +3519,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603184935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!1 &623102700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906490027740110163, guid: e2c5e9ef72a8e24459d2c62c15846700,
+    type: 3}
+  m_PrefabInstance: {fileID: 1451327393}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &623102704
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623102700}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
@@ -4213,7 +4252,7 @@ PrefabInstance:
     - target: {fileID: 332738580268793471, guid: e2c5e9ef72a8e24459d2c62c15846700,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -92
+      value: -127.9
       objectReference: {fileID: 0}
     - target: {fileID: 332738580268793471, guid: e2c5e9ef72a8e24459d2c62c15846700,
         type: 3}
@@ -4272,12 +4311,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892375308704166440, guid: e2c5e9ef72a8e24459d2c62c15846700,
         type: 3}
+      propertyPath: _defaultDialog.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892375308704166440, guid: e2c5e9ef72a8e24459d2c62c15846700,
+        type: 3}
       propertyPath: _interactionCams.Array.data[1]
       value: 
       objectReference: {fileID: 238700493}
     - target: {fileID: 1892375308704166440, guid: e2c5e9ef72a8e24459d2c62c15846700,
         type: 3}
       propertyPath: _firstDialog.Array.data[0]
+      value: I must \- \W0.7 <size=180%> NOT \S \W0.7 <size=100%> \- go near that
+        thing.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892375308704166440, guid: e2c5e9ef72a8e24459d2c62c15846700,
+        type: 3}
+      propertyPath: _defaultDialog.Array.data[0]
       value: That creature \C \W2.0 \c \W0.5 gives me the creeps...
       objectReference: {fileID: 0}
     - target: {fileID: 1539354547306835090, guid: e2c5e9ef72a8e24459d2c62c15846700,
@@ -4334,11 +4384,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Default Interaction Cam
-      objectReference: {fileID: 0}
-    - target: {fileID: 6845785468574536631, guid: e2c5e9ef72a8e24459d2c62c15846700,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2c5e9ef72a8e24459d2c62c15846700, type: 3}
@@ -4995,6 +5040,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1682168561}
     m_Modifications:
+    - target: {fileID: 6399733672552044734, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+        type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037658968173297305, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1689875623251710900, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
       propertyPath: m_Name
@@ -5054,6 +5109,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689875623251710890, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689875623251710890, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e43e3aa5323f65f4b8bed0d5a598de30, type: 3}

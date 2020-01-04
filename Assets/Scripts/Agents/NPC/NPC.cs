@@ -44,6 +44,8 @@ public class NPC : Interactible
 
 	public override void ExitInteraction(byte camIndex = 0)
 	{
+		base.ExitInteraction();
+
 		Player.SetInputReading(true);
 		_interactionCams[camIndex].enabled = false;
 		_dialogBoxScript.Exit();

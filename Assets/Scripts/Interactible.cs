@@ -61,13 +61,16 @@ public class Interactible : MonoBehaviour
 
 	public virtual void ExitInteraction(byte index = 0)
 	{
-
+		if (IsPlayerInRange)
+			_inputPopUpScript.Display(this);
+		else
+			_inputPopUpScript.Exit();
 	}
 
 	protected virtual void OnPlayerEnterRange()
 	{
 		Player.InteractableInRange = this;
-		_inputPopUpScript.Display(this);
+		_inputPopUpScript?.Display(this);
 	}
 
 	protected virtual void OnPlayerExitRange()

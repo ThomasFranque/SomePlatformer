@@ -7,9 +7,12 @@ public class Lazer : Hazard
 	[SerializeField] Sprite image1 = null;
 	[SerializeField] Sprite image2 = null;
 
-	private float fillSpeed = 8.0f;
+	private float yFillSpeed = 8.0f;
+	private float xFillSpeed = 16.0f;
 	private SpriteRenderer sr = null;
-	
+
+	private bool xMaxReached;
+
 	private void Start()
 	{
 		sr = GetComponent<SpriteRenderer>();
@@ -19,18 +22,26 @@ public class Lazer : Hazard
 		else
 			sr.sprite = image2;
 
-		SetFill(0);
+		SetFill(0, 0);
 	}
 
 	private void Update()
 	{
-		SetFill(transform.localScale.y + (Time.deltaTime * fillSpeed));
+		CheckIfXMaxReached();
+		SetFill(transform.localScale.y + (Time.deltaTime * yFillSpeed), transform.localScale.x + (Time.deltaTime * (xMaxReached ? -xFillSpeed : xFillSpeed)));
 	}
 
-	public void SetFill(float fillAmount)
+	public void SetFill(float yFillAmount, float xFillAmount)
 	{
 		Vector3 newScale = transform.localScale;
-		newScale.y = fillAmount;
+		newScale.y = yFillAmount;
+		newScale.x = Mathf.Clamp(xFillAmount, 0 ,1);
 		transform.localScale = newScale;
+	}
+
+	private void CheckIfXMaxReached()
+	{
+		if (transform.localScale.x >= 0.99f)
+			xMaxReached = true;
 	}
 }

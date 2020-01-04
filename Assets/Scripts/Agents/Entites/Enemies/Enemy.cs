@@ -10,16 +10,16 @@ public class Enemy : Entity
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
 		if (invulnerable) return;
+		CameraActions.ActiveCamera.Shake(10 * dmg, 20 * dmg, 0.1f);
 
 		base.OnHit(cameFromRight, knockSpeed, dmg);
 		SetInvunerability(true);
 	}
 
-	protected override void OnDeath()
+	protected override void OnDeath(byte dmg = 1)
 	{
 		deathParticle.Emit(Random.Range(35, 55));
 		base.OnDeath();
-
 	}
 
 	protected override void OnPlayerCollision(Collider2D col)
