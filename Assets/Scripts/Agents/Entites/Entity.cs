@@ -6,7 +6,10 @@ public class Entity : MonoBehaviour
 {
 	[SerializeField] private int _hp = 3;
 	[SerializeField] protected ParticleSystem deathParticle;
+	[SerializeField] protected Vector2 _selfKnockBackAmmount = new Vector2(32.0f, 2.5f);
 
+	protected Animator _anim;
+	protected const float _KNOCK_BACK_TIME = 0.5f;
 
 	public int HP { get => _hp; protected set { _hp = value; } }
 
@@ -19,7 +22,8 @@ public class Entity : MonoBehaviour
 
 	private GFXBlink _blink;
 
-	protected Vector2 groundCheckBoxSize = new Vector2 (5.4f, .25f);
+	protected Vector2 _groundCheckBoxSize = new Vector2 (.15f, .25f);
+	protected Vector3 _groundCheckOffset = new Vector2 (0.0f, 0.0f);
 
 	protected Stack<string> ignoreCollisionTags;
 
@@ -40,23 +44,26 @@ public class Entity : MonoBehaviour
 		get
 		{
 			Collider2D[] collider = Physics2D.OverlapBoxAll(
-				transform.position,
-				groundCheckBoxSize,
+				transform.position + _groundCheckOffset,
+				_groundCheckBoxSize,
 				0,
 				LayerMask.GetMask("Ground"));
 
 			for (byte i = 0; i < collider.Length; i++)
-				if (collider[i] != null && rb.velocity.y >= -0.01f) return true;
+				if (collider[i] != null) return true;
 
 			return false;
 		}
 	}
+
+	protected bool TurnedRight => transform.right.x > 0.0f;
 
 	protected virtual void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		selfCol = GetComponent<Collider2D>();
 		sr = GetComponent<SpriteRenderer>();
+		_anim = GetComponent<Animator>();
 
 		ignoreCollisionTags = new Stack<string>();
 
@@ -77,14 +84,14 @@ public class Entity : MonoBehaviour
 			rb.velocity = new Vector2(rb.velocity.x, -120);
 	}
 
-	protected virtual void OnHit(Vector2 hitDirection, float knockSpeed)
+	protected virtual void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
 		//Debug.Log($"{name} was HIT!");
 
-		HP -= 1;
-		knockBackTimer = 0.5f;
+		HP -= dmg;
+		knockBackTimer = _KNOCK_BACK_TIME;
 
-		rb.velocity = knockSpeed * hitDirection;
+		KnockBack(cameFromRight, knockSpeed);
 
 		if (HP <= 0)
 			OnDeath();
@@ -102,7 +109,6 @@ public class Entity : MonoBehaviour
 
 	protected virtual void OnDeath()
 	{
-		deathParticle.Emit(Random.Range(95, 105));
 		transform.DetachChildren();
 		gameObject.SetActive(false);
 	}
@@ -129,9 +135,9 @@ public class Entity : MonoBehaviour
 			knockBackTimer -= Time.deltaTime;
 	}
 
-	public void Hit(Vector2 hitDirection, float knockSpeed)
+	public void Hit(bool cameFromRight, float knockSpeed, byte damage = 1)
 	{
-		OnHit(hitDirection, knockSpeed);
+		OnHit(cameFromRight, knockSpeed, damage);
 	}
 
 	public void InstaKill()
@@ -139,18 +145,19 @@ public class Entity : MonoBehaviour
 		HP -= HP;
 	}
 
-	public virtual void KnockBack(Vector2 hitDirection, float knockSpeed, bool ignoreInvulnerability = false)
+	public virtual void KnockBack(bool cameFromRight, float knockSpeed)
 	{
-		knockBackTimer = 0.5f;
+		if (invulnerable) return;
 
-		rb.velocity = knockSpeed * hitDirection;
+		Vector2 finalKnock = _selfKnockBackAmmount;
+		finalKnock.x = cameFromRight ? -finalKnock.x : finalKnock.x;
+		rb.velocity = finalKnock * knockSpeed;
 	}
-	public virtual void AddictiveKnockBack(Vector2 hitDirection, float knockSpeed, bool ignoreInvulnerability = false)
+	public virtual void AddictiveKnockBack(bool cameFromRight, float knockSpeed)
 	{
-		if (ignoreInvulnerability)
-		knockBackTimer = 0.5f;
-
-		rb.velocity += knockSpeed * hitDirection;
+		Vector2 finalKnock = _selfKnockBackAmmount;
+		finalKnock.x = cameFromRight ? -finalKnock.x : finalKnock.x;
+		rb.velocity += finalKnock * knockSpeed;
 	}
 
 	private void OnCollisionEnter2D(Collision2D col)
@@ -159,9 +166,9 @@ public class Entity : MonoBehaviour
 			OnPlayerCollision(col.collider);
 	}
 
-	//private void OnDrawGizmos()
-	//{
-	//	Gizmos.color = Color.yellow;
-	//	Gizmos.DrawCube(transform.position,new Vector3(	groundCheckBoxSize.x, groundCheckBoxSize.y, 1));
-	//}
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawCube(transform.position + _groundCheckOffset, new Vector3(_groundCheckBoxSize.x, _groundCheckBoxSize.y, 1));
+	}
 }

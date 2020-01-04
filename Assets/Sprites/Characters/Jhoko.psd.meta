@@ -89,6 +89,12 @@ TextureImporter:
   - first:
       213: -5768329964162467117
     second: Jhoko_28
+  - first:
+      213: -6032083338386476232
+    second: Jhoko_29
+  - first:
+      213: -8476567593984733806
+    second: Jhoko_30
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -777,6 +783,48 @@ TextureImporter:
       bones: []
       spriteID: 1076a48252370c6438be814f787b0069
       internalID: -5768329964162467117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhoko_29
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 224
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69047ba06009fd7488cca5211c5798af
+      internalID: -6032083338386476232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jhoko_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 168
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ab66361461770f48b0eb50791af6395
+      internalID: -8476567593984733806
       vertices: []
       indices: 
       edges: []

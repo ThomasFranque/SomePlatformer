@@ -1,0 +1,547 @@
+fileFormatVersion: 2
+guid: 8e60fc1e44cc79546ad30deac9fb33e9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5687172331347240436
+    second: Jhoko_0
+  - first:
+      213: 3468257362738008999
+    second: Jhoko_1
+  - first:
+      213: -2813848037303913107
+    second: Jhoko_2
+  - first:
+      213: 5146290368079948489
+    second: Jhoko_3
+  - first:
+      213: -7850312512994666528
+    second: Jhoko_4
+  - first:
+      213: 7213362444436363415
+    second: Jhoko_5
+  - first:
+      213: 2967561910561620826
+    second: Jhoko_6
+  - first:
+      213: -1590634007936633875
+    second: Jhoko_7
+  - first:
+      213: 3646314493814265853
+    second: Jhoko_8
+  - first:
+      213: -8485982813222999620
+    second: Jhoko_9
+  - first:
+      213: 328061074095188924
+    second: Jhoko_10
+  - first:
+      213: -1888303069998229285
+    second: Jhoko_11
+  - first:
+      213: 1555890557469478201
+    second: Jhoko_12
+  - first:
+      213: 9026633006746455393
+    second: Jhoko_13
+  - first:
+      213: 1101761371407836679
+    second: Jhoko_14
+  - first:
+      213: -7220712770805124668
+    second: Jhoko_15
+  - first:
+      213: -1711998970572515542
+    second: Jhoko_16
+  - first:
+      213: -5168606109386925509
+    second: Jhoko_17
+  - first:
+      213: 1735873070836941565
+    second: Jhoko_18
+  - first:
+      213: -2974513661031953367
+    second: Jhoko_19
+  - first:
+      213: 2234836405476456445
+    second: Jhoko_20
+  - first:
+      213: 6495302479866494235
+    second: Jhoko_21
+  - first:
+      213: 3886394178020694436
+    second: Jhoko_22
+  - first:
+      213: -722651720575992133
+    second: Jhoko_23
+  - first:
+      213: -8639052437882039971
+    second: Jhoko_24
+  - first:
+      213: -2925829476841555519
+    second: Jhoko_25
+  - first:
+      213: 3109074553215770364
+    second: Jhoko_26
+  - first:
+      213: -6789945560656454646
+    second: Jhoko_27
+  - first:
+      213: -5768329964162467117
+    second: Jhoko_28
+  - first:
+      213: 2820143329777312509
+    second: Frog_0
+  - first:
+      213: -1081280975163990012
+    second: Frog_1
+  - first:
+      213: -8937333279313398460
+    second: Frog_2
+  - first:
+      213: 2012254204448798509
+    second: Frog_3
+  - first:
+      213: -3072931601937957618
+    second: Frog_4
+  - first:
+      213: -4292050155679725338
+    second: Frog_5
+  - first:
+      213: -3970644508504664309
+    second: Frog_6
+  - first:
+      213: 7841689583222476155
+    second: Drop Slime_0
+  - first:
+      213: 9197471523367741126
+    second: Drop Slime_1
+  - first:
+      213: -758258377890555468
+    second: Drop Slime_2
+  - first:
+      213: -854375845875548316
+    second: Drop Slime_3
+  - first:
+      213: 4202679779679595222
+    second: Drop Slime_4
+  - first:
+      213: 7596993723011792864
+    second: Drop Slime_5
+  - first:
+      213: -3363369461021817564
+    second: Drop Slime_6
+  - first:
+      213: -4201076844042176067
+    second: Drop Slime_7
+  - first:
+      213: -4659269989253378105
+    second: Drop Slime_8
+  - first:
+      213: -2560806203392337029
+    second: Drop Slime_9
+  - first:
+      213: -5505862218880029727
+    second: Drop Slime_10
+  - first:
+      213: 8941229209738633753
+    second: Drop Slime_11
+  - first:
+      213: 7973249762440212190
+    second: Drop Slime_12
+  - first:
+      213: 8558284079678976622
+    second: Drop Slime_14
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Drop Slime_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f3d65b67f16fb641aac8b19962b3128
+      internalID: 7841689583222476155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 224
+        width: 6
+        height: 15
+      alignment: 9
+      pivot: {x: 0.5, y: 0.9}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 191c00dbc70db6940ace426c788e8a64
+      internalID: 9197471523367741126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 8
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 1.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54f9984667b048c46b4bb27537f8e23a
+      internalID: -758258377890555468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_3
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544202ff507365f4ab352ed465171d97
+      internalID: -854375845875548316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 059ccdd6837e984409d18240586349b5
+      internalID: 4202679779679595222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_5
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 057a847d64b48a046b86362303057147
+      internalID: 7596993723011792864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 208
+        width: 8
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 1.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cce281fe91b91944af95639ca895043
+      internalID: -3363369461021817564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 8
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 1.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ed4f99408ac41c419cc05f04155a36d
+      internalID: -4201076844042176067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_8
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb6beb3d1f11557418786fcd3fd3db73
+      internalID: -4659269989253378105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_9
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86e67704896419948989c76cf9dbe3d6
+      internalID: -2560806203392337029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_10
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6508e402645259e418ed7443ad916530
+      internalID: -5505862218880029727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_11
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 846804b5c3b785c4dbb74136f918f0cd
+      internalID: 8941229209738633753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26eee63bee1f56c49b8784688a8492f6
+      internalID: 7973249762440212190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drop Slime_14
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 243
+        width: 8
+        height: 13
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20cb2212dd303fe408686ab145b2ccc6
+      internalID: 8558284079678976622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

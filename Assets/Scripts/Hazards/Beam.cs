@@ -11,11 +11,14 @@ public class Beam : MonoBehaviour
 	private const float _BEAM_DURATION = 0.2f;
 	private const float _TIME_WAITING_AFTER_SHOOTING = 2.0f;
 
+	private const float _Y_PLAYER_OFFSET = 3.5f;
+
 	[SerializeField] private GameObject _beamPrefab = null;
 	[SerializeField] private ParticleSystem _beamChargingParticles = null;
 	[SerializeField] private ParticleSystem _beamShootingParticles = null;
 
 	private Vector3 randomExitPoint;
+	private Vector3 _playerOffset = new Vector3(0,_Y_PLAYER_OFFSET,0);
 
 	private GameObject _beam = null;
 
@@ -43,13 +46,13 @@ public class Beam : MonoBehaviour
 		}
 
 		if (spotted && moveToPlayer)
-			MoveTowards(Player.Instance.transform.position, 10);
+			MoveTowards(Player.Instance.transform.position + _playerOffset, 10);
 
 		if (charge)
 			transform.localScale += new Vector3(0.1f * Time.deltaTime, 0.1f * Time.deltaTime, 0);
 
 		if (lookAt)
-			LookAt(Player.Instance.transform.position);
+			LookAt(Player.Instance.transform.position + _playerOffset);
 		if (exit)
 			MoveTowards(randomExitPoint, 70);
 	}

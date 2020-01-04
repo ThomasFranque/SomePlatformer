@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7664014441684772524}
   - component: {fileID: 7664014441684772527}
   - component: {fileID: 7664014441684772499}
-  - component: {fileID: 8469231848417410584}
+  - component: {fileID: 5907105613601571863}
   m_Layer: 10
   m_Name: Controlled Jhoko
   m_TagString: Player
@@ -121,14 +121,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 3
   deathParticle: {fileID: 902305986921298800}
-  stillVersionPrefab: {fileID: 0}
-  _rightInput: 100
-  _leftInput: 97
+  _selfKnockBackAmmount: {x: 1, y: 2.5}
   _upInput: 119
   _downInput: 115
   _jumpInput: 32
   _interactInput: 101
-  _attackInput: 102
+  _attackInput: 108
   moveSpeed: 42
   jumpTime: 0.7
   jumpVelocity: 120
@@ -155,8 +153,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &8469231848417410584
-BoxCollider2D:
+--- !u!70 &5907105613601571863
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -168,19 +166,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 3.27}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 8, y: 8}
-    newSize: {x: 8, y: 8}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.5, y: 6.5}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 3.11}
+  m_Size: {x: 3.8, y: 6.2}
+  m_Direction: 0
 --- !u!1 &7938916621672775129
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,14 +215,13 @@ MonoBehaviour:
   damage: 1
   cooldown: 0.15
   delayToActivate: 0.1
-  groundAttackXVelocity: 45
-  airAttackYVelocity: 0
-  weaponColSize: {x: 6, y: 5}
+  groundAttackXVelocity: 2
+  airAttackXVelocity: 0
+  weaponColSize: {x: 10, y: 6}
   enemiesMask:
     serializedVersion: 2
     m_Bits: 2048
-  airAttackPos: {fileID: 0}
-  _knockSpeed: 0
+  _knockSpeed: 50
 --- !u!1001 &942786341992661299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,17 +237,17 @@ PrefabInstance:
     - target: {fileID: 7734445500054192293, guid: 8148c6e08e687b144a1ea310f3b63852,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7734445500054192293, guid: 8148c6e08e687b144a1ea310f3b63852,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 4.4
       objectReference: {fileID: 0}
     - target: {fileID: 7734445500054192293, guid: 8148c6e08e687b144a1ea310f3b63852,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7734445500054192293, guid: 8148c6e08e687b144a1ea310f3b63852,
         type: 3}

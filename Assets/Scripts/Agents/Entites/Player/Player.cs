@@ -7,47 +7,37 @@ public class Player : Entity
 {
 	public static Player Instance = null;
 
-	public static Interactable InteractableInRange { get; set; }
+	public static Interactible InteractableInRange { get; set; }
 
 	private const float _IGNORE_HAXIS_WALL_JUMP_TIME = 1f;
+	private const float _WALL_SLIDE_FALLOFF_FACTOR = 10.5f;
+	private const byte _MAX_WALL_JUMP_CONSECUTIVE_JUMPS = 5;
 
 	[Header("Player")]
-	[SerializeField]
-	private GameObject stillVersionPrefab;
-	public GameObject StillVersionPrefab { get => stillVersionPrefab; }
 
 	[Header("Inputs")]
-	[SerializeField] private KeyCode _rightInput;
-	[SerializeField] private KeyCode _leftInput;
-	[SerializeField] private KeyCode _upInput;
-	[SerializeField] private KeyCode _downInput;
-	[SerializeField] private KeyCode _jumpInput;
-	[SerializeField] private KeyCode _interactInput;
-	[SerializeField] private KeyCode _attackInput;
+	[SerializeField] private KeyCode _upInput = default;
+	[SerializeField] private KeyCode _downInput = default;
+	[SerializeField] private KeyCode _jumpInput = default;
+	[SerializeField] private KeyCode _interactInput = default;
+	[SerializeField] private KeyCode _attackInput = default;
 
 	// variables
-
-	private Animator anim;
-
 	private MeleeWeapon _meleeWeapon;
 
 	private bool jumpPressed, crouchPressed, attackPressed, interactionPressed;
-	private bool canMove, canGroundJump, canWallJump, invinciblePowUp, _ignoreHAxis;
-	bool _cantSlideWall;
-	float _fallSlideWallMultiplyer, _attackChainTime;
-	float _chainAttackTimer = 0.50f;
+	private bool canMove, canGroundJump, canWallJump, _ignoreHAxis;
+	private bool _cantSlideWall;
+	private float _attackChainTime;
+	private float _chainAttackTimer = 0.50f;
 
-	private byte collectables;
-	private float hAxis, vAxis, timeOfJump,
-		initialMoveSpeed, initialJumpVelocity;
+	private byte _timesWallJumped = 1; // Consecutive times
 
-	private Vector3 spawnpoint;
+	private float hAxis, vAxis, timeOfJump, initialJumpVelocity;
 
 	private Vector2 _wallCheckBoxSize = new Vector2(.3f, 3.0f);
-	private Vector3 _wallCheckOffset = new Vector2(2.85f, 2.0f);
-	private Vector3 _reverseWallCheckOffset = new Vector2(-2.85f, 2.0f);
-	private Vector2 _interactionRange = new Vector2(12, 2);
-	private Vector3 _offset = new Vector2(6, 3);
+	private Vector3 _wallCheckOffset = new Vector2(1.9f, 3.11f);
+	private Vector3 _reverseWallCheckOffset = new Vector2(-1.9f, 3.11f);
 
 	private Coroutine _ignoreHAxisCor;
 
@@ -66,12 +56,9 @@ public class Player : Entity
 	[SerializeField] private bool _readInputs = true;
 	// Properties
 	public bool Dead { get; private set; }
-	public float HAxis { get => hAxis; }
 	public float MoveSpeed { get => moveSpeed; set { moveSpeed = value; } }
-	public float InitialMoveSpeed { get => initialMoveSpeed; }
-	public float InitialJumpVelocity { get => initialJumpVelocity; }
 
-	public bool PushingWall { get => OnGround && OnWall && HAxis != 0; }
+	public bool PushingWall { get => OnGround && OnWall && hAxis != 0; }
 
 	private void InteractWithinRange()
 	{
@@ -93,15 +80,24 @@ public class Player : Entity
 			return false;
 		}
 	}
-	public bool AttackAnimationPlaying
+	public bool GroundAttackAnimationPlaying
 	{
 		get
 		{
 			return
-				(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1")) ||
-				(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack2")) ||
-				(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack3")) ||
+				(_anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1")) ||
+				(_anim.GetCurrentAnimatorStateInfo(0).IsName("Attack2")) ||
+				(_anim.GetCurrentAnimatorStateInfo(0).IsName("Attack3")) ||
 				_meleeWeapon.OnCooldown;
+		}
+	}
+ 
+	public bool AirAttackAnimationPlaying
+	{
+		get
+		{
+			return
+				(_anim.GetCurrentAnimatorStateInfo(0).IsName("AirAttack"));
 		}
 	}
 
@@ -114,30 +110,23 @@ public class Player : Entity
 	// Start is called before the first frame update
 	protected override void Start()
 	{
-		spawnpoint = transform.position;
-
-
 		base.Start();
 
-		anim = GetComponent<Animator>();
+		_anim = GetComponent<Animator>();
 		_meleeWeapon = GetComponentInChildren<MeleeWeapon>();
 
 		canMove = true;
 		canGroundJump = true;
 		canWallJump = true;
-		invinciblePowUp = false;
+		_cantSlideWall = false;
 		Dead = false;
 		timeOfJump = -1500.0f;
-		initialMoveSpeed = moveSpeed;
 		initialJumpVelocity = jumpVelocity;
-		_cantSlideWall = false;
-		_fallSlideWallMultiplyer = 1;
 
 		_ignoreHAxis = false;
 		_ignoreHAxisCor = null;
 
-		// Initial invincibility frames
-		SetInvunerability(true);
+		_groundCheckBoxSize = new Vector2(3.5f, .25f);
 	}
 
 	private void FixedUpdate()
@@ -149,7 +138,7 @@ public class Player : Entity
 	protected override void Update()
 	{
 		// Get inputs
-		if (_readInputs)
+		if (_readInputs && !KnockedBack)
 		{
 			hAxis = Input.GetAxis("Horizontal");
 			jumpPressed = Input.GetKey(_jumpInput);
@@ -157,7 +146,7 @@ public class Player : Entity
 			interactionPressed = Input.GetKeyDown(_interactInput);
 			canMove = !(crouchPressed);
 
-			attackPressed = Input.GetKeyDown(_attackInput) && canMove && OnGround;
+			attackPressed = Input.GetKeyDown(_attackInput) && canMove;
 		}
 
 		// Attack
@@ -168,37 +157,34 @@ public class Player : Entity
 
 		// Prevent continuous ground jumping
 		if (!jumpPressed && !canGroundJump && OnGround)
-		{
 			canGroundJump = true;
-		}
 		if (!jumpPressed && !canWallJump && (OnWall || OnGround))
 			canWallJump = true;
 
+		// Interaction
 		if (interactionPressed)
 			InteractWithinRange();
 
 		UpdateRotation();
 
-		//Individual Updates
-		if (jumpVelocity == InitialJumpVelocity)
+		if (jumpVelocity == initialJumpVelocity)
 			CapMaxYVelocity();
-		//UpdateUI();
 
 		base.Update();
 
 		// ANIMATIOR
-		anim.SetFloat("hAxis", hAxis);
-		anim.SetFloat("yVeloc", rb.velocity.y);
-		anim.SetBool("grounded", OnGround);
-		anim.SetBool("canMove", canMove);
-		anim.SetBool("crouched", crouchPressed);
-		anim.SetBool("wallGrab", OnWall && !OnGround && canWallJump && !_cantSlideWall);
-		anim.SetBool("pushingWall", PushingWall);
+		_anim.SetFloat("hAxis", hAxis);
+		_anim.SetFloat("yVeloc", rb.velocity.y);
+		_anim.SetBool("grounded", OnGround);
+		_anim.SetBool("canMove", canMove);
+		_anim.SetBool("crouched", crouchPressed);
+		_anim.SetBool("wallGrab", OnWall && !OnGround && !_cantSlideWall && canWallJump && !KnockedBack);
+		_anim.SetBool("pushingWall", PushingWall);
 
 		if (hAxis >= 0.1f || hAxis <= -0.1f)
-			anim.speed = hAxis > 0 ? 1 * hAxis : 1 * -hAxis;
+			_anim.speed = hAxis > 0 ? 1 * hAxis : 1 * -hAxis;
 		else
-			anim.speed = 1;
+			_anim.speed = 1;
 
 		// TEMP DEATH PROCEDURE //
 		if (HP <= 0 && !Dead)
@@ -209,13 +195,13 @@ public class Player : Entity
 	{
 		Vector2 currentVelocity = rb.velocity;
 
-		if (!AttackAnimationPlaying && !KnockedBack)
+		if (!GroundAttackAnimationPlaying && !KnockedBack && hAxis != 0 && !AirAttackAnimationPlaying)
 		{
 			if (!_ignoreHAxis)
 				currentVelocity = new Vector2(hAxis * moveSpeed, currentVelocity.y);
 			else
 			{
-				float newXMoveSpeed = currentVelocity.x + HAxis * moveSpeed / 5;
+				float newXMoveSpeed = currentVelocity.x + hAxis * moveSpeed / 5;
 				if (newXMoveSpeed > 40.0f)
 					newXMoveSpeed = 40.0f;
 				else if (newXMoveSpeed < -40.0f)
@@ -250,11 +236,11 @@ public class Player : Entity
 
 				bool turnedRight = ForceRotate();
 
-				currentVelocity.x = turnedRight ? jumpVelocity / 1.8f : -jumpVelocity / 1.8f;
+				currentVelocity.x = turnedRight ? jumpVelocity / 2.5f : -jumpVelocity / 2.5f;
 
 				_ignoreHAxisCor = StartCoroutine(CIgnoreHAxisFor(_IGNORE_HAXIS_WALL_JUMP_TIME));
 
-				_fallSlideWallMultiplyer *= 2.5f;
+				_timesWallJumped++;
 			}
 			// Rising and pressing space
 			else if ((Time.time - timeOfJump) < jumpTime && rb.velocity[1] > 0)
@@ -280,13 +266,14 @@ public class Player : Entity
 			}
 
 			// Slide on wall
-			if (OnWall && canWallJump && !_cantSlideWall)
+			if (OnWall && canWallJump && !_cantSlideWall && !KnockedBack)
 			{
 				currentVelocity[0] = 0;
-				currentVelocity[1] = -1 * _fallSlideWallMultiplyer;
+				currentVelocity[1] = -1 * (_WALL_SLIDE_FALLOFF_FACTOR * _timesWallJumped);
 
-				if (currentVelocity[1] < -60)
+				if (_timesWallJumped >= _MAX_WALL_JUMP_CONSECUTIVE_JUMPS)
 				{
+					currentVelocity[1] = -1 * (_WALL_SLIDE_FALLOFF_FACTOR * _timesWallJumped + 1);
 					_cantSlideWall = true;
 				}
 
@@ -300,7 +287,7 @@ public class Player : Entity
 			// MAKE METHOD ONLAND() IN THE FUTURE
 			if (OnGround)
 			{
-				_fallSlideWallMultiplyer = 1;
+				_timesWallJumped = 1;
 				_cantSlideWall = false;
 			}
 		}
@@ -313,7 +300,7 @@ public class Player : Entity
 		if (!canMove)
 			currentVelocity[0] = 0;
 
-		rb.velocity = currentVelocity;
+		SetVelocity(currentVelocity);
 	}
 
 	private void UpdateChainTime()
@@ -322,10 +309,10 @@ public class Player : Entity
 		if (_attackChainTime > 0)
 		{
 			_attackChainTime -= Time.deltaTime;
-			anim.SetBool("AttackChainEnd", false);
+			_anim.SetBool("AttackChainEnd", false);
 		}
 		else
-			anim.SetBool("AttackChainEnd", true);
+			_anim.SetBool("AttackChainEnd", true);
 	}
 
 	private void UpdateRotation()
@@ -360,13 +347,6 @@ public class Player : Entity
 		rb.velocity = newVelocity;
 	}
 
-	// Power Up
-	public void CollectablePickup(string powUp)
-	{
-		collectables++;
-		//LevelMngr.Instance.CollectablePickup((byte)playerNumber, powUp);
-	}
-
 	public void Heal(byte ammount)
 	{
 		if (HP < 3)
@@ -375,7 +355,7 @@ public class Player : Entity
 
 	private void Attack()
 	{
-		if (!AttackAnimationPlaying)
+		if (!GroundAttackAnimationPlaying)
 		{
 			Vector2 currentVelocity = rb.velocity;
 
@@ -386,20 +366,31 @@ public class Player : Entity
 				{
 					_attackChainTime = _chainAttackTimer;
 
-					anim.SetTrigger("Attack");
+					_anim.SetTrigger("Attack");
 
 					_meleeWeapon.GroundAttack(currentVelocity, attackPSystem);
 				}
 
 			}
+			else
+			{
+				if (!_meleeWeapon.OnCooldown)
+				{
+					_anim.SetTrigger("AirAttack");
+
+					_meleeWeapon.AirAttack(currentVelocity, attackPSystem);
+				}
+			}
 		}
 	}
 
-	protected override void OnHit(Vector2 hitDirection, float knockSpeed)
+	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
-		if (!invulnerable && !invinciblePowUp)
+		if (!invulnerable)
 		{
-			base.OnHit(hitDirection, knockSpeed);
+			base.OnHit(cameFromRight, knockSpeed, dmg);
+
+			CameraActions.ActiveCamera.Shake(40 * dmg, 30 * dmg);
 
 			if (HP <= 0 && !Dead)
 			{
@@ -414,19 +405,11 @@ public class Player : Entity
 		}
 	}
 
-	//private void OnDeath()
-	//{
-	//	Dead = true;
-	//	deathParticle.Emit(Random.Range(95, 105));
-	//	transform.DetachChildren();
-	//	gameObject.SetActive(false);
-	//}
-
-	public override void KnockBack(Vector2 hitDirection, float knockSpeed, bool ignoreInvulnerability = false)
+	public override void KnockBack(bool cameFromRight, float knockSpeed)
 	{
-		if (invulnerable && !ignoreInvulnerability) return;
+		if (invulnerable) return;
 
-		base.KnockBack(hitDirection, knockSpeed);
+		base.KnockBack(cameFromRight, knockSpeed);
 	}
 
 	public void SetInputReading(bool active)
@@ -458,9 +441,16 @@ public class Player : Entity
 		SetInputReading(true);
 	}
 
-	//private void OnDrawGizmos()
-	//{
-	//	Gizmos.color = Color.yellow;
-	//	Gizmos.DrawCube(transform.position + _wallCheckOffset, new Vector3(_wallCheckBoxSize.x, _wallCheckBoxSize.y, 1));
-	//}
+	protected override void OnDeath()
+	{
+		deathParticle.Emit(Random.Range(95, 105));
+		base.OnDeath();
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawCube(transform.position, new Vector3(_groundCheckBoxSize.x, _groundCheckBoxSize.y, 1));
+		Gizmos.DrawCube(transform.position, new Vector3(_groundCheckBoxSize.x, _groundCheckBoxSize.y, 1));
+	}
 }

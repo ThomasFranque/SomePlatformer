@@ -12,6 +12,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Still Leggy
       objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _firstDialog.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _defaultDialog.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _interactionCams.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _firstDialog.Array.data[0]
+      value: That creature looks suspicious
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _interactionCams.Array.data[0]
+      value: 
+      objectReference: {fileID: 6845785468574536631}
     - target: {fileID: 7664014441684772498, guid: 7226f0c034ed60242b7ab24073ee4202,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -81,3 +106,15 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7226f0c034ed60242b7ab24073ee4202, type: 3}
+--- !u!114 &6845785468574536631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3585726093602196314, guid: 7226f0c034ed60242b7ab24073ee4202,
+    type: 3}
+  m_PrefabInstance: {fileID: 7980962924257122541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

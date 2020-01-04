@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactible : MonoBehaviour
 {
-	[SerializeField] private DialogBox _inputPopUpScript;
+	[SerializeField] private DialogBox _inputPopUpScript = null;
 
 	protected Player Player { get; private set; }
 
@@ -59,7 +59,7 @@ public class Interactable : MonoBehaviour
 		OnPlayerInteraction();
 	}
 
-	public virtual void ExitInteraction()
+	public virtual void ExitInteraction(byte index = 0)
 	{
 
 	}

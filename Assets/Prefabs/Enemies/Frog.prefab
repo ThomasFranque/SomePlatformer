@@ -154,8 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ee7fad157a6bb4681fc6503163ba35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 1
+  _hp: 2
   deathParticle: {fileID: 4939683780222303761}
+  _selfKnockBackAmmount: {x: 1, y: 2.5}
+  _useColliderAsTrigger: 0
+  _knockIntensity: 30
   _jumpSpeed: {x: 40, y: 90}
 --- !u!1001 &6713891155238213779
 PrefabInstance:

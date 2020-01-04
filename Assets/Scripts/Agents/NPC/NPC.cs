@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : Interactable
+public class NPC : Interactible
 {
 	[SerializeField] private DialogBox _dialogBoxScript = null;
+	[TextArea]
 	[SerializeField] private string[] _firstDialog = null;
+	[TextArea]
 	[SerializeField] private string[] _defaultDialog = null;
-	
-	private Cinemachine.CinemachineVirtualCamera _interactionCam = null;
+
+	[SerializeField]
+	private Cinemachine.CinemachineVirtualCamera[] _interactionCams = null;
 
 	private bool _alreadyInteracted = false;
 
@@ -16,8 +19,6 @@ public class NPC : Interactable
     protected override void Start()
     {
 		base.Start();
-
-		_interactionCam = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
 
 		AddActionToInteraction(OnInteraction);
 
@@ -35,16 +36,16 @@ public class NPC : Interactable
 	private void OnInteraction()
 	{
 		Player.SetInputReading(false);
-		_interactionCam.enabled = true;
-		_dialogBoxScript.Display(this, _alreadyInteracted ? _defaultDialog : _firstDialog);
+		_interactionCams[0].enabled = true;
+		_dialogBoxScript.Display(this, _interactionCams, _alreadyInteracted ? _defaultDialog : _firstDialog);
 
 		_alreadyInteracted = true;
 	}
 
-	public override void ExitInteraction()
+	public override void ExitInteraction(byte camIndex = 0)
 	{
 		Player.SetInputReading(true);
-		_interactionCam.enabled = false;
+		_interactionCams[camIndex].enabled = false;
 		_dialogBoxScript.Exit();
 	}
 }
