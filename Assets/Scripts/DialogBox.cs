@@ -164,7 +164,18 @@ public class DialogBox : MonoBehaviour
 		if (_activeCamIndex > _cams.Length - 1)
 			_activeCamIndex = 0;
 
-		_cams[_activeCamIndex].enabled = true;
+		// Check if it has a target
+		if (_cams[_activeCamIndex].Follow != null)
+		{
+			// Check if target is not active
+			if (!_cams[_activeCamIndex].Follow.gameObject.activeSelf)
+				NextCam();
+			// Target is active
+			else
+				_cams[_activeCamIndex].enabled = true;
+		}
+		else 
+			_cams[_activeCamIndex].enabled = true;
 	}
 	private void ResetCam()
 	{

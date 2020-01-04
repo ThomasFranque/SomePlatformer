@@ -2846,7 +2846,7 @@ MonoBehaviour:
   m_YDamping: 1
   m_ZDamping: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.88
+  m_ScreenY: 0.5
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -2905,7 +2905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238700491}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 50, z: -10}
+  m_LocalPosition: {x: 20, y: 56, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 236733682}
@@ -2931,7 +2931,7 @@ MonoBehaviour:
   m_Priority: 6
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 524102404}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 32
@@ -3451,6 +3451,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 822aba7b2db68384a9d9254bad8c37f6, type: 3}
+--- !u!4 &524102404 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
+    type: 3}
+  m_PrefabInstance: {fileID: 1689875623424933019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &589727856
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,7 +4127,7 @@ Transform:
   - {fileID: 309621506}
   - {fileID: 2071586832}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1415994353
 PrefabInstance:
@@ -4272,7 +4278,7 @@ PrefabInstance:
     - target: {fileID: 1892375308704166440, guid: e2c5e9ef72a8e24459d2c62c15846700,
         type: 3}
       propertyPath: _firstDialog.Array.data[0]
-      value: That creature \C \W2.0 \c \W0.5 looks suspicious
+      value: That creature \C \W2.0 \c \W0.5 gives me the creeps...
       objectReference: {fileID: 0}
     - target: {fileID: 1539354547306835090, guid: e2c5e9ef72a8e24459d2c62c15846700,
         type: 3}
@@ -4702,6 +4708,7 @@ Transform:
   m_Children:
   - {fileID: 2014181930}
   - {fileID: 1869564974}
+  - {fileID: 524102404}
   m_Father: {fileID: 968374771}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4986,7 +4993,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1682168561}
     m_Modifications:
     - target: {fileID: 1689875623251710900, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
@@ -5011,17 +5018,17 @@ PrefabInstance:
     - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
@@ -5031,7 +5038,7 @@ PrefabInstance:
     - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1689875623251710894, guid: e43e3aa5323f65f4b8bed0d5a598de30,
         type: 3}
