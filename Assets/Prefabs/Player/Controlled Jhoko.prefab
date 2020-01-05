@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7664014441684772498}
+  - component: {fileID: 7664014441684772527}
   - component: {fileID: 7664014441684772525}
   - component: {fileID: 7664014441684772524}
-  - component: {fileID: 7664014441684772527}
   - component: {fileID: 7664014441684772499}
   - component: {fileID: 5907105613601571863}
   m_Layer: 10
@@ -38,6 +38,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7664014441684772527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664014441684772526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cfb4bb5255a5c499c21a2d29b8ddd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hp: 3
+  deathParticle: {fileID: 902305986921298800}
+  _selfKnockBackAmmount: {x: 1, y: 2.5}
+  _invulnerabilityTime: 0.5
+  _KNOCK_BACK_TIME: 0.5
+  _upInput: 119
+  _downInput: 115
+  _jumpInput: 32
+  _interactInput: 101
+  _attackInput: 108
+  moveSpeed: 42
+  jumpTime: 0.7
+  jumpVelocity: 120
+  attackPSystem: {fileID: 1492014705414563761}
+  _readInputs: 1
 --- !u!212 &7664014441684772525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -107,33 +134,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7664014441684772527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7664014441684772526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25cfb4bb5255a5c499c21a2d29b8ddd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hp: 3
-  deathParticle: {fileID: 902305986921298800}
-  _selfKnockBackAmmount: {x: 1, y: 2.5}
-  _invulnerabilityTime: 0.5
-  _KNOCK_BACK_TIME: 0.5
-  _upInput: 119
-  _downInput: 115
-  _jumpInput: 32
-  _interactInput: 101
-  _attackInput: 108
-  moveSpeed: 42
-  jumpTime: 0.7
-  jumpVelocity: 120
-  attackPSystem: {fileID: 1492014705414563761}
-  _readInputs: 1
 --- !u!50 &7664014441684772499
 Rigidbody2D:
   serializedVersion: 4

@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 4460576254976257662}
   - {fileID: 6984292897684119698}
+  - {fileID: 6443111615541823321}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,7 +53,7 @@ MonoBehaviour:
   _hp: 255
   deathParticle: {fileID: 0}
   _selfKnockBackAmmount: {x: 0, y: -2.5}
-  _invulnerabilityTime: 0.5
+  _invulnerabilityTime: 2.4
   _KNOCK_BACK_TIME: 0.5
   _hurtsPlayer: 0
   _canBeStomped: 1
@@ -63,8 +64,9 @@ MonoBehaviour:
     type: 3}
   _beamChargingParticles: {fileID: 1304552954817365685}
   _beamShootingParticles: {fileID: 5697232862572136537}
-  _followSpeed: 7.5
-  _slowLookAtSpeed: 36
+  _proximityIndAnim: {fileID: 5057246736254164331}
+  _followSpeed: 0.8
+  _slowLookAtSpeed: 42
   _stompDisableTime: 2.5
   _maxInterruptedTimes: 5
 --- !u!212 &742330244151831370
@@ -130,8 +132,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 30
+  m_AngularDrag: 100
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: b561b186874499b40ae44b03625991c5, type: 2}
   m_Interpolate: 0
@@ -173,6 +175,87 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &694740718211166080
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 742330244151831373}
+    m_Modifications:
+    - target: {fileID: 7129908557996714948, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_Name
+      value: Proximity Indicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d2895a96ba08ac94e967199b1038ea60, type: 3}
+--- !u!4 &6443111615541823321 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5822785844413049049, guid: d2895a96ba08ac94e967199b1038ea60,
+    type: 3}
+  m_PrefabInstance: {fileID: 694740718211166080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5057246736254164331 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5731609100858897131, guid: d2895a96ba08ac94e967199b1038ea60,
+    type: 3}
+  m_PrefabInstance: {fileID: 694740718211166080}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &845397271014514743
 PrefabInstance:
   m_ObjectHideFlags: 0
