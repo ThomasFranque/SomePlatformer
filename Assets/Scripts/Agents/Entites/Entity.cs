@@ -7,9 +7,10 @@ public class Entity : MonoBehaviour
 	[SerializeField] private int _hp = 3;
 	[SerializeField] protected ParticleSystem deathParticle;
 	[SerializeField] protected Vector2 _selfKnockBackAmmount = new Vector2(32.0f, 2.5f);
+	[SerializeField] protected float _invulnerabilityTime = 0.5f;
+	[SerializeField] protected float _KNOCK_BACK_TIME = 0.5f;
 
 	protected Animator _anim;
-	protected const float _KNOCK_BACK_TIME = 0.5f;
 
 	public int HP { get => _hp; protected set { _hp = value; } }
 
@@ -97,7 +98,7 @@ public class Entity : MonoBehaviour
 			OnDeath(dmg);
 	}
 
-	protected virtual void OnPlayerCollision(Collider2D col) { }
+	protected virtual void OnPlayerCollision(Collision2D col) { }
 
 
 	protected void SetInvunerability(bool active)
@@ -121,7 +122,7 @@ public class Entity : MonoBehaviour
 
 	private IEnumerator CSetInvulnerability(bool active)
 	{
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(_invulnerabilityTime);
 		invulnerable = active;
 	}
 
@@ -169,7 +170,7 @@ public class Entity : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Player")
-			OnPlayerCollision(col.collider);
+			OnPlayerCollision(col);
 	}
 
 	private void OnDrawGizmos()

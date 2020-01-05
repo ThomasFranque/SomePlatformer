@@ -7,7 +7,8 @@ public class Lazer : Hazard
 	[SerializeField] Sprite image1 = null;
 	[SerializeField] Sprite image2 = null;
 
-	private float yFillSpeed = 8.0f;
+
+	private float yFillSpeed = 12.0f;
 	private float xFillSpeed = 16.0f;
 	private SpriteRenderer sr = null;
 

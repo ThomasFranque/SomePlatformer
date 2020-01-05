@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6713891155284336463}
+  - component: {fileID: 6713891155284336456}
   - component: {fileID: 6713891155284336462}
   - component: {fileID: 6713891155284336461}
   - component: {fileID: 6713891155284336460}
   - component: {fileID: 6713891155284336451}
-  - component: {fileID: 6713891155284336456}
   m_Layer: 11
   m_Name: Frog
   m_TagString: Untagged
@@ -36,6 +36,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6713891155284336456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713891155284336450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ee7fad157a6bb4681fc6503163ba35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hp: 2
+  deathParticle: {fileID: 4939683780222303761}
+  _selfKnockBackAmmount: {x: 1, y: 2.5}
+  _invulnerabilityTime: 0.5
+  _KNOCK_BACK_TIME: 0.5
+  _hurtsPlayer: 1
+  _canBeStomped: 1
+  _useColliderAsTrigger: 0
+  _stompYSpeed: 250
+  _knockIntensity: 35
+  _jumpSpeed: {x: 40, y: 90}
 --- !u!212 &6713891155284336462
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -53,7 +76,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -139,27 +162,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 4}
+  m_Offset: {x: 0, y: 3}
   serializedVersion: 2
-  m_Radius: 4
---- !u!114 &6713891155284336456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6713891155284336450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3ee7fad157a6bb4681fc6503163ba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hp: 2
-  deathParticle: {fileID: 4939683780222303761}
-  _selfKnockBackAmmount: {x: 1, y: 2.5}
-  _useColliderAsTrigger: 0
-  _knockIntensity: 30
-  _jumpSpeed: {x: 40, y: 90}
+  m_Radius: 3
 --- !u!1001 &6713891155238213779
 PrefabInstance:
   m_ObjectHideFlags: 0

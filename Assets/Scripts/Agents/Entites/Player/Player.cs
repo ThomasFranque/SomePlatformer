@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -28,6 +26,7 @@ public class Player : Entity
 	private bool jumpPressed, crouchPressed, attackPressed, interactionPressed;
 	private bool canMove, canGroundJump, canWallJump, _ignoreHAxis;
 	private bool _cantSlideWall;
+	private bool _canAirAttack;
 	private float _attackChainTime;
 	private float _chainAttackTimer = 0.50f;
 
@@ -126,7 +125,7 @@ public class Player : Entity
 		_ignoreHAxis = false;
 		_ignoreHAxisCor = null;
 
-		_groundCheckBoxSize = new Vector2(3.5f, .25f);
+		_groundCheckBoxSize = new Vector2(1.5f, .25f);
 	}
 
 	private void FixedUpdate()
@@ -165,7 +164,8 @@ public class Player : Entity
 		if (interactionPressed)
 			InteractWithinRange();
 
-		UpdateRotation();
+		if (_attackChainTime <= 0)
+			UpdateRotation();
 
 		if (jumpVelocity == initialJumpVelocity)
 			CapMaxYVelocity();
@@ -289,6 +289,7 @@ public class Player : Entity
 			{
 				_timesWallJumped = 1;
 				_cantSlideWall = false;
+				_canAirAttack = true;
 			}
 		}
 
@@ -374,15 +375,20 @@ public class Player : Entity
 			}
 			else
 			{
-				if (!_meleeWeapon.OnCooldown)
+				if (!_meleeWeapon.OnCooldown && _canAirAttack)
 				{
 					_anim.SetTrigger("AirAttack");
-
+					_canAirAttack = false;
 					_meleeWeapon.AirAttack(currentVelocity, attackPSystem);
 				}
 			}
 		}
 	}
+
+	public void DoStomp(float newYSpeed)
+	{
+		SetVelocity(new Vector2(rb.velocity.x, newYSpeed));
+	} 
 
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
@@ -446,6 +452,7 @@ public class Player : Entity
 		deathParticle.Emit(Random.Range(95, 105));
 		base.OnDeath();
 	}
+
 
 	private void OnDrawGizmos()
 	{

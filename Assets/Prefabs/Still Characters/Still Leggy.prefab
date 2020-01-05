@@ -12,31 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Still Leggy
       objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _firstDialog.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _defaultDialog.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _interactionCams.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _firstDialog.Array.data[0]
-      value: That creature looks suspicious
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _interactionCams.Array.data[0]
-      value: 
-      objectReference: {fileID: 6845785468574536631}
     - target: {fileID: 7664014441684772498, guid: 7226f0c034ed60242b7ab24073ee4202,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -104,6 +79,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 16a2c54a7c34841488e288b50bcc66a1,
         type: 2}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _firstDialog.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _defaultDialog.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _interactionCams.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _firstDialog.Array.data[0]
+      value: That creature looks suspicious
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _interactionCams.Array.data[0]
+      value: 
+      objectReference: {fileID: 6845785468574536631}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7226f0c034ed60242b7ab24073ee4202, type: 3}
 --- !u!114 &6845785468574536631 stripped

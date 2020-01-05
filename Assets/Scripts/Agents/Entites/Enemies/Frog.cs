@@ -9,6 +9,7 @@ public class Frog : Enemy
 	private bool _facingRight = true;
 	private Vector2 InvertedJumpSpeed => new Vector2(-_jumpSpeed.x, _jumpSpeed.y);
 
+	private Coroutine _actionCor = null;
 
 	protected override void Start()
 	{
@@ -16,7 +17,7 @@ public class Frog : Enemy
 
 		_anim = GetComponent<Animator>();
 
-		StartCoroutine(CAction());
+		_actionCor = StartCoroutine(CAction());
 	}
 
 	protected override void Update()
@@ -49,7 +50,7 @@ public class Frog : Enemy
 		else if (OnGround)
 			Walk();
 
-		StartCoroutine(CAction());
+		_actionCor = StartCoroutine(CAction());
 	}
 
 	private void Jump()
@@ -70,5 +71,20 @@ public class Frog : Enemy
 	private void MaybeRotate()
 	{
 		_facingRight = Rotate();
+	}
+
+	protected override void OnPlayerStomp(Player p)
+	{
+		base.OnPlayerStomp(p);
+		InterruptAction();
+	}
+
+	private void InterruptAction()
+	{
+		if (gameObject.activeSelf)
+		{
+			StopCoroutine(_actionCor);
+			_actionCor = StartCoroutine(CAction());
+		}
 	}
 }

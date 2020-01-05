@@ -12,26 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Still Sophs
       objectReference: {fileID: 0}
-    - target: {fileID: 8907822854128776319, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _interactionCams.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: _interactionCams.Array.data[0]
-      value: 
-      objectReference: {fileID: 8044416234179397836}
-    - target: {fileID: 57448786509865958, guid: 7226f0c034ed60242b7ab24073ee4202,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7664014441684772498, guid: 7226f0c034ed60242b7ab24073ee4202,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -99,6 +79,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 4aca0f0fa6d347048bbb2b7f05f821cd,
         type: 2}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _interactionCams.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394993583578458821, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: _interactionCams.Array.data[0]
+      value: 
+      objectReference: {fileID: 8044416234179397836}
+    - target: {fileID: 8907822854128776319, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 57448786509865958, guid: 7226f0c034ed60242b7ab24073ee4202,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7226f0c034ed60242b7ab24073ee4202, type: 3}
 --- !u!114 &8044416234179397836 stripped

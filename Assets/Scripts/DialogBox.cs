@@ -149,7 +149,9 @@ public class DialogBox : MonoBehaviour
 			yield return WaitForKeyPress();
 
 			if (i == dialog.Length - 1)
+			{
 				interactable.ExitInteraction(_activeCamIndex);
+			}
 			_dialogTextPro.fontSize = _defaultTextSize;
 			_dialogTextPro.text = "";
 			_activeCamIndex = 0;

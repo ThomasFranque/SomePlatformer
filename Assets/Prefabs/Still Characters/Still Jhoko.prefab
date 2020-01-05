@@ -126,7 +126,8 @@ MonoBehaviour:
   _defaultDialog:
   - ASTROPHEUS is my home asteroid.
   - \L I Hope he likes my little asteroid.
-  _interactionCams: []
+  _interactionCams:
+  - {fileID: 3585726093602196314}
 --- !u!212 &7664014441684772525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -348,15 +349,15 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1760370544116026228, guid: 8cb894bdcd049f148b02dded5bcf20d6,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1760370544116026229, guid: 8cb894bdcd049f148b02dded5bcf20d6,
         type: 3}
       propertyPath: m_SortingOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760370544116026228, guid: 8cb894bdcd049f148b02dded5bcf20d6,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cb894bdcd049f148b02dded5bcf20d6, type: 3}
@@ -450,6 +451,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1760370544116026228, guid: a07eacb026875fd4c9dd410d228d884c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1760370544116026230, guid: a07eacb026875fd4c9dd410d228d884c,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -469,11 +475,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1760370544116026228, guid: a07eacb026875fd4c9dd410d228d884c,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a07eacb026875fd4c9dd410d228d884c, type: 3}

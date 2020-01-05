@@ -161,11 +161,9 @@ public class DropSlime : Enemy
 	private Vector3 GetGroundPosition()
 	{
 		RaycastHit2D hit =
-			Physics2D.Raycast(transform.position - _groundCheckOffset, Vector3.down, 64.0f, LayerMask.GetMask("Ground"));
+			Physics2D.Raycast(transform.position + _groundCheckOffset, Vector3.down, 600.0f, LayerMask.GetMask("Ground"));
 
 		Vector3 hitPoint = hit.point;
-		hitPoint.y = -hitPoint.y;
-
 		return hitPoint;
 	}
 

@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Beam : MonoBehaviour
+public class Beam : Enemy
 {
 	private const float _RANGE = 66.0f;
 	private const float _MIN_RANGE = 12.0f;
@@ -21,82 +20,141 @@ public class Beam : MonoBehaviour
 	[Header("Beam Variables")]
 	[SerializeField] private float _followSpeed = 7.5f;
 	[SerializeField] private float _slowLookAtSpeed = 5.0f;
+	[SerializeField] private float _stompDisableTime = 2.5f;
+	[SerializeField] private byte _maxInterruptedTimes = 5;
 
 	private Vector3 randomExitPoint;
 	private Vector3 _playerOffset = new Vector3(0,_Y_PLAYER_OFFSET,0);
 
 	private GameObject _beam = null;
 
-	bool spotted;
+	private byte _timesInterrupted = 0;
+
+	bool stomped;
+
 	bool moveToPlayer = true;
+	bool spotted;
 	bool lookAt;
 	bool charge;
 	bool exit;
 
-	private void Start()
+	private Coroutine _behaviorCor = null;
+	private Coroutine _stompCor = null;
+
+	private bool CanBeInterrupted => _timesInterrupted < 5;
+
+	protected override void Start()
 	{
+		base.Start();
 		randomExitPoint = new Vector3(transform.position.x + Random.Range(-390, 390), transform.position.y + 580, 0);
 	}
 
-	private void Update()
+	protected override void Update()
 	{
-		if (!spotted)
+		PerformBehavior();
+	}
+
+	#region Behavior
+	private void PerformBehavior()
+	{
+		if (!stomped)
 		{
-			if (Vector3.Distance(Player.Instance.transform.position, transform.position) < _RANGE)
+			if (!spotted && Vector3.Distance(Player.Instance.transform.position, transform.position) < _RANGE)
+				_behaviorCor = StartCoroutine(CBehavior());
+			else if (spotted && moveToPlayer && Vector3.Distance(Player.Instance.transform.position, transform.position) > _MIN_RANGE)
+				MoveTowards(Player.Instance.transform.position + _playerOffset, _followSpeed);
+			else if (exit)
 			{
-				spotted = true;
-				StartCoroutine(CLookAt());
+				MoveTowards(randomExitPoint, _followSpeed * 10);
+				SoftLookAt(transform.position + new Vector3(0, -1, 0), 3.2f);
 			}
-		} 
-		else if (spotted && moveToPlayer && Vector3.Distance(Player.Instance.transform.position, transform.position) > _MIN_RANGE)
-			MoveTowards(Player.Instance.transform.position + _playerOffset, _followSpeed);
-		else if (exit)
-		{
-			MoveTowards(randomExitPoint, _followSpeed * 10);
-			SoftLookAt(transform.position + new Vector3(0, -1,0), 1.4f);
+
+			if (charge)
+				transform.localScale += new Vector3(0.1f * Time.deltaTime, 0.15f * Time.deltaTime, 0);
+
+			if (lookAt)
+				SoftLookAt(Player.Instance.transform.position + _playerOffset);
 		}
-
-		if (charge)
-			transform.localScale += new Vector3(0.1f * Time.deltaTime, 0.1f * Time.deltaTime, 0);
-
-		if (lookAt)
-			SoftLookAt(Player.Instance.transform.position + _playerOffset);
+		else
+			SoftLookAt(transform.position + new Vector3(0, -1, 0), 3.2f);
 	}
 
-	private IEnumerator CLookAt()
+	private IEnumerator CBehavior()
 	{
+		OnSpotted();
+
 		yield return new WaitForSeconds(_LOOK_AT_PLAYER_TIME);
-		StartCoroutine(CCharge());
+		OnCharge();
+		yield return new WaitForSeconds(_CHARGE_TIME);
+		OnStartBeam();
+		yield return new WaitForSeconds(_BEAM_DURATION);
+		OnEndBeam();
+		yield return new WaitForSeconds(_TIME_WAITING_AFTER_SHOOTING);
+		OnExit();
+
+		_behaviorCor = null;
 	}
 
-	private IEnumerator CCharge()
+	private void OnSpotted()
+	{
+
+		spotted = true;
+		_anim.SetTrigger("Spotted");
+	}
+
+	private void OnCharge()
 	{
 		_beamChargingParticles.enableEmission = true;
 		lookAt = true;
 		charge = true;
 		moveToPlayer = false;
-		yield return new WaitForSeconds(_CHARGE_TIME);
-		charge = false;
-		_beamChargingParticles.enableEmission = false;
-		StartCoroutine(CBeamSpawn());
 	}
 
-	private IEnumerator CBeamSpawn()
+	private void OnStartBeam()
 	{
+		charge = false;
+		_beamChargingParticles.enableEmission = false;
+
 		lookAt = false;
 		_beamShootingParticles.enableEmission = true;
 		transform.localScale = new Vector3(1, 1, 1);
 		_beam = Instantiate(_beamPrefab, transform.position, transform.rotation, transform);
-		yield return new WaitForSeconds(_BEAM_DURATION);
-		Destroy(_beam);
-		_beamShootingParticles.enableEmission = false;
-		StartCoroutine(CTimeAfterDone());
+		CameraActions.ActiveCamera.Shake(15, 10, 0.1f);
+
 	}
 
-	private IEnumerator CTimeAfterDone()
+	private void OnEndBeam()
 	{
-		yield return new WaitForSeconds(_TIME_WAITING_AFTER_SHOOTING);
+		Destroy(_beam);
+		_beamShootingParticles.enableEmission = false;
+	}
+
+	private void OnExit()
+	{
 		exit = true;
+	}
+
+	private void ResetBehavior()
+	{
+		if (_stompCor != null)
+		{
+			StopCoroutine(_stompCor);
+			_stompCor = null;
+		}
+		if (_behaviorCor != null)
+		{
+			StopCoroutine(_behaviorCor);
+			_behaviorCor = null;
+			_timesInterrupted++;
+		}
+
+		_beamChargingParticles.enableEmission = false;
+		_beamShootingParticles.enableEmission = false;
+		moveToPlayer = true;
+		spotted = false;
+		lookAt = false;
+		charge = false;
+		exit = false;
 	}
 
 	private void MoveTowards(Vector3 p, float speed)
@@ -105,13 +163,6 @@ public class Beam : MonoBehaviour
 
 		// move sprite towards the target location
 		transform.position = Vector2.MoveTowards(transform.position, p, step);
-	}
-
-	private void HardLookAt(Vector3 target)
-	{
-		Vector3 dir = target - transform.position;
-		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
 	}
 
 	private void SoftLookAt(Vector3 target, float lookMultiplier = 1.0f)
@@ -123,5 +174,49 @@ public class Beam : MonoBehaviour
 
 		// Rotate our transform a step closer to the target's.
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.AngleAxis(angle + 90, Vector3.forward), step);
+	}
+	#endregion
+
+	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
+	{
+	}
+
+	protected override void OnPlayerStomp(Player p)
+	{
+		if (!exit)
+		{
+			base.OnPlayerStomp(p);
+			if (_beam == null && CanBeInterrupted)
+			{
+				ResetBehavior();
+				_stompCor = StartCoroutine(CStomped());
+			}
+		}
+	}
+
+	private IEnumerator CStomped()
+	{
+		_anim.SetTrigger("Stomped");
+		stomped = true;
+		yield return new WaitForSeconds(_stompDisableTime);
+		stomped = false;
+		if (Vector3.Distance(Player.Instance.transform.position, transform.position) < _RANGE)
+		{
+			_behaviorCor = StartCoroutine(CBehavior());
+		}
+		else
+		{
+			_anim.SetTrigger("Idle");
+		}
+
+		_stompCor = null;
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, _RANGE);
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, _MIN_RANGE);
 	}
 }

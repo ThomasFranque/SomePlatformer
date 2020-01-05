@@ -19,7 +19,6 @@ public class NPC : Interactible
     protected override void Start()
     {
 		base.Start();
-
 		AddActionToInteraction(OnInteraction);
 
 		if (_defaultDialog.Length == 0)
@@ -47,7 +46,12 @@ public class NPC : Interactible
 		base.ExitInteraction();
 
 		Player.SetInputReading(true);
-		_interactionCams[camIndex].enabled = false;
+		foreach(Cinemachine.CinemachineVirtualCamera c in _interactionCams)
+		{
+			c.enabled = false;
+
+		}
+		//_interactionCams[camIndex].enabled = false;
 		_dialogBoxScript.Exit();
 	}
 }
