@@ -1,49 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GFXBlink
 {
-	int counter;
-	bool toggle;
+	private float lastBlinkTime;
+	private bool toggle;
 
-	//Instantiate this class and put the method on the Update()
-	//private void Start()
-	//{
-	//	counter = 0;
-	//}
+	private float ElapsedTime => Time.unscaledTime - lastBlinkTime;
 
-	//void Update()
-	//{
-	//	DoBlink(mySpriteRenderer);
-	//}
-
-	public GFXBlink()
+	public GFXBlink(bool toggle = true)
 	{
-		counter = 0;
-		toggle = false;
+		lastBlinkTime = Time.unscaledTime;
+		this.toggle = toggle;
 	}
 
-	public void DoBlink(SpriteRenderer spriteRen, int delay)
+	private bool ShouldBlink(float secsBB) => ElapsedTime > secsBB;
+
+	public void DoBlink(SpriteRenderer targetRenderer, float secsBetweenBlinks)
 	{
-		if (counter >= delay)
+		if (ShouldBlink(secsBetweenBlinks))
 		{
-			counter = 0;
-
+			lastBlinkTime = Time.unscaledTime;
 			toggle = !toggle;
-			if (toggle)
-			{
-				spriteRen.enabled = true;
-			}
-			else
-			{
-				spriteRen.enabled = false;
-			}
-
+			targetRenderer.enabled = toggle;
 		}
-		else
+	}
+
+	public void DoBlink(TextMeshProUGUI targetRenderer, float secsBetweenBlinks)
+	{
+		if (ShouldBlink(secsBetweenBlinks))
 		{
-			counter++;
+			lastBlinkTime = Time.unscaledTime;
+			toggle = !toggle;
+			targetRenderer.enabled = toggle;
+		}
+	}
+	public void DoBlink(Image targetRenderer, float secsBetweenBlinks)
+	{
+		if (ShouldBlink(secsBetweenBlinks))
+		{
+			lastBlinkTime = Time.unscaledTime;
+			toggle = !toggle;
+			targetRenderer.enabled = toggle;
+		}
+	}
+	public void DoBlink(GameObject targetObj, float secsBetweenBlinks)
+	{
+		if (ShouldBlink(secsBetweenBlinks))
+		{
+			lastBlinkTime = Time.unscaledTime;
+			toggle = !toggle;
+			targetObj.SetActive(toggle);
 		}
 	}
 }

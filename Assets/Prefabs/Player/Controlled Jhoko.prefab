@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25cfb4bb5255a5c499c21a2d29b8ddd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 3
+  _hp: 5
   deathParticle: {fileID: 902305986921298800}
   _selfKnockBackAmmount: {x: 1, y: 2.5}
   _invulnerabilityTime: 0.5
@@ -60,9 +60,13 @@ MonoBehaviour:
   _jumpInput: 32
   _interactInput: 101
   _attackInput: 108
+  _dashInput1: 303
+  _dashInput2: 109
   moveSpeed: 42
   jumpTime: 0.7
   jumpVelocity: 120
+  dashTime: 0.5
+  dashVelocity: 90
   attackPSystem: {fileID: 1492014705414563761}
   _readInputs: 1
 --- !u!212 &7664014441684772525
@@ -105,7 +109,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 3468257362738008999, guid: f9fd6ed94f3622642bca9d8f4f668394,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9301517, g: 1, b: 0.7216981, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

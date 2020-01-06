@@ -12,7 +12,7 @@ public class Entity : MonoBehaviour
 
 	protected Animator _anim;
 
-	public int HP { get => _hp; protected set { _hp = value; } }
+	public int HP { get => _hp; set { _hp = value; } }
 
 	private float knockBackTimer;
 
@@ -130,7 +130,7 @@ public class Entity : MonoBehaviour
 	{
 		//Blink when necessary (invunerable)
 		if (invulnerable)
-			_blink.DoBlink(sr, 3);
+			_blink.DoBlink(sr, 0.04f);
 		else if (!sr.enabled && !invulnerable)
 			sr.enabled = true;
 	}

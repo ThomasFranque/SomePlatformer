@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GroundProp : MonoBehaviour
 {
+	private float _MIN_ANIMATOR_SPEED = 0.2f;
+	private float _MAX_ANIMATOR_SPEED = 1.5f;
+
 	private Animator _anim;
 
 	private Vector3 _offset;
@@ -34,6 +35,7 @@ public class GroundProp : MonoBehaviour
 		_boxColSize = new Vector2(5f, 0.5f);
 
 		_anim = GetComponent<Animator>();
+		_anim.speed = Random.Range(_MIN_ANIMATOR_SPEED, _MAX_ANIMATOR_SPEED);
     }
 
     // Update is called once per frame

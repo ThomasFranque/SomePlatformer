@@ -98,7 +98,7 @@ public class BlinkingEffect : MonoBehaviour
 
 	private IEnumerator CStopBlinkIn(float secs)
 	{
-		yield return new WaitForSeconds(secs);
+		yield return new WaitForSecondsRealtime(secs);
 		StopBlink();
 	}
 

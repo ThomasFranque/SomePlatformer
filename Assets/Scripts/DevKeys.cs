@@ -19,7 +19,7 @@ public class DevKeys : MonoBehaviour
 			Debug.Log("DEV RELOAD");
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			Debug.Log("DEV QUIT");
 			Application.Quit();

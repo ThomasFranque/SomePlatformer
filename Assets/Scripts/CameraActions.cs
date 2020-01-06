@@ -10,6 +10,7 @@ public class CameraActions : MonoBehaviour
 	private CinemachineVirtualCamera _activeCam = null;
 	private CinemachineBrain _cineBrain = null;
 
+	public bool ActiveCamExists => _activeCam != null;
 	// Shake 
 	private CinemachineBasicMultiChannelPerlin _virtualCameraNoise = null;
 	private float _shakeElapsedTime = 0.0f;
@@ -69,9 +70,12 @@ public class CameraActions : MonoBehaviour
 	{
 		UpdateActiveCam();
 
-		_virtualCameraNoise = _activeCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-		_shakeElapsedTime = duration;
-		_shakeAmplitude = amplitude;
-		_shakeFrequency = frequency;
+		if (ActiveCamExists)
+		{
+			_virtualCameraNoise = _activeCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+			_shakeElapsedTime = duration;
+			_shakeAmplitude = amplitude;
+			_shakeFrequency = frequency;
+		}
 	}
 }
