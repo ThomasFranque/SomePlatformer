@@ -9,7 +9,7 @@ public class Enemy : Entity
 	[SerializeField] private bool _hurtsPlayer = true;
 	[SerializeField] private bool _canBeStomped = true;
 	[Tooltip("Using as trigger will disable stomp.")]
-	[SerializeField] private bool _useColliderAsTrigger = false;
+	[SerializeField] protected bool _useColliderAsTrigger = false;
 	[SerializeField] private float _stompYSpeed = 250.0f;
 	[SerializeField] private float _knockIntensity = 50.0f;
 
@@ -52,8 +52,10 @@ public class Enemy : Entity
 
 	private void OnTriggerEnter2D(Collider2D col)
 	{
-		if (_useColliderAsTrigger && col.tag == "Player")
+		if (_useColliderAsTrigger && col.tag == "Player" && _hurtsPlayer)
 			HitPlayer(col);
+		else if (col.gameObject.tag == "Tilemap")
+			OnTriggerEnterGroundCollision();
 	}
 
 	private void HitPlayer(Collider2D col)
@@ -72,5 +74,10 @@ public class Enemy : Entity
 	{
 		p.DoStomp(_stompYSpeed);
 		Hit(true, 0.0f);
+	}
+
+	protected virtual void OnTriggerEnterGroundCollision()
+	{
+
 	}
 }

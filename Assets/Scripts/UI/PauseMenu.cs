@@ -49,7 +49,7 @@ public class PauseMenu : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
     {
-		SaveMngr = GetComponentInParent<LoadSave>();
+		SaveMngr = LoadSave.Instance;
 
 		blinkButtonFX = new GFXBlink();
 		blinkHeaderFX = new GFXBlink(false);

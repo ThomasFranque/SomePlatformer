@@ -20,17 +20,19 @@ public class Player : Entity
 	private Vector2 _wallCheckBoxSize = new Vector2(.3f, 3.0f);
 	private Vector3 _wallCheckOffset = new Vector2(1.9f, 3.11f);
 	private Vector3 _reverseWallCheckOffset = new Vector2(-1.9f, 3.11f);
-	private float _attackChainTime;
+	//private float _attackChainTime;
 	private float _chainAttackTimer = 0.50f;
 	private float _dashY = 0;
 	private float hAxis, timeOfJump;
 	private float timeOfDash;
+	private float timeOfAttack;
 	private byte _timesWallJumped = 1; // Consecutive times
 	private bool jumpPressed, crouchPressed, attackPressed, interactionPressed, dashPressed;
 	private bool canMove, canGroundJump, canWallJump, _ignoreHAxis;
 	private bool _cantSlideWall;
 	private bool _canAirAttack;
 	private bool _dashVelocityChange;
+	private bool _hitGroundAfterDash;
 
 	[Header("Player")]
 	[Header("Inputs")]
@@ -49,7 +51,12 @@ public class Player : Entity
 	[Range(0, 300)]
 	[SerializeField] private float jumpVelocity = 30.0f;
 	[SerializeField] private float dashTime = 2.0f;
-	[SerializeField] private float dashVelocity = 1320.0f;
+	[SerializeField] private float dashVelocity = 90.0f;
+	[Tooltip("Cool-down additional to dash time.")]
+	[SerializeField] private float dashCooldown = 2.0f;
+	[SerializeField] private float attackDuration = .2f;
+	[Tooltip("Must be higher than attack duration to work")]
+	[SerializeField] private float attackChainDuration = .5f;
 
 	[Header("--- Player References ---")]
 	[SerializeField] private ParticleSystem attackPSystem = null;
@@ -57,6 +64,7 @@ public class Player : Entity
 	[Header("--- Dev Properties ---")]
 	[SerializeField] private bool _readInputs = true;
 
+	private float GetElapsedTime(float timeToElapse) => Time.time - timeToElapse;
 	// Properties
 	public	bool Dead { get; private set; }
 	private bool HAxisFullyPressed => !(hAxis > -0.99f && hAxis < 0.99f);
@@ -66,8 +74,10 @@ public class Player : Entity
 	private bool CanSlideOnWall => OnWall && canWallJump && !_cantSlideWall && !KnockedBack;
 	private bool GroundJumpAllowed => ((OnGround && !OnWall) || (OnGround && OnWall)) && canGroundJump;
 	private bool WallJumpAllowed => WallSlinding && canWallJump && !_cantSlideWall;
-	private bool IsJumping => (Time.time - timeOfJump) < jumpTime && rb.velocity[1] > 0;
-	private bool IsDashing => (Time.time - timeOfDash) < dashTime;
+	private bool IsJumping => (GetElapsedTime(timeOfJump)) < jumpTime && rb.velocity[1] > 0;
+	private bool IsDashing => (GetElapsedTime(timeOfDash)) < dashTime;
+	private bool DashOnCooldown => (GetElapsedTime(timeOfDash)) < dashCooldown + dashTime;
+	private bool CanDash => !GroundAttackAnimationPlaying && !DashOnCooldown && _hitGroundAfterDash;
 	public bool GroundAttackAnimationPlaying
 	{
 		get =>	(_anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1")) ||
@@ -81,6 +91,10 @@ public class Player : Entity
 				_wallCheckBoxSize,
 				0,
 				LayerMask.GetMask("Ground")) != null;
+
+	private bool IsInAttackChain => (GetElapsedTime(timeOfAttack)) < attackChainDuration;
+	private bool CanGroundAttack => !_meleeWeapon.OnCooldown && (GetElapsedTime(timeOfAttack)) > attackDuration && !OnWall;
+
 
 	// Called before Start
 	private void Awake()
@@ -135,6 +149,10 @@ public class Player : Entity
 	}
 	private void UpdateRBVelocity()
 	{
+		///////////////////////////////////////////////
+		//// REFACTURE THIS METHOD, LIKE, URGENTLY ////
+		///////////////////////////////////////////////
+		
 		Vector2 currentVelocity = rb.velocity;
 
 		if (!IsDashing)
@@ -144,7 +162,7 @@ public class Player : Entity
 			if (_dashVelocityChange)
 				currentVelocity = OnDashEnd();
 			// PROCEEDS
-			else if (!GroundAttackAnimationPlaying && !KnockedBack && hAxis != 0 && !AirAttackAnimationPlaying && !dashPressed)
+			else if (!IsInAttackChain && !KnockedBack && hAxis != 0 && !AirAttackAnimationPlaying && !dashPressed)
 			{
 				if (!_ignoreHAxis)
 					currentVelocity = new Vector2(hAxis * moveSpeed, currentVelocity.y);
@@ -159,7 +177,6 @@ public class Player : Entity
 					currentVelocity = new Vector2(newXMoveSpeed, currentVelocity.y);
 				}
 			}
-
 
 			// Movement procedures // TO BE ADDED TO THEIR OWN METHOD
 			//Wall Jump
@@ -226,7 +243,6 @@ public class Player : Entity
 					currentVelocity[1] = -1 * (_WALL_SLIDE_FALLOFF_FACTOR * _timesWallJumped);
 
 					rb.gravityScale = 0.0f;
-
 				}
 				else
 				{
@@ -238,9 +254,12 @@ public class Player : Entity
 				{
 					_timesWallJumped = 1;
 					_cantSlideWall = false;
-					_canAirAttack = true; 
-					rb.gravityScale = 60.0f;
+					_canAirAttack = true;
+					_hitGroundAfterDash = true;
+					rb.gravityScale = 60.0f; 
 				}
+
+				if (OnWall) _hitGroundAfterDash = true;
 			}
 
 			if (WallSlinding || !canMove)
@@ -249,10 +268,11 @@ public class Player : Entity
 		// Is dashing
 		else
 		{
-			if (OnWall)
-				StopDash();
+			if (OnWall) StopDash();
+
 			currentVelocity[0] = transform.rotation == Quaternion.identity ? dashVelocity : -dashVelocity;
 		}
+
 		SetVelocity(currentVelocity);
 	}
 	private void DoPlayerActions()
@@ -272,13 +292,17 @@ public class Player : Entity
 		// Interaction
 		if (interactionPressed && !IsDashing)
 			InteractWithinRange();
-		else if (dashPressed)
+		// Dash
+		else if (dashPressed && CanDash)
+		{
+			if (WallSlinding) ForceRotate();
 			OnDash();
+		}
 
 		// Rotation
 		if (WallSlinding && HAxisFullyPressed && !IsDashing)
 			UpdateRotation();
-		else if (_attackChainTime <= 0 && !WallSlinding && !IsDashing)
+		else if (!IsInAttackChain && !WallSlinding && !IsDashing)
 			UpdateRotation();
 	}
 	private void UpdateAnimator()
@@ -288,8 +312,10 @@ public class Player : Entity
 		_anim.SetBool("grounded", OnGround);
 		_anim.SetBool("canMove", canMove);
 		_anim.SetBool("crouched", crouchPressed);
-		_anim.SetBool("wallGrab", OnWall && !OnGround && !_cantSlideWall && canWallJump && !KnockedBack);
+		_anim.SetBool("wallGrab", WallSlinding && CanSlideOnWall);
 		_anim.SetBool("pushingWall", PushingWall);
+		_anim.SetBool("AttackChainEnd", !IsInAttackChain);
+		_anim.SetBool("Dashing", IsDashing);
 
 		if (hAxis >= 0.1f || hAxis <= -0.1f)
 			_anim.speed = hAxis > 0 ? 1 * hAxis : 1 * -hAxis;
@@ -313,42 +339,33 @@ public class Player : Entity
 	}
 	private void UpdateChainTime()
 	{
-		// Chain attack countdown
-		if (_attackChainTime > 0)
-		{
-			_attackChainTime -= Time.deltaTime;
-			_anim.SetBool("AttackChainEnd", false);
-		}
-		else
-			_anim.SetBool("AttackChainEnd", true);
+		//// Chain attack countdown
+		//if (_attackChainTime > 0)
+		//{
+		//	_attackChainTime -= Time.deltaTime;
+		//	_anim.SetBool("AttackChainEnd", false);
+		//}
+		//else
+		//	_anim.SetBool("AttackChainEnd", true);
 	}
 	private void Attack()
 	{
-		if (!GroundAttackAnimationPlaying && !OnWall)
+		if (CanGroundAttack)
 		{
+			timeOfAttack = Time.time;
 			Vector2 currentVelocity = rb.velocity;
 
 			if (OnGround)
 			{
-				// Check attack intention
-				if (!_meleeWeapon.OnCooldown)
-				{
-					_attackChainTime = _chainAttackTimer;
-
 					_anim.SetTrigger("Attack");
 
 					_meleeWeapon.GroundAttack(currentVelocity, attackPSystem);
-				}
-
 			}
-			else
+			else if (_canAirAttack)
 			{
-				if (!_meleeWeapon.OnCooldown && _canAirAttack)
-				{
 					_anim.SetTrigger("AirAttack");
 					_canAirAttack = false;
 					_meleeWeapon.AirAttack(currentVelocity, attackPSystem);
-				}
 			}
 		}
 	}
@@ -379,6 +396,7 @@ public class Player : Entity
 	private void OnDash()
 	{
 		_dashVelocityChange = true;
+		_hitGroundAfterDash = false;
 		_dashY = transform.position.y;
 		timeOfDash = Time.time;
 	}

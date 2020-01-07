@@ -25,8 +25,6 @@ public static class SaveFile
 		// If save directory does not exist
 		if (!SaveDirExists())
 			CreateSaveFiles();
-
-		Debug.LogWarning("SAVE FILE INITIALIZED");
 	}
 
 	public static void SaveCurrentGameState()

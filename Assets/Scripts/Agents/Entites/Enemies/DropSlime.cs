@@ -10,6 +10,9 @@ public class DropSlime : Enemy
 	[SerializeField] private bool _doHangingBehaviour = true;
 	[SerializeField] private bool _doGroundBehaviour = true;
 	[SerializeField] private bool _startGrounded = false;
+	[Header("Slime Properties")]
+	[SerializeField] private float _preWarnOffset = -4.4f;
+	[SerializeField] private float _groundedVisionRange = 42.0f;
 
 	private ParticleSystem _thrustSystem;
 
@@ -19,8 +22,8 @@ public class DropSlime : Enemy
 	// USE CONSTS WHEN FINISHED
 	private Vector3 _bottomColOffset = new Vector2(0, -8.5f);
 	private Vector2 _bottomColSize = new Vector2(0, 6.0f);
-	private Vector3 _preWarnOffset = new Vector3(4.4f, 0.0f, 0.0f);
-	private Vector3 _groundedVisionRange = new Vector3(0.0f, 26.0f, 0.0f);
+	private Vector3 _preWarnOffsetVector = new Vector3(4.4f, 0.0f, 0.0f);
+	private Vector3 _groundedVisionRangeVector = new Vector3(0.0f, 42.0f, 0.0f);
 	private Vector3 _groundPos;
 
 	private bool TriggerAttack
@@ -42,7 +45,7 @@ public class DropSlime : Enemy
 		get
 		{
 			RaycastHit2D hit =
-			Physics2D.Linecast(transform.position, _sightEndRight.position + _preWarnOffset, LayerMask.GetMask("Player"), 23);			
+			Physics2D.Linecast(transform.position, _sightEndRight.position + _preWarnOffsetVector, LayerMask.GetMask("Player"), 23);			
 
 			return hit;
 		}
@@ -53,7 +56,7 @@ public class DropSlime : Enemy
 		get
 		{
 			RaycastHit2D hit =
-			Physics2D.Linecast(transform.position, _sightEndLeft.position - _preWarnOffset, LayerMask.GetMask("Player"));
+			Physics2D.Linecast(transform.position, _sightEndLeft.position - _preWarnOffsetVector, LayerMask.GetMask("Player"));
 
 			return hit;
 		}
@@ -71,6 +74,8 @@ public class DropSlime : Enemy
 		_bottomColSize[0] = (selfCol as CapsuleCollider2D).size[0];
 		rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
 		_groundPos = GetGroundPosition();
+		_preWarnOffsetVector.x = _preWarnOffset;
+		_groundedVisionRangeVector.y = _groundedVisionRange;
 
 		if (_autoGroundSights)
 			GroundVisionObjects();
@@ -152,8 +157,8 @@ public class DropSlime : Enemy
 		selfCol.offset = _bottomColOffset;
 		(selfCol as CapsuleCollider2D).size = _bottomColSize;
 
-		_sightEndLeft.position = transform.position + _groundedVisionRange;
-		_sightEndRight.position = transform.position + _groundedVisionRange;
+		_sightEndLeft.position = transform.position + _groundedVisionRangeVector;
+		_sightEndRight.position = transform.position + _groundedVisionRangeVector;
 
 		_anim.SetTrigger("ReachBottom");
 	}
@@ -182,7 +187,7 @@ public class DropSlime : Enemy
 		Gizmos.DrawLine(transform.position, _sightEndLeft.position);
 		Gizmos.DrawLine(transform.position, _sightEndRight.position);
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawLine(transform.position, _sightEndRight.position + _preWarnOffset);
-		Gizmos.DrawLine(transform.position, _sightEndLeft.position - _preWarnOffset);
+		Gizmos.DrawLine(transform.position, _sightEndRight.position + _preWarnOffsetVector);
+		Gizmos.DrawLine(transform.position, _sightEndLeft.position - _preWarnOffsetVector);
 	}
 }

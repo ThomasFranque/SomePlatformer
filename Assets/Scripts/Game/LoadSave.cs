@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,16 +8,24 @@ public class LoadSave : MonoBehaviour
 	private static GameState _currentSavedGS;
 	private static bool _loadSave;
 
+	private int CurrentSceneIndex => SceneManager.GetActiveScene().buildIndex;
+
 	private void Awake()
 	{
 		if (Instance == null)
 		{
-			Instance = this;
-			SceneManager.sceneLoaded += OnLevelFinishedLoading;
-			DontDestroyOnLoad(gameObject);
+			InitializeSingleton();
 		}
 		else
 			Destroy(gameObject);
+
+	}
+
+	private void InitializeSingleton()
+	{
+		Instance = this;
+		DontDestroyOnLoad(gameObject);
+		AddActionToScenesLoad(OnLevelFinishedLoading);
 	}
 
 	public void Load()
@@ -27,7 +34,7 @@ public class LoadSave : MonoBehaviour
 		_currentSavedGS = SaveFile.GetSavedGameState();
 
 		// EVENTUALLY LOAD SAVED SCENE // Will call OnLevelFinishedLoading()
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		LoadScene(CurrentSceneIndex);
 	}
 
 	public void Save()
@@ -37,7 +44,7 @@ public class LoadSave : MonoBehaviour
 
 	private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
 	{
-		Debug.Log("Level Loaded: " + scene.name + " - " + mode);
+		Debug.Log("Level Loaded: " + scene.name + "\nLoad Mode: " + mode);
 
 		if (_loadSave)
 			LoadSavedInfo();
@@ -48,5 +55,22 @@ public class LoadSave : MonoBehaviour
 		_loadSave = false;
 		Player.Instance.HP = _currentSavedGS.PlayerHP > 0 ? _currentSavedGS.PlayerHP : 3;
 		Player.Instance.transform.position = _currentSavedGS.PlayerPos;
+	}
+
+	private void LoadScene(int index)
+	{
+		SceneManager.LoadScene(index);
+	}
+
+	public static void AddActionToScenesLoad(UnityEngine.Events.UnityAction<Scene, LoadSceneMode> action)
+	{
+		SceneManager.sceneLoaded += action;
+
+
+
+	}
+	public static void RemoveActionFromScenesLoad(UnityEngine.Events.UnityAction<Scene, LoadSceneMode> action)
+	{
+		SceneManager.sceneLoaded -= action;
 	}
 }

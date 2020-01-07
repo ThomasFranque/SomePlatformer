@@ -39,7 +39,7 @@ public class CameraActions : MonoBehaviour
 
 	private void UpdateActiveCam()
 	{
-		_activeCam = _cineBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+		_activeCam = _cineBrain?.ActiveVirtualCamera?.VirtualCameraGameObject?.GetComponent<CinemachineVirtualCamera>();
 	}
 
 	private void UpdateShake()

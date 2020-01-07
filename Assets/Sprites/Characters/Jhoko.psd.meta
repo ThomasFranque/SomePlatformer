@@ -4,37 +4,37 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -5687172331347240436
-    second: Jhoko_0
+    second: Idle1
   - first:
       213: 3468257362738008999
-    second: Jhoko_1
+    second: Idle2
   - first:
       213: -2813848037303913107
-    second: Jhoko_2
+    second: Idle3
   - first:
       213: 5146290368079948489
-    second: Jhoko_3
+    second: Idle4
   - first:
       213: -7850312512994666528
-    second: Jhoko_4
+    second: Walk1
   - first:
       213: 7213362444436363415
-    second: Jhoko_5
+    second: Walk2
   - first:
       213: 2967561910561620826
-    second: Jhoko_6
+    second: Walk3
   - first:
       213: -1590634007936633875
-    second: Jhoko_7
+    second: Walk4
   - first:
       213: 3646314493814265853
-    second: Jhoko_8
+    second: Jump1
   - first:
       213: -8485982813222999620
-    second: Jhoko_9
+    second: Fall 1
   - first:
       213: 328061074095188924
-    second: Jhoko_10
+    second: Crouch1
   - first:
       213: -1888303069998229285
     second: Jhoko_11
@@ -67,34 +67,40 @@ TextureImporter:
     second: Jhoko_20
   - first:
       213: 6495302479866494235
-    second: Jhoko_21
+    second: Push Wall1
   - first:
       213: 3886394178020694436
-    second: Jhoko_22
+    second: Push Wall2
   - first:
       213: -722651720575992133
-    second: Jhoko_23
+    second: Ground Attack1
   - first:
       213: -8639052437882039971
-    second: Jhoko_24
+    second: Ground Attack2
   - first:
       213: -2925829476841555519
-    second: Jhoko_25
+    second: Ground Attack3
   - first:
       213: 3109074553215770364
-    second: Jhoko_26
+    second: Ground Attack4
   - first:
       213: -6789945560656454646
-    second: Jhoko_27
+    second: Ground Attack5
   - first:
       213: -5768329964162467117
-    second: Jhoko_28
+    second: Ground Attack6
   - first:
       213: -6032083338386476232
-    second: Jhoko_29
+    second: Fall2
   - first:
       213: -8476567593984733806
-    second: Jhoko_30
+    second: Air Attack1
+  - first:
+      213: 8437337219053782366
+    second: Air Dash
+  - first:
+      213: 5798346184601153158
+    second: Ground Dash
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -179,7 +185,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jhoko_0
+      name: Idle1
       rect:
         serializedVersion: 2
         x: 0
@@ -200,7 +206,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_1
+      name: Idle2
       rect:
         serializedVersion: 2
         x: 8
@@ -221,7 +227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_2
+      name: Idle3
       rect:
         serializedVersion: 2
         x: 16
@@ -242,7 +248,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_3
+      name: Idle4
       rect:
         serializedVersion: 2
         x: 24
@@ -263,7 +269,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_4
+      name: Walk1
       rect:
         serializedVersion: 2
         x: 0
@@ -284,7 +290,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_5
+      name: Walk2
       rect:
         serializedVersion: 2
         x: 8
@@ -305,7 +311,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_6
+      name: Walk3
       rect:
         serializedVersion: 2
         x: 16
@@ -326,7 +332,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_7
+      name: Walk4
       rect:
         serializedVersion: 2
         x: 24
@@ -347,7 +353,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_8
+      name: Jump1
       rect:
         serializedVersion: 2
         x: 0
@@ -368,7 +374,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_9
+      name: Fall 1
       rect:
         serializedVersion: 2
         x: 0
@@ -389,7 +395,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_10
+      name: Crouch1
       rect:
         serializedVersion: 2
         x: 0
@@ -620,7 +626,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_21
+      name: Push Wall1
       rect:
         serializedVersion: 2
         x: 0
@@ -641,7 +647,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_22
+      name: Push Wall2
       rect:
         serializedVersion: 2
         x: 8
@@ -662,7 +668,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_23
+      name: Ground Attack1
       rect:
         serializedVersion: 2
         x: 0
@@ -683,7 +689,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_24
+      name: Ground Attack2
       rect:
         serializedVersion: 2
         x: 8
@@ -704,7 +710,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_25
+      name: Ground Attack3
       rect:
         serializedVersion: 2
         x: 0
@@ -725,7 +731,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_26
+      name: Ground Attack4
       rect:
         serializedVersion: 2
         x: 8
@@ -746,7 +752,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_27
+      name: Ground Attack5
       rect:
         serializedVersion: 2
         x: 0
@@ -767,7 +773,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_28
+      name: Ground Attack6
       rect:
         serializedVersion: 2
         x: 8
@@ -788,7 +794,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_29
+      name: Fall2
       rect:
         serializedVersion: 2
         x: 8
@@ -809,7 +815,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jhoko_30
+      name: Air Attack1
       rect:
         serializedVersion: 2
         x: 0
@@ -825,6 +831,48 @@ TextureImporter:
       bones: []
       spriteID: 0ab66361461770f48b0eb50791af6395
       internalID: -8476567593984733806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Air Dash
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04494eb226bca7a46a2fecadc3794e83
+      internalID: 8437337219053782366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground Dash
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 152
+        width: 8
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2acdeb5f07cb4c4294484e36b191c61
+      internalID: 5798346184601153158
       vertices: []
       indices: 
       edges: []

@@ -80,9 +80,13 @@ public class Beam : Enemy
 				SoftLookAt(transform.position + new Vector3(0, -1, 0), 3.2f);
 			}
 			else if (PlayerAlmostInRange)
+			{
 				_proximityIndAnim.SetTrigger("Question");
+			}
 			else
+			{
 				_proximityIndAnim.SetTrigger("None");
+			}
 
 			if (charge)
 				transform.localScale += new Vector3(0.1f * Time.deltaTime, 0.15f * Time.deltaTime, 0);

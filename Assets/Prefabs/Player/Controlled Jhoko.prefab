@@ -65,8 +65,11 @@ MonoBehaviour:
   moveSpeed: 42
   jumpTime: 0.7
   jumpVelocity: 120
-  dashTime: 0.5
+  dashTime: 0.3
   dashVelocity: 90
+  dashCooldown: 0.3
+  attackDuration: 0.15
+  attackChainDuration: 0.5
   attackPSystem: {fileID: 1492014705414563761}
   _readInputs: 1
 --- !u!212 &7664014441684772525
@@ -360,6 +363,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734445500054192293, guid: 8e2db6e3de1572d4087e721cb8b01dc8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e2db6e3de1572d4087e721cb8b01dc8, type: 3}
