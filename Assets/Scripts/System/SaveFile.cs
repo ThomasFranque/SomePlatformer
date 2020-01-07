@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -80,6 +81,7 @@ public static class SaveFile
 		}
 		void ProcessPlayerLines(string line, byte lineIndex)
 		{
+			line = line.ToString(CultureInfo.InvariantCulture);
 			// Get position
 			if (lineIndex == 0)
 			{

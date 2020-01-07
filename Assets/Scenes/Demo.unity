@@ -13160,7 +13160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &396462621
 Transform:
   m_ObjectHideFlags: 0
@@ -13681,7 +13681,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 70
+  orthographic size: 65
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -13705,7 +13705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471003081}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -471.9, y: 74.840004, z: -10}
+  m_LocalPosition: {x: -137, y: 233.39, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 589727857}
@@ -17253,7 +17253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059405010}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -471, y: 31.389997, z: -10}
+  m_LocalPosition: {x: -137, y: 233.39, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 982696820}
@@ -19918,8 +19918,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1475243094
-CircleCollider2D:
+--- !u!70 &1475243094
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19932,8 +19932,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 2}
-  serializedVersion: 2
-  m_Radius: 2
+  m_Size: {x: 2.95, y: 4}
+  m_Direction: 0
 --- !u!50 &1475243095
 Rigidbody2D:
   serializedVersion: 4
@@ -19947,14 +19947,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 0.5
+  m_AngularDrag: 0.4
   m_GravityScale: 8
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!114 &1475243096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19978,9 +19978,10 @@ MonoBehaviour:
   _stompYSpeed: 250
   _knockIntensity: 120
   _airPlungeUpVelocity: 120
-  _airPlungeHeight: 62
+  _airPlungeHeight: 52
   _airPlungeInAirWait: 2
   _airPlungeBeforeDropWait: 0.5
+  _airPlungeMaxWaitForGetNear: 5
   _airPlungeDropSpeed: 200
 --- !u!1001 &1482720979
 PrefabInstance:
@@ -22286,17 +22287,17 @@ PrefabInstance:
     - target: {fileID: 7664014441684772526, guid: 58330342f83be4e419e15be59588ea14,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7664014441684772498, guid: 58330342f83be4e419e15be59588ea14,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -471
+      value: -137
       objectReference: {fileID: 0}
     - target: {fileID: 7664014441684772498, guid: 58330342f83be4e419e15be59588ea14,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 7664014441684772498, guid: 58330342f83be4e419e15be59588ea14,
         type: 3}

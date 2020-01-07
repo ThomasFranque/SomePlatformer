@@ -17,6 +17,7 @@ public class Boss1 : Enemy
 	[SerializeField] private float _airPlungeHeight = 24.0f;
 	[SerializeField] private float _airPlungeInAirWait = 2.0f;
 	[SerializeField] private float _airPlungeBeforeDropWait = .5f;
+	[SerializeField] private float _airPlungeMaxWaitForGetNear = 5.0f;
 	[SerializeField] private float _airPlungeDropSpeed= 18.0f;
 	private Vector3 _airPlungeStoredPosition = default;
 	private bool _airPlungeSoftMoveToTargetPos = false;
@@ -45,10 +46,12 @@ public class Boss1 : Enemy
 		if (SoftMoveToTargetPosition)
 			SmoothMoveTowardsTarget(2);
 		if (SoftMoveToPlayerX)
-			SmoothMoveTowardsTarget(3, _pPos, yLock: _yPositionLock);
+			SmoothMoveTowardsTarget(3, _pPos, _colliderTouchingSolidGround ? (float?)transform.position.x : null ,_yPositionLock);
 		if (LockYPosition)
 			LockYPos();
 		//
+
+		Debug.Log(_colliderTouchingSolidGround);
 	}
 
 	private void PlungeAttack()
@@ -118,7 +121,7 @@ public class Boss1 : Enemy
 		selfCol.isTrigger = false;
 
 		// Move towards player 
-		yield return WaitForAirPlungeGetNearPlayerX();
+		yield return WaitForAirPlungeAirTimeEnd();
 
 		_useColliderAsTrigger = true;
 		selfCol.isTrigger = true;
@@ -133,11 +136,14 @@ public class Boss1 : Enemy
 		yield return WaitForTouchGround();
 
 		SetRBVelocity(0, 0);
+		_yPositionLock = transform.position.y;
+		_airPlungeLockYPosition = true;
 		_useColliderAsTrigger = false;
 		selfCol.isTrigger = false;
 
 		yield return new WaitForSeconds(2.0f);
 
+		_airPlungeLockYPosition = false;
 		_currentAttack = null;
 
 		PlungeAttack();
@@ -156,9 +162,11 @@ public class Boss1 : Enemy
 	{
 		while (transform.position.y < _airPlungeStoredPosition.y + _airPlungeHeight) yield return null;
 	}
-	private IEnumerator WaitForAirPlungeGetNearPlayerX()
+	private IEnumerator WaitForAirPlungeAirTimeEnd()
 	{
-		while (transform.position.x - _pPos.x > 0.5f || -0.5 > transform.position.x - _pPos.x) yield return null;
+		float timeOfWaitStart = Time.time;
+		while (transform.position.x - _pPos.x > 0.5f || -0.5 > transform.position.x - _pPos.x || 
+			timeOfWaitStart - Time.time > _airPlungeMaxWaitForGetNear) yield return null;
 	}
 	private IEnumerator WaitForTouchGround()
 	{

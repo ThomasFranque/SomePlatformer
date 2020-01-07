@@ -13,6 +13,8 @@ public class Enemy : Entity
 	[SerializeField] private float _stompYSpeed = 250.0f;
 	[SerializeField] private float _knockIntensity = 50.0f;
 
+	protected bool _colliderTouchingSolidGround;
+
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
 		if (invulnerable) return;
@@ -54,7 +56,12 @@ public class Enemy : Entity
 	{
 		if (_useColliderAsTrigger && col.tag == "Player" && _hurtsPlayer)
 			HitPlayer(col);
-		else if (col.gameObject.tag == "Tilemap")
+		else if (col.gameObject.tag == "Tilemap") 
+			OnTriggerExitGroundCollision();
+	}
+	private void OnTriggerExit2D(Collider2D col)
+	{
+		if (col.gameObject.tag == "Tilemap")
 			OnTriggerEnterGroundCollision();
 	}
 
@@ -78,6 +85,21 @@ public class Enemy : Entity
 
 	protected virtual void OnTriggerEnterGroundCollision()
 	{
+		_colliderTouchingSolidGround = true;
+	}
+	protected virtual void OnTriggerExitGroundCollision()
+	{
+		_colliderTouchingSolidGround = false;
+	}
 
+	protected override void OnEnterGroundCollision()
+	{
+		base.OnEnterGroundCollision();
+		_colliderTouchingSolidGround = true;
+	}
+	protected override void OnExitGroundCollision()
+	{
+		base.OnExitGroundCollision();
+		_colliderTouchingSolidGround = false;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -71,7 +72,17 @@ public class DialogBox : MonoBehaviour
 
 	private float ExtractTimeFromText(string word, uint index)
 	{
-		return float.Parse(word.Substring((int)index + 2, 3));
+		try
+		{
+			string invariantWord = word.ToString(CultureInfo.InvariantCulture);
+			return float.Parse(invariantWord.Substring((int)index + 2, 3));
+		}
+		catch
+		{
+			Debug.LogError(word.Substring((int)index + 2, 3));
+			return float.Parse(word.Substring((int)index + 2, 3));
+
+		}
 	}
 
 	private IEnumerator CDialogTxt(Interactible interactable, string[] dialog)

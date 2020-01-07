@@ -171,7 +171,19 @@ public class Entity : MonoBehaviour
 	{
 		if (col.gameObject.tag == "Player")
 			OnPlayerCollision(col);
+		else if (col.gameObject.tag == "Tilemap")
+			OnEnterGroundCollision();
 	}
+
+	private void OnCoolisionExit2D(Collision2D col)
+	{
+
+		if (col.gameObject.tag == "Tilemap")
+			OnExitGroundCollision();
+	}
+
+	protected virtual void OnEnterGroundCollision() { }
+	protected virtual void OnExitGroundCollision() { }
 
 	private void OnDrawGizmos()
 	{
