@@ -72,17 +72,10 @@ public class DialogBox : MonoBehaviour
 
 	private float ExtractTimeFromText(string word, uint index)
 	{
-		try
-		{
-			string invariantWord = word.ToString(CultureInfo.InvariantCulture);
-			return float.Parse(invariantWord.Substring((int)index + 2, 3));
-		}
-		catch
-		{
-			Debug.LogError(word.Substring((int)index + 2, 3));
-			return float.Parse(word.Substring((int)index + 2, 3));
-
-		}
+		// https://stackoverflow.com/questions/1354924/how-do-i-parse-a-string-with-a-decimal-point-to-a-double
+		//string invariantWord = word.ToString(CultureInfo.CurrentCulture);
+		return float.Parse(word.Substring((int)index + 2, 3), CultureInfo.InvariantCulture);
+		
 	}
 
 	private IEnumerator CDialogTxt(Interactible interactable, string[] dialog)

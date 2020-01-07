@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -18,6 +16,7 @@ public static class SaveFile
 
 	static SaveFile()
 	{
+		CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 		// Merge all paths
 		_dirPath = Path.Combine(
 			Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -81,14 +80,13 @@ public static class SaveFile
 		}
 		void ProcessPlayerLines(string line, byte lineIndex)
 		{
-			line = line.ToString(CultureInfo.InvariantCulture);
 			// Get position
 			if (lineIndex == 0)
 			{
 				// Split [1] [3]
 				splitLine = line.Split(' ', ',', '(', ')');
-				pPos.x = float.Parse(splitLine[1]);
-				pPos.y = float.Parse(splitLine[3]);
+				pPos.x = float.Parse(splitLine[1], CultureInfo.InvariantCulture);
+				pPos.y = float.Parse(splitLine[3], CultureInfo.InvariantCulture);
 			}
 			// Get hp
 			else if (lineIndex == 1)
@@ -104,7 +102,7 @@ public static class SaveFile
 		void ProcessInfoLines(string line, byte lineIndex)
 		{
 			splitLine = line.Split('\n');
-			runTime = float.Parse(splitLine[0]);
+			runTime = float.Parse(splitLine[0], CultureInfo.InvariantCulture);
 		}
 	}
 
@@ -120,7 +118,6 @@ public static class SaveFile
 	private static void SavePlayerState(GameState currentGS)
 	{
 		string fullPlayerPath = Path.Combine(_dirPath, _PLAYER_FILE_NAME);
-
 		string finalTxt = "";
 		finalTxt = currentGS.PlayerPos.ToString();
 		finalTxt += '\n';
