@@ -15660,7 +15660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 758341860}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Room Center
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -21212,13 +21212,13 @@ MonoBehaviour:
         paramDataPos: 
         paramByteDataSize: 
     - name: Stage 2 Check
-      description: 
+      description: Check If Boss stage change
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 480
-        y: 624
-        width: 135
+        x: 464
+        y: 768
+        width: 173
         height: 48
       isBreakpoint: 0
       isSequence: 0
@@ -21303,12 +21303,12 @@ MonoBehaviour:
         paramDataPos: 000000000100000000000000010000000200000000000000
         paramByteDataSize: 000000000000000000000000000000000000000001000000
     - name: Jump Back To Right
-      description: 
+      description: Hop Back
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 240
-        y: 384
+        y: 272
         width: 159
         height: 32
       isBreakpoint: 0
@@ -21640,13 +21640,13 @@ MonoBehaviour:
         paramDataPos: 0000000000000000000000000100000002000000000000000400000003000000000000000500000004000000050000000600000000000000000000000900000007000000010000000a00000008000000090000000a00000001000000010000000e00000001000000010000000b0000000c0000000d0000000f000000130000001400000002000000150000000000000002000000000000000e000000
         paramByteDataSize: 000000000000000000000000000000000000000004000000010000000000000000000000040000000000000000000000000000000000000000000000010000000000000000000000040000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000040000000100000001000000000000000400000000000000000000000000000000000000
     - name: Check Player Position
-      description: 
+      description: Check if player is on right side
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 144
-        y: 528
-        width: 185
+        y: 416
+        width: 207.5
         height: 48
       isBreakpoint: 0
       isSequence: 0
@@ -21854,12 +21854,12 @@ MonoBehaviour:
         paramDataPos: 000000000000000000000000010000000200000000000000040000000100000003000000040000000500000005000000
         paramByteDataSize: 000000000000000000000000000000000000000004000000010000000000000000000000000000000000000001000000
     - name: Jump Back To Left
-      description: 
+      description: Hop Back
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 64
-        y: 384
+        y: 272
         width: 151
         height: 32
       isBreakpoint: 0
@@ -22191,13 +22191,13 @@ MonoBehaviour:
         paramDataPos: 0000000000000000000000000100000002000000000000000400000003000000000000000500000004000000050000000600000000000000000000000900000007000000010000000a00000008000000090000000a00000001000000010000000e00000001000000010000000b0000000c0000000d0000000f000000130000001400000002000000150000000000000002000000000000000e000000
         paramByteDataSize: 000000000000000000000000000000000000000004000000010000000000000000000000040000000000000000000000000000000000000000000000010000000000000000000000040000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000040000000100000001000000000000000400000000000000000000000000000000000000
     - name: Check Jump Space
-      description: 
+      description: Check if has enough space to hop
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 240
-        y: 624
-        width: 153
+        x: 160
+        y: 528
+        width: 201
         height: 48
       isBreakpoint: 0
       isSequence: 0
@@ -22246,7 +22246,7 @@ MonoBehaviour:
         fsmIntParams: []
         fsmBoolParams:
         - useVariable: 1
-          name: Has Room Space
+          name: Has Room Jump Back Space
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -22272,9 +22272,64 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000100000000000000
         paramByteDataSize: 00000000000000000000000001000000
+    - name: State 1
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 768
+        y: 160
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
     events:
     - name: FINISHED
       isSystemEvent: 1
+      isGlobal: 0
+    - name: BOSS HIT
+      isSystemEvent: 0
       isGlobal: 0
     - name: GO TO STAGE 1
       isSystemEvent: 0
@@ -22291,7 +22346,15 @@ MonoBehaviour:
     - name: PLAYER ON THE RIGHT
       isSystemEvent: 0
       isGlobal: 0
-    globalTransitions: []
+    globalTransitions:
+    - fsmEvent:
+        name: BOSS HIT
+        isSystemEvent: 0
+        isGlobal: 0
+      toState: State 1
+      linkStyle: 0
+      linkConstraint: 0
+      colorIndex: 0
     variables:
       floatVariables:
       - useVariable: 1
@@ -22405,7 +22468,7 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: Has Room Space
+        name: Has Room Jump Back Space
         tooltip: 
         showInInspector: 0
         networkSync: 0

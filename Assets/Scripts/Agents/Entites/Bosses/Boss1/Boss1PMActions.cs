@@ -6,7 +6,7 @@ using HutongGames.PlayMaker;
 public class Boss1PMActions : Enemy
 {
 	// Use raycasts later to get room size
-	private const float _ROOM_SPACE_TOTAL = 170;
+	private const float _JUMP_BACK_ROOM_SPACE_TOTAL = 120;
 
 	[Header("Boss References")]
 	[SerializeField] private Transform _bossRoomCenter;
@@ -19,12 +19,12 @@ public class Boss1PMActions : Enemy
 	private PlayMakerFSM _bossFsm;
 	private FsmBool _fsmVulnerable;
 	private FsmBool _fsmPOnRightside;
-	private FsmBool _fsmpHasRoomSpace;
+	private FsmBool _fsmpHasRoomJumpSpace;
 	private FsmInt _fsmStage;
 
 	private bool IsPlayerOnRightSide => transform.position.x - Player.Instance.transform.position.x < 0;
 
-	private bool HasRoomSpace => transform.position.x < _bossRoomCenter.position.x + (_ROOM_SPACE_TOTAL / 2) && transform.position.x > _bossRoomCenter.position.x - (_ROOM_SPACE_TOTAL / 2);
+	private bool HasRoomJumpBackSpace => transform.position.x < _bossRoomCenter.position.x + (_JUMP_BACK_ROOM_SPACE_TOTAL / 2) && transform.position.x > _bossRoomCenter.position.x - (_JUMP_BACK_ROOM_SPACE_TOTAL / 2);
 
 	private bool SecondStageReached => HP < _stage2RequiredHp;
 	private bool ThirdStageReached => HP < _stage3RequiredHp;
@@ -45,7 +45,7 @@ public class Boss1PMActions : Enemy
 		_bossFsm = GetComponent<PlayMakerFSM>();
 		_fsmVulnerable = _bossFsm.FsmVariables.GetFsmBool("Vulnerable");
 		_fsmPOnRightside = _bossFsm.FsmVariables.GetFsmBool("Player on Rightside");
-		_fsmpHasRoomSpace = _bossFsm.FsmVariables.GetFsmBool("Has Room Space");
+		_fsmpHasRoomJumpSpace = _bossFsm.FsmVariables.GetFsmBool("Has Room Jump Back Space");
 		_fsmStage = _bossFsm.FsmVariables.GetFsmInt("Stage");
 		_fsmStage.Value = (int)CurrentStage;
 	}
@@ -55,13 +55,15 @@ public class Boss1PMActions : Enemy
 		base.Update();
 		_canBeStomped = _fsmVulnerable.Value;
 		_fsmPOnRightside.Value = IsPlayerOnRightSide;
-		_fsmpHasRoomSpace.Value = HasRoomSpace;
+		_fsmpHasRoomJumpSpace.Value = HasRoomJumpBackSpace;
+
 	}
 
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
 		base.OnHit(cameFromRight, knockSpeed, dmg);
 		UpdateFsmBossStage();
+		PlayMakerFSM.BroadcastEvent("BOSS HIT");
 	}
 
 	public override void KnockBack(bool cameFromRight, float knockSpeed) {}
