@@ -66,16 +66,17 @@ public class Player : Entity
 
 	private float GetElapsedTime(float timeToElapse) => Time.time - timeToElapse;
 	// Properties
+	public Rigidbody2D RigidBody2D => rb;
 	public	bool Dead { get; private set; }
 	private bool HAxisFullyPressed => !(hAxis > -0.99f && hAxis < 0.99f);
 	private bool ReadInput => _readInputs && !KnockedBack;
 	public	bool PushingWall => OnGround && OnWall && hAxis != 0;
 	public	bool WallSlinding => OnWall && !OnGround && rb.velocity.y <= 0.0f;
+	public  bool IsDashing => (GetElapsedTime(timeOfDash)) < dashTime;
 	private bool CanSlideOnWall => OnWall && canWallJump && !_cantSlideWall && !KnockedBack;
 	private bool GroundJumpAllowed => ((OnGround && !OnWall) || (OnGround && OnWall)) && canGroundJump;
 	private bool WallJumpAllowed => WallSlinding && canWallJump && !_cantSlideWall;
 	private bool IsJumping => (GetElapsedTime(timeOfJump)) < jumpTime && rb.velocity[1] > 0;
-	private bool IsDashing => (GetElapsedTime(timeOfDash)) < dashTime;
 	private bool DashOnCooldown => (GetElapsedTime(timeOfDash)) < dashCooldown + dashTime;
 	private bool CanDash => !GroundAttackAnimationPlaying && !DashOnCooldown && _hitGroundAfterDash;
 	public bool GroundAttackAnimationPlaying
@@ -85,14 +86,13 @@ public class Player : Entity
 				(_anim.GetCurrentAnimatorStateInfo(0).IsName("Attack3")) ||
 				_meleeWeapon.OnCooldown;
 	}
-	public bool AirAttackAnimationPlaying => _anim.GetCurrentAnimatorStateInfo(0).IsName("AirAttack");
 	public bool OnWall => Physics2D.OverlapBox(
 				transform.position + (transform.rotation == Quaternion.identity ? _wallCheckOffset : _reverseWallCheckOffset),
 				_wallCheckBoxSize,
 				0,
 				LayerMask.GetMask("Ground")) != null;
-
-	private bool IsInAttackChain => (GetElapsedTime(timeOfAttack)) < attackChainDuration;
+	public bool AirAttackAnimationPlaying => _anim.GetCurrentAnimatorStateInfo(0).IsName("AirAttack");
+	public bool IsInAttackChain => (GetElapsedTime(timeOfAttack)) < attackChainDuration;
 	private bool CanGroundAttack => !_meleeWeapon.OnCooldown && (GetElapsedTime(timeOfAttack)) > attackDuration && !OnWall;
 
 

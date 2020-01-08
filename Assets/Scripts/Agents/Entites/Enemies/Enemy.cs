@@ -7,7 +7,7 @@ public class Enemy : Entity
 	private const float _STOMP_CENTER_Y_OFFSET = 0.0f;
 
 	[SerializeField] private bool _hurtsPlayer = true;
-	[SerializeField] private bool _canBeStomped = true;
+	[SerializeField] protected bool _canBeStomped = true;
 	[Tooltip("Using as trigger will disable stomp.")]
 	[SerializeField] protected bool _useColliderAsTrigger = false;
 	[SerializeField] private float _stompYSpeed = 250.0f;
