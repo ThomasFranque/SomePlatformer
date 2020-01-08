@@ -33,6 +33,7 @@ public class Player : Entity
 	private bool _canAirAttack;
 	private bool _dashVelocityChange;
 	private bool _hitGroundAfterDash;
+	private bool _stompJump;
 
 	[Header("Player")]
 	[Header("Inputs")]
@@ -160,7 +161,7 @@ public class Player : Entity
 
 			// ONLY ACTIVATES WHEN AFTER DASH ENDS
 			if (_dashVelocityChange)
-				currentVelocity = OnDashEnd();
+				currentVelocity = OnDashEnd(_stompJump || KnockedBack);
 			// PROCEEDS
 			else if (!IsInAttackChain && !KnockedBack && hAxis != 0 && !AirAttackAnimationPlaying && !dashPressed)
 			{
@@ -256,6 +257,7 @@ public class Player : Entity
 					_cantSlideWall = false;
 					_canAirAttack = true;
 					_hitGroundAfterDash = true;
+					_stompJump = false;
 					rb.gravityScale = 60.0f; 
 				}
 
@@ -400,10 +402,13 @@ public class Player : Entity
 		_dashY = transform.position.y;
 		timeOfDash = Time.time;
 	}
-	private Vector2 OnDashEnd()
+	private Vector2 OnDashEnd(bool supress)
 	{
 		_dashVelocityChange = false;
-		return new Vector2( transform.rotation == Quaternion.identity ? dashVelocity/2 : -dashVelocity/2, 0);
+		if (!supress)
+			return new Vector2(transform.rotation == Quaternion.identity ? dashVelocity / 2 : -dashVelocity / 2, 0);
+		else
+			return rb.velocity;
 	}
 	private void StopDash()
 	{
@@ -425,6 +430,9 @@ public class Player : Entity
 	}
 	public void DoStomp(float newYSpeed)
 	{
+		if (IsDashing)
+			StopDash();
+		_stompJump = true;
 		SetVelocity(new Vector2(rb.velocity.x, newYSpeed));
 	} 
 	public void SetVelocity(Vector2 newVelocity)
@@ -459,6 +467,9 @@ public class Player : Entity
 
 			CameraActions.ActiveCamera.Shake(40 * dmg, 30 * dmg);
 			_UIHPUpdate?.Invoke(HP);
+
+			if (IsDashing)
+				StopDash();
 
 			if (HP <= 0 && !Dead)
 			{
