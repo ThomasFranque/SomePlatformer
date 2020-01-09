@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Entity
 {
-	public static Player Instance = null;
+	public static Player Instance { get; private set; } = null;
 	public static Interactible InteractableInRange { get; set; }
 
 	private const float _IGNORE_HAXIS_WALL_JUMP_TIME = 1f;
@@ -330,7 +330,7 @@ public class Player : Entity
 		if (ReadInput)
 		{
 			hAxis = Input.GetAxis("Horizontal");
-			jumpPressed = Input.GetKey(_jumpInput);
+			jumpPressed = Input.GetKey(_jumpInput) || Input.GetKey(_upInput);
 			crouchPressed = Input.GetKey(_downInput) && !jumpPressed && OnGround;
 			interactionPressed = Input.GetKeyDown(_interactInput);
 			canMove = !(crouchPressed);
@@ -507,6 +507,6 @@ public class Player : Entity
 	{
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawCube(transform.position, new Vector3(_groundCheckBoxSize.x, _groundCheckBoxSize.y, 1));
-		Gizmos.DrawCube(transform.position, new Vector3(_groundCheckBoxSize.x, _groundCheckBoxSize.y, 1));
+		Gizmos.DrawCube(transform.position, new Vector3(_wallCheckBoxSize.x, _wallCheckBoxSize.y, 1));
 	}
 }
