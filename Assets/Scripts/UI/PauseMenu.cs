@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : ControlledCanvasMenu
 {
 	public static bool Paused { get; private set; } = false;
 	private static bool _pauseAllowed				= true;
@@ -47,8 +47,10 @@ public class PauseMenu : MonoBehaviour
 	}
 
 	// Start is called before the first frame update
-	private void Start()
+	protected override void Start()
     {
+		base.Start();
+
 		SaveMngr = LoadSave.Instance;
 
 		blinkButtonFX = new GFXBlink();
