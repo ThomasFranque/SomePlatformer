@@ -87,7 +87,6 @@ public class DialogBox : MonoBehaviour
 			string[] words = dialog[i].Split(' ');
 			bool wait = true; // used to auto skip (\-)
 			bool autoNext = false; // used to automatically move to next dialog
-
 			// Go through all words in single dialog
 			for (uint j = 0; j < words.Length; j++)
 			{

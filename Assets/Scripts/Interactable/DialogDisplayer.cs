@@ -7,6 +7,7 @@ public class DialogDisplayer : Interactible
 	[SerializeField] private DialogBox _dialogBoxScript = null;
 	[SerializeField] private float _delayOnTextDisplay = 0.0f;
 	[SerializeField] private bool _cameraChangeOnInteraction = true;
+	[SerializeField] private bool _hidePlayerUI = true;
 	[TextArea]
 	[SerializeField] private string[] _firstDialog = null;
 	[TextArea]
@@ -32,7 +33,7 @@ public class DialogDisplayer : Interactible
 			_defaultDialog = _firstDialog;
 
 		_mainCanvas = GameObject.Find("CANVAS").GetComponent<MainCanvas>();
-	}
+	}	
 
     // Update is called once per frame
     protected override void Update()
@@ -43,12 +44,12 @@ public class DialogDisplayer : Interactible
 	private void OnInteraction()
 	{
 		Player.SetInputReading(false);
-		_alreadyInteracted = true;
 
 		if (_cameraChangeOnInteraction)
 			_interactionCams[0].enabled = true;
 
-		_mainCanvas.PlayerUIScript.HideUI();
+		if(_hidePlayerUI)
+			_mainCanvas.PlayerUIScript.HideUI();
 
 		_interactionListener?.InteractionStarted();
 
@@ -69,6 +70,7 @@ public class DialogDisplayer : Interactible
 	private void DisplayText()
 	{
 		_dialogBoxScript.Display(this, _interactionCams, _alreadyInteracted ? _defaultDialog : _firstDialog);
+		_alreadyInteracted = true;
 	}
 
 	public override void ExitInteraction(byte camIndex = 0)
@@ -76,7 +78,9 @@ public class DialogDisplayer : Interactible
 		base.ExitInteraction();
 
 		Player.SetInputReading(true);
-		_mainCanvas.PlayerUIScript.UnHideUI();
+
+		if (_hidePlayerUI)
+			_mainCanvas.PlayerUIScript.UnHideUI();
 
 		foreach(Cinemachine.CinemachineVirtualCamera c in _interactionCams)
 			c.enabled = false;

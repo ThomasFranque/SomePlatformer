@@ -3456,10 +3456,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5897010721528575295, guid: 96d7baec02ad61042888450b7af43c43,
+        type: 3}
+      propertyPath: m_Name
+      value: Sparks
+      objectReference: {fileID: 0}
     - target: {fileID: 463267726221898501, guid: 96d7baec02ad61042888450b7af43c43,
         type: 3}
       propertyPath: m_Name
       value: Crashed Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 463267726221898501, guid: 96d7baec02ad61042888450b7af43c43,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 463267726221898500, guid: 96d7baec02ad61042888450b7af43c43,
         type: 3}
@@ -3526,6 +3536,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 463267725308893103, guid: 96d7baec02ad61042888450b7af43c43,
+        type: 3}
+      propertyPath: m_Name
+      value: Smoke
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96d7baec02ad61042888450b7af43c43, type: 3}
 --- !u!1001 &5757457453630295679
@@ -3539,6 +3554,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CANVAS
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757457453385383587, guid: 90821bac49a6cc44a9a699862ea2bfe2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5757457453385383583, guid: 90821bac49a6cc44a9a699862ea2bfe2,
         type: 3}

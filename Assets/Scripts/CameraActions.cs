@@ -22,13 +22,14 @@ public class CameraActions : MonoBehaviour
 
 	private void Awake()
 	{
+		_cineBrain = GetComponent<CinemachineBrain>();
+		UpdateActiveCam();
 		ActiveCamera = this;
 	}
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		_cineBrain = GetComponent<CinemachineBrain>();
 	}
 
 	// Update is called once per frame
