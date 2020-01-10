@@ -11,6 +11,6 @@ public class CrashedShipInteraction : InteractionListener
 
 	protected override void InteractionStartedAction()
 	{
-		Debug.Log("I listen!");
+
 	}
 }

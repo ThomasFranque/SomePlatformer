@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463267724955684925}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7000008, y: 25.789997, z: -10}
+  m_LocalPosition: {x: -1.9, y: 25.789997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463267725054529016}
@@ -335,7 +335,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463267725136806485}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7000008, y: 25.789997, z: -10}
+  m_LocalPosition: {x: -1.9, y: 25.789997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463267726427021384}
@@ -5391,7 +5391,9 @@ MonoBehaviour:
   _delayOnTextDisplay: 2
   _cameraChangeOnInteraction: 1
   _firstDialog:
-  - "\\C \\W0.3 This ship\\W0.7 .\\W0.7 .\\W0.7 .\\W0.7 \nIt should be able to fly."
+  - '\C \W0.3 This ship\W0.6 .\W0.6 .\W0.6 .\W0.6 '
+  - "Yes.\\W1.0 \\N \n"
+  - It should fly.
   _defaultDialog: []
   _interactionCams:
   - {fileID: 463267724955684922}
@@ -5563,12 +5565,12 @@ PrefabInstance:
     - target: {fileID: 1760370543616737209, guid: 8cb894bdcd049f148b02dded5bcf20d6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9000015
+      value: -1.9
       objectReference: {fileID: 0}
     - target: {fileID: 1760370543616737209, guid: 8cb894bdcd049f148b02dded5bcf20d6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 32.6
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 1760370543616737209, guid: 8cb894bdcd049f148b02dded5bcf20d6,
         type: 3}

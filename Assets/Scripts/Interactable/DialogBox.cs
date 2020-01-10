@@ -23,6 +23,7 @@ public class DialogBox : MonoBehaviour
 	private const char _NEXT_CAM_CHAR = 'C';
 	private const char _FIRST_CAM_CHAR = 'c';
 	private const char _SKIP_WAIT_CHAR = '-';
+	private const char _AUTO_NEXT_CHAR = 'N';
 
 	private const float _SLOW_WRITE_SPEED = .06f; //secs
 	private const float _TEXT_SPEED_UP_AMMOUNT = 2.5f;
@@ -80,13 +81,14 @@ public class DialogBox : MonoBehaviour
 
 	private IEnumerator CDialogTxt(Interactible interactable, string[] dialog)
 	{
-		// Go through all text
+		// Go through all dialog
 		for (byte i = 0; i < dialog.Length; i++)
 		{
 			string[] words = dialog[i].Split(' ');
-			bool wait = true;
+			bool wait = true; // used to auto skip (\-)
+			bool autoNext = false; // used to automatically move to next dialog
 
-			// Go through all words
+			// Go through all words in single dialog
 			for (uint j = 0; j < words.Length; j++)
 			{
 				bool specialAction = false;
@@ -119,6 +121,9 @@ public class DialogBox : MonoBehaviour
 							case _FIRST_CAM_CHAR:
 								ResetCam();
 								break;
+							case _AUTO_NEXT_CHAR:
+								autoNext = true;
+								break;
 							default:
 								Debug.LogWarning($"UNKNOWN TEXT COMMAND: {_SPECIAL_CHAR}{words[j][(int)k + 1]}" );
 								break;
@@ -150,7 +155,9 @@ public class DialogBox : MonoBehaviour
 				if (!specialAction)
 					_dialogTextPro.text += ' ';
 			}
-			yield return WaitForKeyPress();
+
+			if (!autoNext)
+				yield return WaitForKeyPress();
 
 			if (i == dialog.Length - 1)
 			{
