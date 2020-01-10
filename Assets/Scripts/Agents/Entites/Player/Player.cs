@@ -77,7 +77,7 @@ public class Player : Entity
 	private bool CanSlideOnWall => OnWall && canWallJump && !_cantSlideWall && !KnockedBack;
 	private bool GroundJumpAllowed => ((OnGround && !OnWall) || (OnGround && OnWall)) && canGroundJump;
 	private bool WallJumpAllowed => WallSlinding && canWallJump && !_cantSlideWall;
-	private bool IsJumping => (GetElapsedTime(timeOfJump)) < jumpTime && rb.velocity[1] > 0;
+	private bool IsJumping => (GetElapsedTime(timeOfJump)) < jumpTime && rb.velocity[1] > 0 || _stompJump;
 	private bool DashOnCooldown => (GetElapsedTime(timeOfDash)) < dashCooldown + dashTime;
 	private bool CanDash => !GroundAttackAnimationPlaying && !DashOnCooldown && _hitGroundAfterDash;
 	public bool GroundAttackAnimationPlaying
@@ -507,6 +507,7 @@ public class Player : Entity
 	{
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawCube(transform.position, new Vector3(_groundCheckBoxSize.x, _groundCheckBoxSize.y, 1));
-		Gizmos.DrawCube(transform.position, new Vector3(_wallCheckBoxSize.x, _wallCheckBoxSize.y, 1));
+		Gizmos.color = Color.blue;
+		Gizmos.DrawCube(transform.position + _wallCheckOffset, new Vector3(_wallCheckBoxSize.x, _wallCheckBoxSize.y, 1));
 	}
 }

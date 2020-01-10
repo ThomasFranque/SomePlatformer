@@ -6,7 +6,10 @@ public class Enemy : Entity
 {
 	private const float _STOMP_CENTER_Y_OFFSET = 0.0f;
 
-	[SerializeField] private bool _hurtsPlayer = true;
+	[Header("Enemy")]
+	[SerializeField] protected EnemyProperties _selfProperties;
+
+	[SerializeField] protected bool _hurtsPlayer = true;
 	[SerializeField] protected bool _canBeStomped = true;
 	[Tooltip("Using as trigger will disable stomp.")]
 	[SerializeField] protected bool _useColliderAsTrigger = false;
@@ -14,6 +17,27 @@ public class Enemy : Entity
 	[SerializeField] private float _knockIntensity = 50.0f;
 
 	protected bool _colliderTouchingSolidGround;
+
+	protected override void Start()
+	{
+		base.Start();
+		GetEnemyProperties();
+		_anim = GetComponentInChildren<Animator>();
+	}
+
+	private void GetEnemyProperties()
+	{
+		if (_selfProperties != null)
+		{
+			_hurtsPlayer = _selfProperties.HurtsPlayer;
+			_canBeStomped = _selfProperties.CanBeStomped;
+			_useColliderAsTrigger = _selfProperties.UseColliderAsTrigger;
+			_stompYSpeed = _selfProperties.StompYSpeed;
+			_knockIntensity = _selfProperties.KnockBackIntesity;
+		}
+		else
+			Debug.LogWarning("Enemy Properties not assigned. Using default values.\n Please create one from the asset menu.");
+	}
 
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
@@ -71,10 +95,15 @@ public class Enemy : Entity
 		{
 			Player p = col.GetComponent<Player>();
 			bool cameFromRight = p.transform.position.x < transform.position.x;
-
+			OnHitPlayer();
 
 			p.Hit(cameFromRight, _knockIntensity);
 		}
+	}
+
+	protected virtual void OnHitPlayer()
+	{
+
 	}
 
 	protected virtual void OnPlayerStomp(Player p)
@@ -101,5 +130,11 @@ public class Enemy : Entity
 	{
 		base.OnExitGroundCollision();
 		_colliderTouchingSolidGround = false;
+	}
+
+	private void OnCollisionStay2D(Collision2D collision)
+	{
+		if (collision.transform.CompareTag("Player"))
+			OnPlayerCollision(collision);
 	}
 }

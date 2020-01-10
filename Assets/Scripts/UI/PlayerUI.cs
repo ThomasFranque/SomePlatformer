@@ -51,6 +51,16 @@ public class PlayerUI : MonoBehaviour, IOnSceneLoad
 		_anim.SetTrigger("Reset");
 	}
 
+	public void HideUI()
+	{
+		_anim.SetTrigger("Hide");
+	}
+
+	public void UnHideUI()
+	{
+		_anim.SetTrigger("Reset");
+	}
+
 	public void OnSceneLoad(Scene scene, LoadSceneMode mode)
 	{
 		//ResetPlayerUI();

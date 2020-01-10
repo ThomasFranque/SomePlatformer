@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+	[Header("Entity")]
 	[SerializeField] private int _hp = 3;
 	[SerializeField] protected ParticleSystem deathParticle;
 	[SerializeField] protected Vector2 _selfKnockBackAmmount = new Vector2(32.0f, 2.5f);
 	[SerializeField] protected float _invulnerabilityTime = 0.5f;
-	[SerializeField] protected float _KNOCK_BACK_TIME = 0.5f;
+	[SerializeField] protected float _knockBackTime = 0.5f;
 
 	protected Animator _anim;
 
@@ -63,9 +64,16 @@ public class Entity : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody2D>();
 		selfCol = GetComponent<Collider2D>();
+
 		sr = GetComponent<SpriteRenderer>();
 		_anim = GetComponent<Animator>();
 
+		if (_anim == null)
+			_anim = GetComponentInChildren<Animator>();
+		if (sr == null)
+			sr = GetComponentInChildren<SpriteRenderer>();
+		if (deathParticle == null)
+			deathParticle = GetComponentInChildren<ParticleSystem>();
 		ignoreCollisionTags = new Stack<string>();
 
 		_blink = new GFXBlink();
@@ -90,7 +98,7 @@ public class Entity : MonoBehaviour
 		//Debug.Log($"{name} was HIT!");
 
 		HP -= dmg;
-		knockBackTimer = _KNOCK_BACK_TIME;
+		knockBackTimer = _knockBackTime;
 
 		KnockBack(cameFromRight, knockSpeed);
 
@@ -110,7 +118,7 @@ public class Entity : MonoBehaviour
 
 	protected virtual void OnDeath(byte dmg = 1)
 	{
-		transform.DetachChildren();
+		deathParticle.transform.parent = null;
 		DeathCamShake(dmg);
 		gameObject.SetActive(false);
 	}
@@ -175,15 +183,13 @@ public class Entity : MonoBehaviour
 			OnEnterGroundCollision();
 	}
 
-	private void OnCoolisionExit2D(Collision2D col)
-	{
-
-		if (col.gameObject.tag == "Tilemap")
-			OnExitGroundCollision();
-	}
-
 	protected virtual void OnEnterGroundCollision() { }
 	protected virtual void OnExitGroundCollision() { }
+
+	protected void SetGravityScale(float newG)
+	{
+		
+	}
 
 	private void OnDrawGizmos()
 	{
