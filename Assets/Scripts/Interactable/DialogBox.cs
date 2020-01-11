@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Globalization;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class DialogBox : MonoBehaviour
 {
-	/* WHEN CALLING ANY CUSTOM SPECIAL CHARACTER A SPACE MUST FOLLOW AFTER INSTRUCTION
+	/*
+	 * WHEN CALLING ANY CUSTOM SPECIAL CHARACTER A SPACE MUST FOLLOW AFTER INSTRUCTION
 	 * WHEN CALLING WAIT (\W) IT MUST ALLWAYS HAVE DECIMAL NUMBER OF 1 (EX: \W1.0 )
 	 * BIGGER AND SMALLER WILL AFFECT ALL TEXT
 	 * SKIP WAIT WILL REMAIN ACTIVE UNTIL NEXT DIALOGUE IF NOT CALLED AGAIN
@@ -28,6 +28,7 @@ public class DialogBox : MonoBehaviour
 	private const float _SLOW_WRITE_SPEED = .06f; //secs
 	private const float _TEXT_SPEED_UP_AMMOUNT = 2.5f;
 
+	[SerializeField]private Animator _nextDialogIndicatorAnim;
 	private Animator _anim;
 	private TextMeshPro _dialogTextPro;
 	private Coroutine _dialogCor;
@@ -156,7 +157,11 @@ public class DialogBox : MonoBehaviour
 			}
 
 			if (!autoNext)
+			{
+				_nextDialogIndicatorAnim.SetTrigger("Display");
 				yield return WaitForKeyPress();
+				_nextDialogIndicatorAnim.SetTrigger("Hide");
+			}
 
 			if (i == dialog.Length - 1)
 			{

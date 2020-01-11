@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf931a4c8e324f04fa661342de032f1d, type: 3}
   m_Name: Default Bullet
   m_EditorClassIdentifier: 
-  _possibleSprites: []
+  _possibleSprites:
+  - {fileID: -3876855153373189597, guid: ab32d11dd4f498049a10c5018757f534, type: 3}
+  - {fileID: -3638915416353919606, guid: ab32d11dd4f498049a10c5018757f534, type: 3}
+  - {fileID: 2227524988284003772, guid: ab32d11dd4f498049a10c5018757f534, type: 3}
+  - {fileID: -4567166467494461625, guid: ab32d11dd4f498049a10c5018757f534, type: 3}
   _damage: 1
-  _speed: 5
+  _speed: 450

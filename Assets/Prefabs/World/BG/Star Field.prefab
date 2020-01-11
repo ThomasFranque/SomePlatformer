@@ -4771,7 +4771,7 @@ MonoBehaviour:
   _starSize: 0.5
   _starSizeRange: 0.5
   _colorize: 0
-  _fieldSize: {x: 250, y: 150}
+  _fieldSize: {x: 300, y: 180}
 --- !u!114 &222095991245051289
 MonoBehaviour:
   m_ObjectHideFlags: 0

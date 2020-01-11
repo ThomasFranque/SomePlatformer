@@ -6,12 +6,12 @@ using UnityEngine;
 public class Interactible : MonoBehaviour
 {
 	[SerializeField] private DialogBox _inputPopUpScript = null;
+	[SerializeField] private Vector2 _interactionRange = new Vector2(24, 2);
 
 	protected Player Player { get; private set; }
 
 	private Action PlayerInteraction;
 
-	private Vector2 _interactionRange = new Vector2(24, 2);
 	private Vector3 _offset = new Vector2(0, 3);
 	private bool _playerRangeTrigger = false;
 
