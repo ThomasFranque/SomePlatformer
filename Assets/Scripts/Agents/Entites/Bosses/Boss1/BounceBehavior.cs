@@ -5,6 +5,7 @@ using UnityEngine;
 public class BounceBehavior : StateMachineBehaviour
 {
 	[SerializeField] private float _moveTowardsSpeed = 1;
+	[SerializeField] private string _nextTriggerName = "Wait";
 	private Vector3 _bounceFinalPos;
 
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -17,7 +18,7 @@ public class BounceBehavior : StateMachineBehaviour
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		if (Mathf.Abs(_bounceFinalPos.x - animator.transform.position.x) < 20)
-			animator.SetTrigger("Wait");
+			animator.SetTrigger(_nextTriggerName);
 		
 		SmoothMoveTowardsPlayerX(animator);
 	}

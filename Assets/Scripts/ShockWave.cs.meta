@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 46bbdd2b61bdb6a4899275dd2d661bd5
+guid: 6f1adb98eea4ef440975a1521e932e7e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _shockWavePrefab: {fileID: 18202315645669166, guid: 744b4d672ff64f94d824496e1d99a9ea,
-      type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

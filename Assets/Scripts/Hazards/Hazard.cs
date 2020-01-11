@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 // When not overridden, will hit everything
 public class Hazard : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class Hazard : MonoBehaviour
 	[SerializeField] protected float yHitDirection = 1.5f;
 	[SerializeField] protected float knockSpeed = 100.0f;
 	[SerializeField] protected bool _hitEnemies = true;
-	[SerializeField] private LayerMask _groundLayer;
 
 	protected virtual void OnEntityCollision(GameObject target)
 	{
@@ -50,7 +50,7 @@ public class Hazard : MonoBehaviour
 				if (_hitEnemies) OnEntityCollision(hitGO);
 				break;
 			case "Collectible":
-				OnCollectableCollision(hitGO);
+					OnCollectableCollision(hitGO);
 				break;
 			default:
 				break;

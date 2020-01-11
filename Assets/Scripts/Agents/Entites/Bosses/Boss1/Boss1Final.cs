@@ -14,6 +14,9 @@ public class Boss1Final : MonoBehaviour
 	[SerializeField]
 	private Transform _physicalTransform = null;
 
+	[SerializeField]
+	private bool _autoGroundOnStart = false;
+
 	private JumpBehavior _jumpBehaviour = null;
 
 	public bool InsideRoom => transform.position.x > RoomLeftEdge && transform.position.x < RoomRightEdge;
@@ -24,7 +27,8 @@ public class Boss1Final : MonoBehaviour
 	// Start is called before the first frame update
 	private void Start()
     {
-
+		if (_autoGroundOnStart)
+			transform.position = new Vector3(transform.position.x, GetGroundPosition().y, 0);
     }
 
 	// Update is called once per frame
@@ -32,20 +36,11 @@ public class Boss1Final : MonoBehaviour
     {
 
 	}
-
-	private Vector3 GetGroundPosition()
-	{
-		RaycastHit2D hit =
-			Physics2D.Raycast(transform.position, Vector3.down, 600.0f, LayerMask.GetMask("Ground"));
-
-		Vector3 hitPoint = hit.point;
-		return hitPoint;
-	}
-
 	// Called on jump animation Event
 	private void OnJumpEnd()
 	{
 		_jumpBehaviour.GetPlayerX();
+		CameraActions.ActiveCamera.Shake(duration:0.1f);
 	}
 
 	public void SetJumpBehavior(JumpBehavior jumpBehavior)
@@ -61,4 +56,15 @@ public class Boss1Final : MonoBehaviour
 		else
 			return new Vector3(RoomLeftEdge, _physicalTransform.position.y, 0);
 	}
+
+	private Vector3 GetGroundPosition()
+	{
+		RaycastHit2D hit =
+			Physics2D.Raycast(transform.position, Vector3.down, 600.0f, LayerMask.GetMask("Ground"));
+
+		Vector3 hitPoint = hit.point;
+		return hitPoint;
+	}
+
+
 }
