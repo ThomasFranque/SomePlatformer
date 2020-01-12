@@ -88,9 +88,9 @@ public class MeleeWeapon : MonoBehaviour
 	{
 		foreach (Collider2D enemyCol in enemiesInRange)
 		{
-			Entity e = enemyCol.GetComponent<Entity>();
+			ICanBeHit e = enemyCol.GetComponent<ICanBeHit>();
 
-			bool cameFromRight = e.transform.position.x < transform.position.x;
+			bool cameFromRight = enemyCol.transform.position.x < transform.position.x;
 
 			e?.Hit(cameFromRight, _knockSpeed);
 

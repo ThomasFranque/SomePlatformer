@@ -55,9 +55,10 @@ MonoBehaviour:
   deathParticle: {fileID: 1068026819939722858}
   _selfKnockBackAmmount: {x: 0, y: 0}
   _invulnerabilityTime: 0.5
-  _KNOCK_BACK_TIME: 0.5
+  _knockBackTime: 0.5
+  _selfProperties: {fileID: 0}
   _hurtsPlayer: 1
-  _canBeStomped: 1
+  _canBeStomped: 0
   _useColliderAsTrigger: 1
   _stompYSpeed: 250
   _knockIntensity: 40
@@ -67,6 +68,8 @@ MonoBehaviour:
   _doHangingBehaviour: 1
   _doGroundBehaviour: 1
   _startGrounded: 0
+  _preWarnOffset: -4.4
+  _groundedVisionRange: 42
 --- !u!212 &1689875623251710895
 SpriteRenderer:
   m_ObjectHideFlags: 0

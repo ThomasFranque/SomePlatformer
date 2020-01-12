@@ -17,9 +17,13 @@ public class Boss1Final : MonoBehaviour
 	[SerializeField]
 	private bool _autoGroundOnStart = false;
 
+	[SerializeField] 
+	private Cinemachine.CinemachineVirtualCamera _cutsceneVCam;
+	
 	private JumpBehavior _jumpBehaviour = null;
 
 	public bool InsideRoom => transform.position.x > RoomLeftEdge && transform.position.x < RoomRightEdge;
+	public Vector3 RoomCenterPos=> _roomCenter.position;
 
 	private float RoomRightEdge => _roomCenter.position.x + _roomSizeFromCenter;
 	private float RoomLeftEdge => _roomCenter.position.x - _roomSizeFromCenter;
@@ -41,6 +45,17 @@ public class Boss1Final : MonoBehaviour
 	{
 		_jumpBehaviour.GetPlayerX();
 		CameraActions.ActiveCamera.Shake(duration:0.1f);
+	}
+
+	public void TriggerCutsceneCam()
+	{
+		_cutsceneVCam.enabled = !_cutsceneVCam.enabled;
+	}
+
+	// Called on cutscene animation Event
+	public void TriggerCutsceneScreechCamShake()
+	{
+		CameraActions.ActiveCamera.Shake(duration:2);
 	}
 
 	public void SetJumpBehavior(JumpBehavior jumpBehavior)

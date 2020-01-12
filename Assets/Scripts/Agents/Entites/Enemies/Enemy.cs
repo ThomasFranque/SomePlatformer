@@ -11,7 +11,6 @@ public class Enemy : Entity
 
 	[SerializeField] protected bool _hurtsPlayer = true;
 	[SerializeField] protected bool _canBeStomped = true;
-	[Tooltip("Using as trigger will disable stomp.")]
 	[SerializeField] protected bool _useColliderAsTrigger = false;
 	[SerializeField] private float _stompYSpeed = 250.0f;
 	[SerializeField] private float _knockIntensity = 50.0f;
@@ -25,7 +24,7 @@ public class Enemy : Entity
 		_anim = GetComponentInChildren<Animator>();
 	}
 
-	private void GetEnemyProperties()
+	protected void GetEnemyProperties()
 	{
 		if (_selfProperties != null)
 		{
@@ -36,7 +35,7 @@ public class Enemy : Entity
 			_knockIntensity = _selfProperties.KnockBackIntesity;
 		}
 		else
-			Debug.LogWarning("Enemy Properties not assigned. Using default values.\n Please create one from the asset menu.");
+			Debug.LogWarning($"Enemy Properties on {name.ToUpper()} not assigned. Using default values.\n Please create one from the asset menu.");
 	}
 
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
@@ -78,8 +77,20 @@ public class Enemy : Entity
 
 	private void OnTriggerEnter2D(Collider2D col)
 	{
-		if (_useColliderAsTrigger && col.tag == "Player" && _hurtsPlayer)
-			HitPlayer(col);
+		if (_useColliderAsTrigger && col.tag == "Player")
+		{
+			Vector3 center = selfCol.bounds.center;
+			bool top = Player.Instance.transform.position.y > center.y + _STOMP_CENTER_Y_OFFSET;
+
+			if (top && _canBeStomped)
+			{
+				OnPlayerStomp(col.gameObject.GetComponent<Player>());
+				return;
+			}
+
+			if (_hurtsPlayer) HitPlayer(col);
+
+		}
 		else if (col.gameObject.tag == "Tilemap") 
 			OnTriggerExitGroundCollision();
 	}

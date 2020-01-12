@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, ICanBeHit
 {
 	[Header("Entity")]
 	[SerializeField] private int _hp = 3;
@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour
 
 	protected Collider2D selfCol;
 
-	private GFXBlink _blink;
+	protected GFXBlink _blink;
 
 	protected Vector2 _groundCheckBoxSize = new Vector2 (.15f, .25f);
 	protected Vector3 _groundCheckOffset = new Vector2 (0.0f, 0.0f);
@@ -169,13 +169,16 @@ public class Entity : MonoBehaviour
 
 		Vector2 finalKnock = _selfKnockBackAmmount;
 		finalKnock.x = cameFromRight ? -finalKnock.x : finalKnock.x;
-		rb.velocity = finalKnock * knockSpeed;
+		if (rb != null)
+			rb.velocity = finalKnock * knockSpeed;
 	}
 	public virtual void AddictiveKnockBack(bool cameFromRight, float knockSpeed)
 	{
 		Vector2 finalKnock = _selfKnockBackAmmount;
 		finalKnock.x = cameFromRight ? -finalKnock.x : finalKnock.x;
-		rb.velocity += finalKnock * knockSpeed;
+
+		if (rb != null)
+			rb.velocity += finalKnock * knockSpeed;
 	}
 
 	private void OnCollisionEnter2D(Collision2D col)
