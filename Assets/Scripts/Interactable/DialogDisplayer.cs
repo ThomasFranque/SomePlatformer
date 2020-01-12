@@ -42,7 +42,7 @@ public class DialogDisplayer : Interactible
 
 	private void OnInteraction()
 	{
-		Player.SetInputReading(false);
+		Player.SetInteractionInputReading(false);
 
 		if (_cameraChangeOnInteraction)
 			_interactionCams[0].enabled = true;
@@ -76,7 +76,7 @@ public class DialogDisplayer : Interactible
 	{
 		base.ExitInteraction();
 
-		Player.SetInputReading(true);
+		Player.SetInteractionInputReading(true);
 
 		if (_hidePlayerUI)
 			_mainCanvas.PlayerUIScript.UnHideUI();

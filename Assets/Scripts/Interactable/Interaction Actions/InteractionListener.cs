@@ -6,7 +6,7 @@ public abstract class InteractionListener : MonoBehaviour, IInteractionListener
 	private Action InteractionStart;
 	private Action InteractionEnd;
 
-	private void Start()
+	protected virtual void Start()
 	{
 		InteractionStart = InteractionStartedAction;
 		InteractionEnd = InteractionFinishedAction;

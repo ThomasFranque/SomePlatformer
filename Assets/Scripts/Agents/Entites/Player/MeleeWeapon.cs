@@ -92,7 +92,7 @@ public class MeleeWeapon : MonoBehaviour
 
 			bool cameFromRight = enemyCol.transform.position.x < transform.position.x;
 
-			e?.Hit(cameFromRight, _knockSpeed);
+			e?.Hit(cameFromRight, _knockSpeed, damage);
 
 		}
 	}

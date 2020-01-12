@@ -13,38 +13,48 @@ public class Boss1Final : MonoBehaviour
 	private float _roomSizeFromCenter = 40.0f;
 	[SerializeField]
 	private Transform _physicalTransform = null;
+	[SerializeField]
+	private Animator _rightDoorAnimator = null;
 
 	[SerializeField]
 	private bool _autoGroundOnStart = false;
 
-	[SerializeField] 
+	[SerializeField]
 	private Cinemachine.CinemachineVirtualCamera _cutsceneVCam;
-	
+	[SerializeField] private Cinemachine.CinemachineVirtualCamera _bossRoomCam;
+
 	private JumpBehavior _jumpBehaviour = null;
+	private Boss1Physical _bossPhysical;
 
 	public bool InsideRoom => transform.position.x > RoomLeftEdge && transform.position.x < RoomRightEdge;
-	public Vector3 RoomCenterPos=> _roomCenter.position;
+	public Vector3 RoomCenterPos => _roomCenter.position;
 
 	private float RoomRightEdge => _roomCenter.position.x + _roomSizeFromCenter;
 	private float RoomLeftEdge => _roomCenter.position.x - _roomSizeFromCenter;
 
 	// Start is called before the first frame update
 	private void Start()
-    {
+	{
+		_bossPhysical = GetComponentInChildren<Boss1Physical>();
+		_rightDoorAnimator.SetTrigger("Close");
+
 		if (_autoGroundOnStart)
 			transform.position = new Vector3(transform.position.x, GetGroundPosition().y, 0);
-    }
+
+		_bossPhysical.SetHurtsPlayer(false);
+		_bossPhysical.SetCanBeStomped(false);
+	}
 
 	// Update is called once per frame
 	private void Update()
-    {
+	{
 
 	}
 	// Called on jump animation Event
 	private void OnJumpEnd()
 	{
-		_jumpBehaviour.GetPlayerX();
-		CameraActions.ActiveCamera.Shake(duration:0.1f);
+		_jumpBehaviour?.GetPlayerX();
+		CameraActions.ActiveCamera.Shake(duration: 0.1f);
 	}
 
 	public void TriggerCutsceneCam()
@@ -55,7 +65,29 @@ public class Boss1Final : MonoBehaviour
 	// Called on cutscene animation Event
 	public void TriggerCutsceneScreechCamShake()
 	{
-		CameraActions.ActiveCamera.Shake(duration:2);
+		CameraActions.ActiveCamera.Shake(duration: 2);
+	}
+	// Called on initial cutscene animation Event
+	public void TriggerCutsceneLandCamShake()
+	{
+		CameraActions.ActiveCamera.Shake(amplitude: 40, frequency: 30);
+		_bossPhysical.SetHurtsPlayer(true);
+		_bossPhysical.SetCanBeStomped(true);
+	}
+
+	public void ShootDeathParticles()
+	{
+		_bossPhysical.ShootDeathParticles();
+	}
+
+	// Called when death animation ended
+	public void DeathAnimationEnded()
+	{
+		TriggerCutsceneCam();
+		_cutsceneVCam.transform.parent = null;
+		_rightDoorAnimator.SetTrigger("Open");
+		_bossRoomCam.enabled = false;
+		Destroy(gameObject);
 	}
 
 	public void SetJumpBehavior(JumpBehavior jumpBehavior)

@@ -126,7 +126,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 		gameObject.SetActive(false);
 	}
 
-	private void DeathCamShake(byte dmg)
+	protected void DeathCamShake(byte dmg)
 	{
 		CameraActions.ActiveCamera.Shake(20 * dmg, 30 * dmg, 0.1f);
 	}

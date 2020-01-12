@@ -54,7 +54,7 @@ MonoBehaviour:
   deathParticle: {fileID: 902305986921298800}
   _selfKnockBackAmmount: {x: 1, y: 2.5}
   _invulnerabilityTime: 0.5
-  _KNOCK_BACK_TIME: 0.5
+  _knockBackTime: 0.5
   _upInput: 119
   _downInput: 115
   _jumpInput: 32

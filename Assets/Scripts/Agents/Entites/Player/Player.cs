@@ -64,13 +64,14 @@ public class Player : Entity
 
 	[Header("--- Dev Properties ---")]
 	[SerializeField] private bool _readInputs = true;
+	private bool _interactionReadInputs = true;
 
 	private float GetElapsedTime(float timeToElapse) => Time.time - timeToElapse;
 	// Properties
 	public Rigidbody2D RigidBody2D => rb;
 	public	bool Dead { get; private set; }
 	private bool HAxisFullyPressed => !(hAxis > -0.99f && hAxis < 0.99f);
-	private bool ReadInput => _readInputs && !KnockedBack;
+	private bool ReadInput => _readInputs && !KnockedBack && _interactionReadInputs;
 	public	bool PushingWall => OnGround && OnWall && hAxis != 0;
 	public	bool WallSlinding => OnWall && !OnGround && rb.velocity.y <= 0.0f;
 	public  bool IsDashing => (GetElapsedTime(timeOfDash)) < dashTime;
@@ -453,6 +454,22 @@ public class Player : Entity
 			canMove = true;
 		}
 	}
+
+	public void SetInteractionInputReading(bool active)
+	{
+		_interactionReadInputs = active;
+
+		if (!active)
+		{
+			hAxis = 0.0f;
+			jumpPressed = false;
+			attackPressed = false;
+			crouchPressed = false;
+			interactionPressed = false;
+			canMove = true;
+		}
+	}
+
 	public override void KnockBack(bool cameFromRight, float knockSpeed)
 	{
 		if (invulnerable) return;

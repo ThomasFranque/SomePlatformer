@@ -12,8 +12,10 @@ public class Boss1Physical : Enemy
 	private bool _invulnerable;
 
 	private byte _currentStage = 1;
-	private bool Stage2Reached => HP < _stage2MinHP;
-	private bool Stage3Reached => HP < _stage3MinHP;
+	private bool Stage2Reached => HP <= _stage2MinHP;
+	private bool Stage3Reached => HP <= _stage3MinHP;
+
+	private bool _isDead;
 
 
 	protected override void Start()
@@ -50,6 +52,30 @@ public class Boss1Physical : Enemy
 			_currentStage++;
 			Debug.Log("Boss Reached Stage 2");
 		}
+	}
 
+	protected override void OnDeath(byte dmg = 1)
+	{
+		if (!_isDead)
+		{
+			_bossAnimator.SetTrigger("Dead");
+			_isDead = true;
+		}
+	}
+
+	public void SetHurtsPlayer(bool active)
+	{
+		_hurtsPlayer = active;
+	}
+	public void SetCanBeStomped(bool active)
+	{
+		_canBeStomped = active;
+	}
+
+	public void ShootDeathParticles()
+	{
+		deathParticle.Emit(200);
+		deathParticle.transform.parent = null;
+		sr.gameObject.SetActive(false);
 	}
 }

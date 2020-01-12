@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,7 +7,7 @@ public class LoadSave : MonoBehaviour
 {
 	public static LoadSave Instance { get; private set; }
 	private static GameState _currentSavedGS;
-	private static bool _loadSave;
+	private bool _loadSave;
 
 	private int CurrentSceneIndex => SceneManager.GetActiveScene().buildIndex;
 
@@ -46,6 +47,8 @@ public class LoadSave : MonoBehaviour
 	{
 		Debug.Log("Level Loaded: " + scene.name + "\nLoad Mode: " + mode);
 
+		Debug.Log(_loadSave);
+
 		if (_loadSave)
 			LoadSavedInfo();
 	}
@@ -65,12 +68,20 @@ public class LoadSave : MonoBehaviour
 	public static void AddActionToScenesLoad(UnityEngine.Events.UnityAction<Scene, LoadSceneMode> action)
 	{
 		SceneManager.sceneLoaded += action;
-
-
-
 	}
 	public static void RemoveActionFromScenesLoad(UnityEngine.Events.UnityAction<Scene, LoadSceneMode> action)
 	{
 		SceneManager.sceneLoaded -= action;
+	}
+
+	public void LoadIn(float secs)
+	{
+		StartCoroutine(CLoadSaveFileIn(secs));
+	}
+
+	private IEnumerator CLoadSaveFileIn(float secs)
+	{
+		yield return new WaitForSecondsRealtime(secs);
+		Load();
 	}
 }

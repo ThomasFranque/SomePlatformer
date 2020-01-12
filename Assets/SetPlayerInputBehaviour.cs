@@ -10,12 +10,12 @@ public class SetPlayerInputBehaviour : StateMachineBehaviour
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		Player.Instance.SetInputReading(_playerInputOnEnter);
+		Player.Instance.SetInteractionInputReading(_playerInputOnEnter);
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		Player.Instance.SetInputReading(_playerInputOnExit);
+		Player.Instance.SetInteractionInputReading(_playerInputOnExit);
 	}
 }

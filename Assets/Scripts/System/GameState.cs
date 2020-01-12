@@ -14,7 +14,8 @@ public struct GameState
 	public GameState(Vector2 pPos, int pHP, float time)
 	{
 		PlayerPos = pPos;
-		PlayerHP = pHP;
+		//PlayerHP = pHP;		
+		PlayerHP = 5;
 		RunTime = time;
 	}
 
