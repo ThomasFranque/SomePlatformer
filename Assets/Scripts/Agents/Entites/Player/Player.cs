@@ -495,7 +495,7 @@ public class Player : Entity
 			else
 			{
 				deathParticle.Emit(UnityEngine.Random.Range(15, 25));
-				SetInvunerability(true);
+				SetInvulnerability(true);
 				StartCoroutine(CIgnoreInputFor(0.8f));
 			}
 		}
