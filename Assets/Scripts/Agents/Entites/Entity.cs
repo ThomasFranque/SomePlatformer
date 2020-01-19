@@ -112,7 +112,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 	protected virtual void OnPlayerCollision(Collision2D col) { }
 
 
-	protected void SetInvunerability(bool active)
+	protected void SetInvulnerability(bool active)
 	{
 		invulnerable = active;
 		if (gameObject.activeSelf)

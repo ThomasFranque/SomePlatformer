@@ -45,7 +45,7 @@ public class Enemy : Entity
 		deathParticle?.Emit(Random.Range(3 * dmg, 5 * dmg));
 
 		base.OnHit(cameFromRight, knockSpeed, dmg);
-		SetInvunerability(true);
+		SetInvulnerability(true);
 	}
 
 	protected override void OnDeath(byte dmg = 1)

@@ -241,7 +241,7 @@ public class Beam : Enemy
 	{
 		_proximityIndAnim.SetTrigger("Dots");
 		_anim.SetTrigger("Stomped");
-		SetInvunerability(true);
+		SetInvulnerability(true);
 		stomped = true;
 		yield return new WaitForSeconds(_stompDisableTime);
 		stomped = false;
