@@ -151,9 +151,9 @@ public class Player : Entity
 	}
 	private void UpdateRBVelocity()
 	{
-		///////////////////////////////////////////////
-		//// REFACTURE THIS METHOD, LIKE, URGENTLY ////
-		///////////////////////////////////////////////
+		//! //////////////////////////////////////////
+		//! REFACTURE THIS METHOD, LIKE, URGENTLY ////
+		//! //////////////////////////////////////////
 		
 		Vector2 currentVelocity = rb.velocity;
 
@@ -342,7 +342,7 @@ public class Player : Entity
 	}
 	private void UpdateChainTime()
 	{
-		//// Chain attack countdown
+		// Chain attack countdown
 		//if (_attackChainTime > 0)
 		//{
 		//	_attackChainTime -= Time.deltaTime;
@@ -403,10 +403,10 @@ public class Player : Entity
 		_dashY = transform.position.y;
 		timeOfDash = Time.time;
 	}
-	private Vector2 OnDashEnd(bool supress)
+	private Vector2 OnDashEnd(bool suppress)
 	{
 		_dashVelocityChange = false;
-		if (!supress)
+		if (!suppress)
 			return new Vector2(transform.rotation == Quaternion.identity ? dashVelocity / 2 : -dashVelocity / 2, 0);
 		else
 			return rb.velocity;
@@ -424,10 +424,10 @@ public class Player : Entity
 	{
 		_UIHPUpdate += hpUpdate;
 	}
-	public void Heal(byte ammount)
+	public void Heal(byte amount)
 	{
 		if (HP < 3)
-			HP += ammount;
+			HP += amount;
 	}
 	public void DoStomp(float newYSpeed)
 	{
