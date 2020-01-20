@@ -47,8 +47,6 @@ public class LoadSave : MonoBehaviour
 	{
 		Debug.Log("Level Loaded: " + scene.name + "\nLoad Mode: " + mode);
 
-		Debug.Log(_loadSave);
-
 		if (_loadSave)
 			LoadSavedInfo();
 	}

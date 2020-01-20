@@ -2,6 +2,8 @@
 
 public class GroundProp : MonoBehaviour
 {
+	//TODO: Change all of this for OnTriggerStay()
+
 	private float _MIN_ANIMATOR_SPEED = 0.2f;
 	private float _MAX_ANIMATOR_SPEED = 1.5f;
 

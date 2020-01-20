@@ -6,7 +6,6 @@ public class MainCanvas : MonoBehaviour
 {
 	public PlayerUI PlayerUIScript { get; private set; }
 	public PauseMenu PauseMenu { get; private set; }
-
 	[SerializeField] private Animator _fadeAnim;
 
 	// Start is called before the first frame update

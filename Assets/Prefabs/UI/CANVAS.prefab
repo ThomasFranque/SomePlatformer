@@ -793,11 +793,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2458775158924467999, guid: e751cc0f0af6a9b4e8a5d079393ed248,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4201786067122872095, guid: e751cc0f0af6a9b4e8a5d079393ed248,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -887,6 +882,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2458775158924467999, guid: e751cc0f0af6a9b4e8a5d079393ed248,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e751cc0f0af6a9b4e8a5d079393ed248, type: 3}

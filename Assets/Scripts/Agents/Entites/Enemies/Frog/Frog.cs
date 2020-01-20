@@ -44,6 +44,7 @@ public class Frog : Enemy
 	private IEnumerator CAction()
 	{
 		yield return new WaitForSeconds(Random.Range(2.5f, 6.5f));
+		_soundPlayer.PlayOneShotLocalized(_soundClips[0], transform.position);
 
 		if (OnGround && Random.Range(0.0f, 1.0f) > 0.5f)
 			Jump();

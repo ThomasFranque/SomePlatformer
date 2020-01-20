@@ -52,7 +52,9 @@ MonoBehaviour:
   deathParticle: {fileID: 4939683780222303761}
   _selfKnockBackAmmount: {x: 1, y: 2.5}
   _invulnerabilityTime: 0.5
-  _KNOCK_BACK_TIME: 0.5
+  _knockBackTime: 0.5
+  _soundClips: {fileID: 11400000, guid: 1a5167806fcd90847bce6d64ac5d9f10, type: 2}
+  _selfProperties: {fileID: 0}
   _hurtsPlayer: 1
   _canBeStomped: 1
   _useColliderAsTrigger: 0

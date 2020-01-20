@@ -94,6 +94,6 @@ public class Interactible : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawCube(transform.position + _offset, new Vector3(_interactionRange.x, _interactionRange.y, 1));
+		Gizmos.DrawWireCube(transform.position + _offset, new Vector3(_interactionRange.x, _interactionRange.y, 1));
 	}
 }

@@ -14,6 +14,8 @@ public class Entity : MonoBehaviour, ICanBeHit
 	[SerializeField] protected float _invulnerabilityTime = 0.5f;
 	[SerializeField] protected float _knockBackTime = 0.5f;
 
+	[SerializeField] protected SoundClips _soundClips;
+
 	protected Animator _anim;
 
 	public int HP { get => _hp; set { _hp = value; } }
@@ -27,12 +29,15 @@ public class Entity : MonoBehaviour, ICanBeHit
 
 	protected GFXBlink _blink;
 
+	protected SoundPlayer _soundPlayer;
+
 	protected Vector2 _groundCheckBoxSize = new Vector2 (.15f, .25f);
 	protected Vector3 _groundCheckOffset = new Vector2 (0.0f, 0.0f);
 
 	protected Stack<string> ignoreCollisionTags;
 
 	protected bool invulnerable;
+	protected bool TurnedRight => transform.right.x > 0.0f;
 
 	protected bool KnockedBack
 	{
@@ -61,8 +66,6 @@ public class Entity : MonoBehaviour, ICanBeHit
 		}
 	}
 
-	protected bool TurnedRight => transform.right.x > 0.0f;
-
 	protected virtual void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -80,7 +83,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 		ignoreCollisionTags = new Stack<string>();
 
 		_blink = new GFXBlink();
-
+		_soundPlayer = new SoundPlayer();
 	}
 	protected virtual void Update()
 	{

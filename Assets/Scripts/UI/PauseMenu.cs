@@ -13,6 +13,7 @@ public class PauseMenu : ControlledCanvasMenu
 	[Header("Pause Menu Options")]
 	[SerializeField] private KeyCode _pauseKey		= KeyCode.Escape;
 	[SerializeField] private bool _gameCanBePaused	= true;
+
 	[Header("Pause Menu References")]
 	[SerializeField] private TextMeshProUGUI _pauseHeaderPro	= null;
 	[SerializeField] private GameObject _continueButton			= null;
@@ -20,7 +21,6 @@ public class PauseMenu : ControlledCanvasMenu
 	[SerializeField] private GameObject _exitButton				= null;
 	[SerializeField] private GameObject _loadButton				= null;
 	[SerializeField] private GameObject _saveButton				= null;
-
 	private GameObject _pauseMenuHolder;
 	private LoadSave SaveMngr;
 	private GFXBlink blinkButtonFX;
@@ -190,7 +190,7 @@ public class PauseMenu : ControlledCanvasMenu
 	}
 	//
 
-	// Visuals
+	// FX
 	private void ToggleMenu()
 	{
 		_pauseMenuHolder.SetActive(Paused);
@@ -226,11 +226,13 @@ public class PauseMenu : ControlledCanvasMenu
 
 	private IEnumerator CButtonBlinkBeforeAction(Action action)
 	{
+		_sp.PlayOneShotGeneral(_buttonPressedSound);
 		yield return new WaitForSecondsRealtime(1.0f);
 		action.Invoke();
 	}
 	private IEnumerator CSaveClicked()
 	{
+		_sp.PlayOneShotGeneral(_buttonPressedSound);
 		_saveBlink = true;
 		yield return new WaitForSecondsRealtime(0.3f);
 		_saveBlink = false;
@@ -238,6 +240,7 @@ public class PauseMenu : ControlledCanvasMenu
 	}
 	private IEnumerator CLoadClicked()
 	{
+		_sp.PlayOneShotGeneral(_buttonPressedSound);
 		_loadBlink = true;
 		yield return new WaitForSecondsRealtime(1.0f);
 		_loadBlink = false;
