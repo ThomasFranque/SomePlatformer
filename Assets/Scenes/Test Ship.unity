@@ -271,7 +271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471003081}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -0.0000023841858, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 589727857}
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 0.45
+  m_LookaheadTime: 0.2
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
   m_XDamping: 1.5
@@ -460,12 +460,12 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0.14
-  m_DeadZoneHeight: 0.25
+  m_DeadZoneWidth: 0.03
+  m_DeadZoneHeight: 0.05
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 1
-  m_SoftZoneHeight: 1
+  m_SoftZoneWidth: 0.15
+  m_SoftZoneHeight: 0.25
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -569,7 +569,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059405010}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -0.0000023841858, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 982696820}
@@ -602,6 +602,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Star Field (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 222095991245051286, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 222095991245051291, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
         type: 3}
@@ -667,6 +672,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _maxStars
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 222095991245051290, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
+        type: 3}
+      propertyPath: _colorize
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 222095991245051289, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
         type: 3}
@@ -879,6 +889,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -4.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5440394774511022961, guid: 5ab34f0013b1b46438af8cc52c1912e4,
+        type: 3}
+      propertyPath: _maxVelocity
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 5440394774511022961, guid: 5ab34f0013b1b46438af8cc52c1912e4,
+        type: 3}
+      propertyPath: _acceleration
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5440394774511022960, guid: 5ab34f0013b1b46438af8cc52c1912e4,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ab34f0013b1b46438af8cc52c1912e4, type: 3}
 --- !u!1001 &1741114316
@@ -958,6 +983,11 @@ PrefabInstance:
       propertyPath: _maxStars
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 222095991245051290, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
+        type: 3}
+      propertyPath: _colorize
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 222095991245051289, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
         type: 3}
       propertyPath: _parallaxFactor
@@ -976,6 +1006,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Star Field (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 222095991245051286, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 222095991245051291, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
         type: 3}
@@ -1036,6 +1071,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _maxStars
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 222095991245051290, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
+        type: 3}
+      propertyPath: _colorize
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 222095991245051289, guid: 9bfb9aeda7fc99c4f823956a795c7bf2,
         type: 3}

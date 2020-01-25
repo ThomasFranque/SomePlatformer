@@ -32,17 +32,17 @@ public class Starfield : MonoBehaviour
 		for (int i = 0; i < _maxStars; i++)
 		{
 			float randSize = Random.Range(_starSizeRange, _starSizeRange + 1f);                       // Randomize star size within parameters
-			float scaledColor = (true == _colorize) ? randSize - _starSizeRange : 1f;         // If coloration is desired, color based on size
+			
 
 			_stars[i].position = GetRandomInRectangle(_fieldSize.x, _fieldSize.y) + transform.position;
 			_stars[i].startSize = _starSize * randSize;
 			//_stars[i].startColor = new Color(1f, scaledColor, scaledColor, 1f);
-			_stars[i].startColor = Color.white;
+			_stars[i].startColor = _colorize ? Random.ColorHSV() : Color.white;
 		}
 		_particles.SetParticles(_stars, _stars.Length);                                                                // Write data to the particle system
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		for (int i = 0; i < _maxStars; i++)
 		{

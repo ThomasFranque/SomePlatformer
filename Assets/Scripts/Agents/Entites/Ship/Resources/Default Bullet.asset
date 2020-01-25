@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: -4567166467494461625, guid: ab32d11dd4f498049a10c5018757f534, type: 3}
   _damage: 1
   _speed: 450
+  _lifetime: 0.6

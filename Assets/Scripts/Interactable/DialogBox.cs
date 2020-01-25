@@ -6,10 +6,11 @@ using TMPro;
 public class DialogBox : MonoBehaviour
 {
 	/*
-	 * WHEN CALLING ANY CUSTOM SPECIAL CHARACTER A SPACE MUST FOLLOW AFTER INSTRUCTION
-	 * WHEN CALLING WAIT (\W) IT MUST ALLWAYS HAVE DECIMAL NUMBER OF 1 (EX: \W1.0 )
+	 * WHEN CALLING ANY CUSTOM SPECIAL CHARACTER A SPACE CHAR MUST FOLLOW AFTER INSTRUCTION
+	 * WHEN CALLING WAIT (\W) IT MUST ALLWAYS HAVE DECIMAL NUMBER OF 1 (EX: \W0.8)
 	 * BIGGER AND SMALLER WILL AFFECT ALL TEXT
 	 * SKIP WAIT WILL REMAIN ACTIVE UNTIL NEXT DIALOGUE IF NOT CALLED AGAIN
+	 * PLAY SOUND WILL PLAY THE SOUND FROM THE FOLLOWING INDEX (\s2 : will play sound on index [2]) //! needs to have a sound resource to do so
 	*/
 
 	private const char _SPECIAL_CHAR = '\\';
@@ -24,6 +25,7 @@ public class DialogBox : MonoBehaviour
 	private const char _FIRST_CAM_CHAR = 'c';
 	private const char _SKIP_WAIT_CHAR = '-';
 	private const char _AUTO_NEXT_CHAR = 'N';
+	private const char _PLAY_SOUND_CHAR = 's';
 
 	private const float _SLOW_WRITE_SPEED = .06f; //secs
 	private const float _TEXT_SPEED_UP_AMMOUNT = 2.5f;
@@ -36,8 +38,11 @@ public class DialogBox : MonoBehaviour
 	private float _defaultTextSize;
 	private byte _activeCamIndex;
 
+	private SoundClips _soundClips;
+	private SoundPlayer _soundPlayer;
+
 	// Start is called before the first frame update
-	private void Start()
+	private void Awake()
 	{
 		_anim = GetComponent<Animator>();
 		_dialogTextPro = GetComponentInChildren<TextMeshPro>();
@@ -46,29 +51,31 @@ public class DialogBox : MonoBehaviour
 		_defaultTextSize = _dialogTextPro.fontSize;
 	}
 
-	public void Display(Interactible interactable, Cinemachine.CinemachineVirtualCamera[] cams = null, string[] dialog = null)
-	{
-		_cams = cams;
-
-		if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("Display"))
-			_anim.SetTrigger("Display");
-
-		if (dialog != null)
-			DisplayDialog(interactable, dialog);
-
-	}
-
 	public void Exit()
 	{
 		if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("Hide"))
 			_anim.SetTrigger("Hide");
 	}
 
-	private void DisplayDialog(Interactible interactable, string[] dialog)
+	public void Display(Interactible interactable, Cinemachine.CinemachineVirtualCamera[] cams = null, string[] dialog = null, SoundClips soundClips = null)
+	{
+		_cams = cams;
+		if (soundClips != null)
+			_soundPlayer = new SoundPlayer();
+
+		if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("Display"))
+			_anim.SetTrigger("Display");
+
+		if (dialog != null)
+			StartDialog(interactable, dialog, soundClips);
+
+	}
+
+	private void StartDialog(Interactible interactable, string[] dialog, SoundClips soundClips)
 	{
 		_dialogTextPro.text = "";
 
-		_dialogCor = StartCoroutine(CDialogTxt(interactable, dialog));
+		_dialogCor = StartCoroutine(CDialogTxt(interactable, dialog, soundClips));
 
 	}
 
@@ -77,10 +84,14 @@ public class DialogBox : MonoBehaviour
 		// https://stackoverflow.com/questions/1354924/how-do-i-parse-a-string-with-a-decimal-point-to-a-double
 		//string invariantWord = word.ToString(CultureInfo.CurrentCulture);
 		return float.Parse(word.Substring((int)index + 2, 3), CultureInfo.InvariantCulture);
-		
 	}
 
-	private IEnumerator CDialogTxt(Interactible interactable, string[] dialog)
+	private int ExtractIndexFromText(string word, uint index)
+	{
+		return int.Parse(word.Substring((int)index + 2));
+	}
+
+	private IEnumerator CDialogTxt(Interactible interactable, string[] dialog, SoundClips sounds)
 	{
 		// Go through all dialog
 		for (byte i = 0; i < dialog.Length; i++)
@@ -123,6 +134,9 @@ public class DialogBox : MonoBehaviour
 								break;
 							case _AUTO_NEXT_CHAR:
 								autoNext = true;
+								break;
+							case _PLAY_SOUND_CHAR:
+								PlayClip(sounds[ExtractIndexFromText(words[j], k)]);
 								break;
 							default:
 								Debug.LogWarning($"UNKNOWN TEXT COMMAND: {_SPECIAL_CHAR}{words[j][(int)k + 1]}" );
@@ -174,6 +188,11 @@ public class DialogBox : MonoBehaviour
 		}
 
 		yield return null;
+	}
+
+	private void PlayClip(AudioClip clip)
+	{
+		_soundPlayer.PlayOneShotGeneral(clip);
 	}
 
 	private void NextCam()

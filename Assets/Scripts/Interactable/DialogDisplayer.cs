@@ -15,9 +15,10 @@ public class DialogDisplayer : Interactible
 	[SerializeField]
 	private Cinemachine.CinemachineVirtualCamera[] _interactionCams = null;
 
-	[Tooltip("Optional")]
+	[Header("Optional Fields")]
 	[SerializeField]
 	private InteractionListener _interactionListener;
+	[SerializeField] private SoundClips _sounds;
 
 	private MainCanvas _mainCanvas;
 	private bool _alreadyInteracted = false;
@@ -68,7 +69,7 @@ public class DialogDisplayer : Interactible
 
 	private void DisplayText()
 	{
-		_dialogBoxScript.Display(this, _interactionCams, _alreadyInteracted ? _defaultDialog : _firstDialog);
+		_dialogBoxScript.Display(this, _interactionCams, _alreadyInteracted ? _defaultDialog : _firstDialog, sounds);
 		_alreadyInteracted = true;
 	}
 
