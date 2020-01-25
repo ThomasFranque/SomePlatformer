@@ -69,7 +69,7 @@ public class DialogDisplayer : Interactible
 
 	private void DisplayText()
 	{
-		_dialogBoxScript.Display(this, _interactionCams, _alreadyInteracted ? _defaultDialog : _firstDialog, sounds);
+		_dialogBoxScript.Display(this, _interactionCams, _alreadyInteracted ? _defaultDialog : _firstDialog, _sounds);
 		_alreadyInteracted = true;
 	}
 
