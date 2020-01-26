@@ -75,11 +75,9 @@ MonoBehaviour:
   yHitDirection: 1.5
   knockSpeed: 100
   _hitEnemies: 0
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
   _speed: 1
   _speedIncreaseFactor: 200
+  _sizeIncreaseFactor: 1.025
 --- !u!1 &18202316007861453
 GameObject:
   m_ObjectHideFlags: 0
