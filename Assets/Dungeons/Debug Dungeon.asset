@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Debug Dungeon
   m_EditorClassIdentifier: 
   _blockedRoom: {fileID: 11400000, guid: bb26a65ebfa923e49b183f7c675920a4, type: 2}
-  _maxDungeonSize: {x: 50, y: 50}
+  _maxDungeonSize: {x: 100, y: 100}
   _maxMainRooms: 50
   _ascending: 0
   _backwards: 0

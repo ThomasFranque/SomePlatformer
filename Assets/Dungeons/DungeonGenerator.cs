@@ -25,7 +25,7 @@ namespace Dungeons
 
         private Vector2Int _roomIndex;
 
-        private List<Vector2> _mainPath;
+        private List<PathPosition> _mainPath;
 
         // Start is called before the first frame update
         void Awake()
@@ -47,7 +47,7 @@ namespace Dungeons
         private void AssignActions()
         {
             // What happens when a room is supposed to spawn
-            NewRoom += RandomRoomInPivotPosition;
+            //NewRoom += RandomRoomInPivotPosition;
 
             // Keeps track of Y pivot
             if (_dungeonInfo.Ascending) NewRoomRow += IncrementPivotY;
@@ -76,8 +76,8 @@ namespace Dungeons
         //! IT IS A CORROUTINE FOR DEBUG PURPOSES
         private IEnumerator DrawMainPath()
         {
-            _mainPath = new List<Vector2>(150);
-            _mainPath.Add(_pivotStartPos);
+            _mainPath = new List<PathPosition>(150);
+            _mainPath.Add(new PathPosition(_pivotStartPos));
 
             int mainRooms = 0;
             Vector2Int pathIndex = Vector2Int.zero;
@@ -87,14 +87,14 @@ namespace Dungeons
             Vector2 pathPivot = _pivotStartPos;
 
             // 0-Left 1-Right 2-Down 3-Up
-            byte[] dirs = new byte[12] { 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
-            
+            byte[] dirs = new byte[12] { 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3 };
+
             if (_dungeonInfo.Ascending)
             {
                 //dirs[7] = 3;
-                dirs [8] = 3;
+                dirs[8] = 3;
             }
-            else 
+            else
             {
                 //dirs[9] = 2;
                 dirs[10] = 2;
@@ -105,7 +105,7 @@ namespace Dungeons
                 //dirs[3] = 0;
                 dirs[4] = 0;
             }
-            else 
+            else
             {
                 //dirs[1] = 1;
                 dirs[2] = 1;
@@ -127,6 +127,10 @@ namespace Dungeons
                     pathPivot.x -= _totalRoomSize.x;
                     pathIndex.x--;
                     mainRooms++;
+
+                    passedIndexes.Add(pathIndex);
+                    _mainPath.Add(new PathPosition(pathPivot));
+                    lastDir = pathDir;
                 }
                 else if (pathDir == 1 && lastDir != 1 && IsNextPathAvailable(new Vector2Int(pathIndex.x + 1, pathIndex.y)))
                 {
@@ -134,6 +138,10 @@ namespace Dungeons
                     pathPivot.x += _totalRoomSize.x;
                     pathIndex.x++;
                     mainRooms++;
+
+                    passedIndexes.Add(pathIndex);
+                    _mainPath.Add(new PathPosition(pathPivot));
+                    lastDir = pathDir;
                 }
                 else if (pathDir == 2 && lastDir != 2 && IsNextPathAvailable(new Vector2Int(pathIndex.x, pathIndex.y - 1)))
                 {
@@ -141,6 +149,10 @@ namespace Dungeons
                     pathPivot.y -= _totalRoomSize.y;
                     pathIndex.y--;
                     mainRooms++;
+
+                    passedIndexes.Add(pathIndex);
+                    _mainPath.Add(new PathPosition(pathPivot));
+                    lastDir = pathDir;
                 }
                 else if (pathDir == 3 && lastDir != 3 && IsNextPathAvailable(new Vector2Int(pathIndex.x, pathIndex.y + 1)))
                 {
@@ -148,11 +160,12 @@ namespace Dungeons
                     pathPivot.y += _totalRoomSize.y;
                     pathIndex.y++;
                     mainRooms++;
+
+                    passedIndexes.Add(pathIndex);
+                    _mainPath.Add(new PathPosition(pathPivot));
+                    lastDir = pathDir;
                 }
 
-                passedIndexes.Add(pathIndex);
-                _mainPath.Add(pathPivot);
-                lastDir = pathDir;
                 loops++;
                 yield return new WaitForSeconds(0.0000f);
             }
@@ -164,9 +177,15 @@ namespace Dungeons
                 // Restart
                 StartCoroutine(DrawMainPath());
             }
-            else 
+            else
             {
                 Debug.LogWarning("Main Path Done");
+                SetPathOpenings();
+                foreach(bool b in _mainPath[1].Openings)
+                    Debug.Log(b);
+                //Debug.Log(_mainPath.Count);
+                //TODO: Get path openings
+                //SpawnRoomsInMainLine(); 
             }
 
             // Checks if the has already been used and neighbors ones are availble
@@ -201,6 +220,59 @@ namespace Dungeons
             }
         }
 
+        private void SetPathOpenings()
+        {
+            int numOfPos = _mainPath.Count;
+            for (int i = 0; i < numOfPos; i++)
+            {
+                // Left Right Top Bottom
+                bool[] openings = new bool[4];
+
+                Vector2? previousPos = null;
+                Vector2? nextPos = null;
+                if (i - 1 > 0)
+                    previousPos = _mainPath[i - 1].Position;
+                if (i + 1 < numOfPos)
+                    nextPos = _mainPath[i + 1].Position;
+
+                //! BUG ON LEFT AND RIGHT
+
+                if (previousPos != null)
+                {
+                    // Opening on the right ?
+                    if (((Vector2)previousPos).x > _mainPath[i].Position.x)
+                        openings[1] = true;
+                    // Left
+                    else if (((Vector2)previousPos).x < _mainPath[i].Position.x)
+                        openings[0] = true;
+
+                    // Opening up ?
+                    if (((Vector2)previousPos).y > _mainPath[i].Position.y)
+                        openings[2] = true;
+                    // Down
+                    else if (((Vector2)previousPos).y < _mainPath[i].Position.y)
+                        openings[3] = true;
+                }
+                if (nextPos != null)
+                {
+                    // Opening on the right ?
+                    if (((Vector2)nextPos).x > _mainPath[i].Position.x)
+                        openings[1] = true;
+                    // Left
+                    else if (((Vector2)nextPos).x < _mainPath[i].Position.x)
+                        openings[0] = true;
+
+                    // Opening up ?
+                    if (((Vector2)nextPos).y > _mainPath[i].Position.y)
+                        openings[2] = true;
+                    // Down
+                    else if (((Vector2)nextPos).y < _mainPath[i].Position.y)
+                        openings[3] = true;
+                }
+
+                _mainPath[i].SetOpenings(openings);
+            }
+        }
 
         private void SpawnRooms()
         {
@@ -220,7 +292,15 @@ namespace Dungeons
             }
         }
 
-        private void RandomRoomInPivotPosition()
+        private void SpawnRoomsInMainLine()
+        {
+            foreach (PathPosition v in _mainPath)
+            {
+                RandomRoomInPivotPosition(v.Position);
+            }
+        }
+
+        private void RandomRoomInPivotPosition(Vector2 position)
         {
             DungeonRoomInfo[] neighbors = GetNeighbors();
             DungeonRoomInfo newRoomInfo;
@@ -239,7 +319,7 @@ namespace Dungeons
 
             Instantiate(
                 newRoomInfo.RoomPrefab,
-                _roomPivot, Quaternion.identity,
+                position, Quaternion.identity,
                 _roomsTransform);
         }
 
@@ -305,10 +385,10 @@ namespace Dungeons
             if (_mainPath != null)
             {
                 Vector2 lastPoint = _pivotStartPos;
-                foreach (Vector2 v in _mainPath)
+                foreach (PathPosition v in _mainPath)
                 {
-                    Gizmos.DrawLine(lastPoint, v);
-                    lastPoint = v;
+                    Gizmos.DrawLine(lastPoint, v.Position);
+                    lastPoint = v.Position;
                     //Gizmos.DrawWireCube(v, _totalRoomSize);
                 }
             }
