@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: d01d49dfc2e40654aa017a4327f46ec0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _blockedRoom: {fileID: 11400000, guid: bb26a65ebfa923e49b183f7c675920a4, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

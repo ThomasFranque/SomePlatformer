@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20939e7669dfe3a41b20281174afba0f, type: 3}
+  m_Name: Debug Room 5
+  m_EditorClassIdentifier: 
+  _roomPrefab: {fileID: 5918880216037651403, guid: 5873d2dc58dc75a42bc8b020a4421f4c,
+    type: 3}
+  _left: 0
+  _right: 0
+  _top: 1
+  _bottom: 1

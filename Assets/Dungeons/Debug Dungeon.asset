@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01d49dfc2e40654aa017a4327f46ec0, type: 3}
+  m_Name: Debug Dungeon
+  m_EditorClassIdentifier: 
+  _blockedRoom: {fileID: 11400000, guid: bb26a65ebfa923e49b183f7c675920a4, type: 2}
+  _dungeonSize: {x: 10, y: 10}
+  _ascending: 0
+  _backwards: 0
+  _possibleRooms:
+  - {fileID: 11400000, guid: 6672bbbf5a326034cb887949262f31cd, type: 2}
+  - {fileID: 11400000, guid: aee72db83880a3c4e9fb28dc6d19e8f3, type: 2}
+  - {fileID: 11400000, guid: 900bf25f6d0427246a37b1c6198ad52a, type: 2}
+  - {fileID: 11400000, guid: 4bb547c222b97ba42a4b91bf67339166, type: 2}
+  - {fileID: 11400000, guid: dbdd02e2ea79dc14b885d2c63c5b432d, type: 2}
+  - {fileID: 11400000, guid: aa89f4c3d1ac4124fa6dae57e66f7af7, type: 2}

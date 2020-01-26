@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: af59c055369afaa4c859e69863e6068f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _dungeonInfo: {fileID: 11400000, guid: c68694ed1a8158b43b9ded5c8a702302, type: 2}
+  - _roomsTransform: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

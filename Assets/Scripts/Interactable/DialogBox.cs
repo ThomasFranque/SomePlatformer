@@ -10,7 +10,7 @@ public class DialogBox : MonoBehaviour
 	 * WHEN CALLING WAIT (\W) IT MUST ALLWAYS HAVE DECIMAL NUMBER OF 1 (EX: \W0.8)
 	 * BIGGER AND SMALLER WILL AFFECT ALL TEXT
 	 * SKIP WAIT WILL REMAIN ACTIVE UNTIL NEXT DIALOGUE IF NOT CALLED AGAIN
-	 * PLAY SOUND WILL PLAY THE SOUND FROM THE FOLLOWING INDEX (\s2 : will play sound on index [2]) //! needs to have a sound resource to do so
+	 * PLAY SOUND WILL PLAY THE SOUND FROM THE FOLLOWING INDEX (\s2 : will play sound on index [2])
 	*/
 
 	private const char _SPECIAL_CHAR = '\\';
@@ -179,7 +179,7 @@ public class DialogBox : MonoBehaviour
 
 			if (i == dialog.Length - 1)
 			{
-				interactable.ExitInteraction(_activeCamIndex);
+				interactable?.ExitInteraction(_activeCamIndex);
 			}
 			_dialogTextPro.fontSize = _defaultTextSize;
 			_dialogTextPro.text = "";
