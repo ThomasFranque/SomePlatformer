@@ -24,9 +24,8 @@ public class DialogDisplayer : Interactible
 	private bool _alreadyInteracted = false;
 
     // Start is called before the first frame update
-    protected override void Start()
+    protected void Awake()
     {
-		base.Start();
 		AddActionToInteraction(OnInteraction);
 
 		if (_defaultDialog.Length == 0)
@@ -34,12 +33,6 @@ public class DialogDisplayer : Interactible
 
 		_mainCanvas = GameObject.Find("CANVAS").GetComponent<MainCanvas>();
 	}	
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-		base.Update();
-    }
 
 	private void OnInteraction()
 	{
