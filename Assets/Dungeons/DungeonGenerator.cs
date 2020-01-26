@@ -13,8 +13,6 @@ namespace Dungeons
         [SerializeField] private DungeonInfo _dungeonInfo;
         [SerializeField] private Transform _roomsTransform;
 
-        private DungeonRoomInfo[,] _rooms;
-
         // Local world pivot position
         private Vector2 _roomPivot;
 
@@ -23,41 +21,18 @@ namespace Dungeons
 
         private Vector2 _pivotStartPos;
 
-        private Vector2Int _roomIndex;
-
         private List<PathPosition> _mainPath;
 
         // Start is called before the first frame update
         void Awake()
         {
             _roomPivot = _pivotStartPos = transform.position;
-            _rooms = new DungeonRoomInfo[_dungeonInfo.Size.x, _dungeonInfo.Size.y];
 
             //UnityEngine.Random.InitState();
 
-            AssignActions();
             GrabTotalRoomSize();
-            //SpawnRooms();
-            //TODO: Re-checkRooms();
 
-            //! debugging
             StartCoroutine(DrawMainPath());
-        }
-
-        private void AssignActions()
-        {
-            // What happens when a room is supposed to spawn
-            //NewRoom += RandomRoomInPivotPosition;
-
-            // Keeps track of Y pivot
-            if (_dungeonInfo.Ascending) NewRoomRow += IncrementPivotY;
-            else NewRoomRow += DecrementPivotY;
-            NewRoomRow += ResetPivotX;
-
-            // Spawns room and keeps track of X pivot
-            NewRoomColumn += OnNewRoom;
-            if (_dungeonInfo.Backwards) NewRoomColumn += DecrementPivotX;
-            else NewRoomColumn += IncrementPivotX;
         }
 
         private void GrabTotalRoomSize()
@@ -72,8 +47,6 @@ namespace Dungeons
                 (gridCellSize.y * _CELLS_PER_ROOM_V) + gridCellGap.y);
         }
 
-
-        //! IT IS A CORROUTINE FOR DEBUG PURPOSES
         private IEnumerator DrawMainPath()
         {
             _mainPath = new List<PathPosition>(150);
@@ -121,7 +94,7 @@ namespace Dungeons
 
                 byte pathDir = dirs[UnityEngine.Random.Range(0, dirs.Length)];
 
-                if (pathDir == 0 && lastDir != 0 && IsNextPathAvailable(new Vector2Int(pathIndex.x - 1, pathIndex.y)))
+                if (pathDir == 0 && lastDir != 1 && IsNextPathAvailable(new Vector2Int(pathIndex.x - 1, pathIndex.y)))
                 {
                     loops = 0;
                     pathPivot.x -= _totalRoomSize.x;
@@ -132,7 +105,7 @@ namespace Dungeons
                     _mainPath.Add(new PathPosition(pathPivot));
                     lastDir = pathDir;
                 }
-                else if (pathDir == 1 && lastDir != 1 && IsNextPathAvailable(new Vector2Int(pathIndex.x + 1, pathIndex.y)))
+                else if (pathDir == 1 && lastDir != 0 && IsNextPathAvailable(new Vector2Int(pathIndex.x + 1, pathIndex.y)))
                 {
                     loops = 0;
                     pathPivot.x += _totalRoomSize.x;
@@ -143,7 +116,7 @@ namespace Dungeons
                     _mainPath.Add(new PathPosition(pathPivot));
                     lastDir = pathDir;
                 }
-                else if (pathDir == 2 && lastDir != 2 && IsNextPathAvailable(new Vector2Int(pathIndex.x, pathIndex.y - 1)))
+                else if (pathDir == 2 && lastDir != 3 && IsNextPathAvailable(new Vector2Int(pathIndex.x, pathIndex.y - 1)))
                 {
                     loops = 0;
                     pathPivot.y -= _totalRoomSize.y;
@@ -154,7 +127,7 @@ namespace Dungeons
                     _mainPath.Add(new PathPosition(pathPivot));
                     lastDir = pathDir;
                 }
-                else if (pathDir == 3 && lastDir != 3 && IsNextPathAvailable(new Vector2Int(pathIndex.x, pathIndex.y + 1)))
+                else if (pathDir == 3 && lastDir != 2 && IsNextPathAvailable(new Vector2Int(pathIndex.x, pathIndex.y + 1)))
                 {
                     loops = 0;
                     pathPivot.y += _totalRoomSize.y;
@@ -181,8 +154,7 @@ namespace Dungeons
             {
                 Debug.LogWarning("Main Path Done");
                 SetPathOpenings();
-                foreach(bool b in _mainPath[1].Openings)
-                    Debug.Log(b);
+                SpawnRoomsInPathPositions(_mainPath);
                 //Debug.Log(_mainPath.Count);
                 //TODO: Get path openings
                 //SpawnRoomsInMainLine(); 
@@ -230,7 +202,7 @@ namespace Dungeons
 
                 Vector2? previousPos = null;
                 Vector2? nextPos = null;
-                if (i - 1 > 0)
+                if (i - 1 >= 0)
                     previousPos = _mainPath[i - 1].Position;
                 if (i + 1 < numOfPos)
                     nextPos = _mainPath[i + 1].Position;
@@ -247,7 +219,7 @@ namespace Dungeons
                         openings[0] = true;
 
                     // Opening up ?
-                    if (((Vector2)previousPos).y > _mainPath[i].Position.y)
+                    else if (((Vector2)previousPos).y > _mainPath[i].Position.y)
                         openings[2] = true;
                     // Down
                     else if (((Vector2)previousPos).y < _mainPath[i].Position.y)
@@ -263,7 +235,7 @@ namespace Dungeons
                         openings[0] = true;
 
                     // Opening up ?
-                    if (((Vector2)nextPos).y > _mainPath[i].Position.y)
+                    else if (((Vector2)nextPos).y > _mainPath[i].Position.y)
                         openings[2] = true;
                     // Down
                     else if (((Vector2)nextPos).y < _mainPath[i].Position.y)
@@ -274,107 +246,23 @@ namespace Dungeons
             }
         }
 
-        private void SpawnRooms()
+        private void SpawnRoomsInPathPositions(ICollection<PathPosition> pathPositions)
         {
-            for (int y = 0; y < _dungeonInfo.Size.y; y++)
+            foreach(PathPosition p in pathPositions)
             {
-                _roomIndex.y = y;
 
-                for (int x = 0; x < _dungeonInfo.Size.x; x++)
-                {
-                    _roomIndex.x = x;
-                    // New Column in row
-                    OnNewRoomColumn();
-                }
+               // DungeonRoomInfo newRoomInfo = _dungeonInfo.GetRoomWithOpenings(p.Openings);
 
-                // New row
-                OnNewRoomRow();
+                DungeonRoom newRoom =
+                Instantiate(
+                _dungeonInfo.DungeonRoom,
+                p.Position,
+                Quaternion.identity,
+                _roomsTransform).GetComponent<DungeonRoom>();
+
+                newRoom.SetOpenings(p.Openings);
             }
         }
-
-        private void SpawnRoomsInMainLine()
-        {
-            foreach (PathPosition v in _mainPath)
-            {
-                RandomRoomInPivotPosition(v.Position);
-            }
-        }
-
-        private void RandomRoomInPivotPosition(Vector2 position)
-        {
-            DungeonRoomInfo[] neighbors = GetNeighbors();
-            DungeonRoomInfo newRoomInfo;
-
-            int maxLoops = _dungeonInfo.Size.x * _dungeonInfo.Size.y * 2;
-            int loops = 0;
-
-            do
-            {
-                newRoomInfo = _dungeonInfo.RandomRoomInfo;
-                loops++;
-            } while (!DungeonRoomInfo.CanBePlaced(newRoomInfo, neighbors) && loops < maxLoops);
-
-            if (loops >= maxLoops) newRoomInfo = _dungeonInfo.BlockedRoom;
-            _rooms[_roomIndex.x, _roomIndex.y] = newRoomInfo;
-
-            Instantiate(
-                newRoomInfo.RoomPrefab,
-                position, Quaternion.identity,
-                _roomsTransform);
-        }
-
-        private DungeonRoomInfo[] GetNeighbors()
-        {
-            DungeonRoomInfo[] neighbors = new DungeonRoomInfo[4];
-
-            neighbors[0] = _roomIndex.x - 1 >= 0 ? _rooms[_roomIndex.x - 1, _roomIndex.y] : null;
-            neighbors[1] = _roomIndex.x + 1 < _dungeonInfo.Size.x ? _rooms[_roomIndex.x + 1, _roomIndex.y] : null;
-            neighbors[2] = _roomIndex.y + 1 < _dungeonInfo.Size.y ? _rooms[_roomIndex.x, _roomIndex.y + 1] : null;
-            neighbors[3] = _roomIndex.y - 1 >= 0 ? _rooms[_roomIndex.x, _roomIndex.y - 1] : null;
-
-            return neighbors;
-        }
-
-        private void IncrementPivotX()
-        {
-            _roomPivot.x += _totalRoomSize.x;
-        }
-
-        private void DecrementPivotX()
-        {
-            _roomPivot.x -= _totalRoomSize.x;
-        }
-
-        private void DecrementPivotY()
-        {
-            _roomPivot.y -= _totalRoomSize.y;
-        }
-
-        private void IncrementPivotY()
-        {
-            _roomPivot.y += _totalRoomSize.y;
-        }
-
-        private void ResetPivotX()
-        {
-            _roomPivot.x = _pivotStartPos.x;
-        }
-
-
-        private void OnNewRoomRow()
-        {
-            NewRoomRow?.Invoke();
-        }
-        private void OnNewRoomColumn()
-        {
-            NewRoomColumn?.Invoke();
-        }
-
-        private void OnNewRoom()
-        {
-            NewRoom?.Invoke();
-        }
-
 
         private void OnDrawGizmos()
         {
@@ -384,18 +272,33 @@ namespace Dungeons
             Gizmos.color = Color.green;
             if (_mainPath != null)
             {
+                bool toggle = false;
                 Vector2 lastPoint = _pivotStartPos;
                 foreach (PathPosition v in _mainPath)
                 {
+                    Gizmos.color = Color.green;
+
                     Gizmos.DrawLine(lastPoint, v.Position);
+
+                    if (toggle)
+                        Gizmos.color = Color.cyan;
+                    else 
+                        Gizmos.color = Color.magenta;
+
+                    if(v.Openings[0])
+                        Gizmos.DrawSphere(v.Position - new Vector2(_totalRoomSize.x/3, 0), 4.0f);
+                    if(v.Openings[1])
+                        Gizmos.DrawSphere(v.Position + new Vector2(_totalRoomSize.x/3, 0), 4.0f);
+                    if(v.Openings[2])
+                        Gizmos.DrawSphere(v.Position + new Vector2(0, _totalRoomSize.y/3), 4.0f);
+                    if(v.Openings[3])
+                        Gizmos.DrawSphere(v.Position - new Vector2(0, _totalRoomSize.y/3), 4.0f);
+
                     lastPoint = v.Position;
+                    toggle = !toggle;
                     //Gizmos.DrawWireCube(v, _totalRoomSize);
                 }
             }
         }
-
-        private Action NewRoom;
-        private Action NewRoomRow;
-        private Action NewRoomColumn;
     }
 }
