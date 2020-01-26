@@ -31,7 +31,7 @@ public class Interactible : MonoBehaviour
 	// Start is called before the first frame update
 	protected virtual void Start()
     {
-		PlayerInteraction = _inputPopUpScript.Exit;
+		PlayerInteraction += _inputPopUpScript.Exit;
 		Player = null;
     }
 

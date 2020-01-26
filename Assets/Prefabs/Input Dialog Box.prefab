@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b927b24b0e10234bb331cc8fae802ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nextDialogIndicatorAnim: {fileID: 3629829261537272545}
 --- !u!95 &3629829261537272545
 Animator:
   serializedVersion: 3
