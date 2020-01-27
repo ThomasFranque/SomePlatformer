@@ -268,11 +268,9 @@ namespace Dungeons
                         // Through every point again
                         for (int j = 0; j < nSize; j++)
                         {
-                            // Check if the point is the same && is not the first point in a collection (branching openings first room) && not a branch intersection
-                            //if (c != n || (!c[i].IsBranchIntersection && j != 0)) continue;
-
+                            // Connect if the collection is the same or is a intersection and checking point is the first room of collection and vice versa
                             if (!(c == n || (c[i].IsBranchIntersection && j == 0) || (i == 0 && n[j].IsBranchIntersection))) continue;
-                            
+
                             if (n[j].Index == leftIndex)
                                 openings[0] = true;
                             else if (n[j].Index == rightIndex)
