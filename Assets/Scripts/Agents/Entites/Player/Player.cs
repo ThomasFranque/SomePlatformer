@@ -13,6 +13,8 @@ public class Player : Entity
 
 	// variables
 	private MeleeWeapon _meleeWeapon;
+	private PlayerInventory _inventory;
+
 	private Coroutine _ignoreHAxisCor;
 
 	private Action<int> _UIHPUpdate;

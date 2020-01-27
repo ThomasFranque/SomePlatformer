@@ -55,6 +55,7 @@ MonoBehaviour:
   _selfKnockBackAmmount: {x: 1, y: 2.5}
   _invulnerabilityTime: 0.5
   _knockBackTime: 0.5
+  _soundClips: {fileID: 0}
   _upInput: 119
   _downInput: 115
   _jumpInput: 32
