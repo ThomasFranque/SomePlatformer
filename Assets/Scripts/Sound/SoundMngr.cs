@@ -4,6 +4,7 @@ namespace Sound
 {
     public class SoundMngr : MonoBehaviour
     {
+        [SerializeField] private GameObject _audioMngrPrefab;
         public const string AUDIO_MNGR_OBJ_NAME = "Audio Manager";
 
         public static SoundMngr Instance { get; private set; }
@@ -13,6 +14,7 @@ namespace Sound
         [SerializeField]
         private AudioSource _generalAudioSource = null;
         private float _volume;
+
         private void Awake()
         {
             Instance = this;
