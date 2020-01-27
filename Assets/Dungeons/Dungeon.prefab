@@ -118,6 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af59c055369afaa4c859e69863e6068f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dungeonInfo: {fileID: 11400000, guid: c68694ed1a8158b43b9ded5c8a702302, type: 2}
+  _dungeonInfo: {fileID: 0}
   _roomsTransform: {fileID: 1325225100732337070}
   _debugMode: 0
