@@ -12,6 +12,7 @@ namespace Dungeons
         private const int _CELLS_PER_ROOM_V = 16;
         [SerializeField] private DungeonInfo _dungeonInfo;
         [SerializeField] private Transform _roomsTransform;
+        [SerializeField] private bool _debugMode;
 
         // The calculated world scaled room size
         private Vector2 _totalRoomSize;
@@ -46,7 +47,15 @@ namespace Dungeons
             PathPosition startPathPos = new PathPosition(transform.position);
 
             // Main path
-            CreateNewPath(startPathPos, true);
+            List<PathPosition> newPath;
+
+            do
+            {
+                newPath = CreateNewPath(startPathPos, true);
+            } while (newPath.Count == 0);
+
+            AddPathToAllPaths(newPath);
+            Debug.LogWarning("Main path generated");
 
             // Create branches
             for (int i = 0; i < _allPaths.Count; i++)
@@ -56,23 +65,30 @@ namespace Dungeons
                     if (_allPaths[i][j].IsBranchIntersection)
                     {
                         //Drawbranch
-                        CreateNewPath(_allPaths[i][j], false, false, true, false);
-                        Debug.Log(_allPaths[i][j].Position);
+                        newPath = CreateNewPath(_allPaths[i][j], false, true, false);
+
+                        if (newPath.Count != 0)
+                        {
+                            AddPathToAllPaths(newPath);
+                            Debug.LogWarning("New branch path generated");
+                        }
                     }
             }
 
             SetAllPathOpenings();
+            Debug.LogWarning("All path openings set");
 
             foreach (List<PathPosition> ps in _allPaths)
             {
                 //SetPathOpenings(ps);
                 SpawnRoomsInPathPositions(ps);
             }
+            Debug.LogWarning("Rooms spawned.");
 
         }
 
 
-        private void CreateNewPath(PathPosition startPos, bool addFirstPosToCollection, bool restartIfStuck = true, bool ignoreDungeonInfo = false, bool createNewBranches = true)
+        private List<PathPosition> CreateNewPath(PathPosition startPos, bool addFirstPosToCollection, bool ignoreDungeonInfo = false, bool createNewBranches = true)
         {
             List<PathPosition> newDrawnPath = new List<PathPosition>(150);
             if (addFirstPosToCollection)
@@ -116,7 +132,7 @@ namespace Dungeons
             byte? lastDir = null;
             byte pathDir = dirs[UnityEngine.Random.Range(0, dirs.Length)];
             float rndNum;
-            while (Mathf.Abs(pathIndex.x) < Mathf.Abs(_dungeonInfo.Size.x) && Mathf.Abs(pathIndex.y) < Mathf.Abs(_dungeonInfo.Size.y) && loops < maxLoops && rooms < _dungeonInfo.MaxMainRooms)
+            while (Mathf.Abs(pathIndex.x) < Mathf.Abs(_dungeonInfo.Size.x) && Mathf.Abs(pathIndex.y) < Mathf.Abs(_dungeonInfo.Size.y) && loops < maxLoops && rooms < _dungeonInfo.MaxRoomsPerPath)
             {
                 rndNum = UnityEngine.Random.Range(0.0f, 1.0f);
                 bool shouldChange = rndNum < _dungeonInfo.Complexity;
@@ -158,18 +174,22 @@ namespace Dungeons
             }
             GC.Collect();
 
-            // Creation is stuck 
-            if (loops >= maxLoops && restartIfStuck)
-            {
-                // Restart
-                CreateNewPath(startPos, addFirstPosToCollection, restartIfStuck);
-            }
-            else
-            {
-                Debug.LogWarning("Path Done");
+            //  Recursive
+            // // Creation is stuck 
+            // if (loops >= maxLoops && restartIfStuck)
+            // {
+            //     // Restart
+            //     CreateNewPath(startPos, addFirstPosToCollection, restartIfStuck);
+            // }
+            // else
+            // {
+            //     Debug.LogWarning("Path Done");
 
-                AddPathToAllPaths(newDrawnPath);
-            }
+
+            //     AddPathToAllPaths(newDrawnPath);
+            // }
+
+            return newDrawnPath;
 
             void NewRoom()
             {
@@ -178,7 +198,7 @@ namespace Dungeons
 
                 PathPosition newPos = new PathPosition(pathPivot, pathIndex);
 
-                if (rndNum < _dungeonInfo.Complexity / 3 && createNewBranches)
+                if (rndNum < _dungeonInfo.Complexity / 3 && createNewBranches && _dungeonInfo.GenerateBranches)
                 {
                     newPos.TriggerBranch();
                 }
@@ -362,50 +382,62 @@ namespace Dungeons
 
         private void OnDrawGizmos()
         {
-            if (_allPaths != null)
+            if (_debugMode)
             {
-                //bool toggle = false;
-                foreach (List<PathPosition> c in _allPaths)
+                Gizmos.color = Color.magenta;
+                Gizmos.DrawWireCube(transform.position, (new Vector3(_totalRoomSize.x, _totalRoomSize.y) * (Vector2)_dungeonInfo.Size * 2));
+
+                if (_allPaths != null)
                 {
-                    foreach (PathPosition p in c)
+                    //bool toggle = false;
+                    foreach (List<PathPosition> c in _allPaths)
                     {
-                        if (p.IsBranchIntersection)
+                        foreach (PathPosition p in c)
                         {
-                            Gizmos.color = Color.yellow;
-                            Gizmos.DrawCube(p.Position, new Vector3(16, 16, 16));
-                        }
-                        if (p == c[c.Count - 1])
-                        {
-                            Gizmos.color = Color.red;
-                            Gizmos.DrawSphere(p.Position, 6.0f);
-                        }
-                        else if (p == c[0])
-                        {
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawSphere(p.Position, 6.0f);
-                        }
-                        else
-                        {
-                            Gizmos.color = Color.cyan;
-                            Gizmos.DrawWireSphere(p.Position, 4.5f);
-                        }
+                            if (p.IsBranchIntersection)
+                            {
+                                Gizmos.color = Color.yellow;
+                                Gizmos.DrawWireCube(p.Position, new Vector3(16, 16, 16));
+                            }
+                            if (p == c[c.Count - 1])
+                            {
+                                if (c == _allPaths[0])
+                                    Gizmos.color = Color.magenta;
+                                else
+                                    Gizmos.color = Color.red;
+                                Gizmos.DrawSphere(p.Position, 6.0f);
+                            }
+                            else if (p == c[0])
+                            {
+                                if (c == _allPaths[0])
+                                    Gizmos.color = Color.green;
+                                else
+                                    Gizmos.color = Color.cyan;
+                                Gizmos.DrawSphere(p.Position, 6.0f);
+                            }
+                            else
+                            {
+                                Gizmos.color = Color.grey;
+                                Gizmos.DrawWireSphere(p.Position, 4.5f);
+                            }
 
-                        // if (toggle)
-                        //     Gizmos.color = Color.cyan;
-                        // else 
-                        //     Gizmos.color = Color.magenta;
+                            // if (toggle)
+                            //     Gizmos.color = Color.cyan;
+                            // else 
+                            //     Gizmos.color = Color.magenta;
 
-                        // if(v.Openings[0])
-                        //     Gizmos.DrawSphere(v.Position - new Vector2(_totalRoomSize.x/3, 0), 4.0f);
-                        // if(v.Openings[1])
-                        //     Gizmos.DrawSphere(v.Position + new Vector2(_totalRoomSize.x/3, 0), 4.0f);
-                        // if(v.Openings[2])
-                        //     Gizmos.DrawSphere(v.Position + new Vector2(0, _totalRoomSize.y/3), 4.0f);
-                        // if(v.Openings[3])
-                        //     Gizmos.DrawSphere(v.Position - new Vector2(0, _totalRoomSize.y/3), 4.0f);
+                            // if(v.Openings[0])
+                            //     Gizmos.DrawSphere(v.Position - new Vector2(_totalRoomSize.x/3, 0), 4.0f);
+                            // if(v.Openings[1])
+                            //     Gizmos.DrawSphere(v.Position + new Vector2(_totalRoomSize.x/3, 0), 4.0f);
+                            // if(v.Openings[2])
+                            //     Gizmos.DrawSphere(v.Position + new Vector2(0, _totalRoomSize.y/3), 4.0f);
+                            // if(v.Openings[3])
+                            //     Gizmos.DrawSphere(v.Position - new Vector2(0, _totalRoomSize.y/3), 4.0f);
 
-                        //toggle = !toggle;
-                        //Gizmos.DrawWireCube(v, _totalRoomSize);
+                            //toggle = !toggle;
+                            //Gizmos.DrawWireCube(v, _totalRoomSize);
+                        }
                     }
                 }
             }

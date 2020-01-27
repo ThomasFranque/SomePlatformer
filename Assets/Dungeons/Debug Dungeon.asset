@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dungeonRoom: {fileID: 978546304921881775, guid: 1114d28473f82e34a84a52e25e7afc3a,
     type: 3}
-  _maxDungeonSize: {x: 8, y: 8}
-  _maxMainRooms: 15
-  _complexity: 0.8
+  _maxDungeonSize: {x: 5, y: 5}
+  _maxRoomsPerPath: 5
+  _complexity: 0.6
+  _generateBranches: 1
   _ascending: 0
   _backwards: 0
