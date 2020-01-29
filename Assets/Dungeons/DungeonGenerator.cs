@@ -198,7 +198,7 @@ namespace Dungeons
 
                 PathPosition newPos = new PathPosition(pathPivot, pathIndex);
 
-                if (rndNum < _dungeonInfo.Complexity / 3 && createNewBranches && _dungeonInfo.GenerateBranches)
+                if (rndNum < _dungeonInfo.Complexity / 3 && (createNewBranches || _dungeonInfo.BranchesHaveBranches) && _dungeonInfo.GenerateBranches)
                 {
                     newPos.TriggerBranch();
                 }
@@ -417,7 +417,10 @@ namespace Dungeons
                             }
                             else
                             {
-                                Gizmos.color = Color.grey;
+                                if (c == _allPaths[0])
+                                    Gizmos.color = Color.white;
+                                else Gizmos.color = Color.grey;
+
                                 Gizmos.DrawWireSphere(p.Position, 4.5f);
                             }
 

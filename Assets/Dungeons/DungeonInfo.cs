@@ -10,6 +10,8 @@ namespace Dungeons
         [SerializeField] private int _maxRoomsPerPath = 15;
         [Range(0.0f,1.0f)] [SerializeField] private float _complexity = 0.6f;
         [SerializeField] private bool _generateBranches = true;
+        [Tooltip("Exponentially increases generation time!")]
+        [SerializeField] private bool _branchesHaveBranches = false;
 
         [Tooltip("It is not guaranteed, will only increase the odds.")]
         [SerializeField] private bool _ascending, _backwards = false;
@@ -19,6 +21,7 @@ namespace Dungeons
         public float Complexity => _complexity;
 
         public bool GenerateBranches => _generateBranches;
+        public bool BranchesHaveBranches => _branchesHaveBranches;
 
         public bool Ascending => _ascending;
         public bool Backwards => _backwards;
