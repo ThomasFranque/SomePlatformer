@@ -7,12 +7,11 @@ public class Interactible : MonoBehaviour
 {
 	[SerializeField] private DialogBox _inputPopUpScript = null;
 	[SerializeField] private Vector2 _interactionRange = new Vector2(24, 2);
+	[SerializeField] private Vector2 _interactionOffset = new Vector2(0,2);
 
 	protected Player Player { get; private set; }
 
 	private Action PlayerInteraction;
-
-	private Vector3 _offset = new Vector2(0, 3);
 	private bool _playerRangeTrigger = false;
 
 	protected bool IsPlayerInRange
@@ -20,7 +19,7 @@ public class Interactible : MonoBehaviour
 		get
 		{
 			Collider2D col = Physics2D.OverlapBox(
-				transform.position + _offset,
+				transform.position + (Vector3)_interactionOffset,
 				_interactionRange,
 				0,
 				LayerMask.GetMask("Player"));
@@ -94,6 +93,6 @@ public class Interactible : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawWireCube(transform.position + _offset, new Vector3(_interactionRange.x, _interactionRange.y, 1));
+		Gizmos.DrawWireCube(transform.position + (Vector3)_interactionOffset, new Vector3(_interactionRange.x, _interactionRange.y, 1));
 	}
 }

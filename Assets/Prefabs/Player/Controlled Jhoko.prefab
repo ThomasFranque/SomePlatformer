@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 5
   deathParticle: {fileID: 902305986921298800}
-  _selfKnockBackAmmount: {x: 1, y: 2.5}
+  _selfKnockBackAmount: {x: 2, y: 2.5}
   _invulnerabilityTime: 0.5
   _knockBackTime: 0.5
   _soundClips: {fileID: 0}

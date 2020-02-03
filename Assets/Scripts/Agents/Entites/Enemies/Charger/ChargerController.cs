@@ -104,9 +104,9 @@ public class ChargerController : Enemy, IBehaviourController
 	private void Patrol()
 	{
 		if (transform.rotation == Quaternion.identity)
-			SetVelocity(15, rb.velocity.y);
+			SetVelocity(15, _rb.velocity.y);
 		else
-			SetVelocity(-15, rb.velocity.y);
+			SetVelocity(-15, _rb.velocity.y);
 	}
 	#endregion
 
@@ -125,7 +125,7 @@ public class ChargerController : Enemy, IBehaviourController
 		{
 			// On Charge End
 			_timeOfChargeEnd = Time.time;
-			SetVelocity(rb.velocity / 2);
+			SetVelocity(_rb.velocity / 2);
 			CurrentBehaviour = IdleBehaviour;
 			_anim.SetBool("Charging", false);
 		}
@@ -135,7 +135,7 @@ public class ChargerController : Enemy, IBehaviourController
 	{
 		base.OnHitPlayer();
 		if (CurrentBehaviour == ChargeBehaviour)
-			SetVelocity(rb.velocity / 3);
+			SetVelocity(_rb.velocity / 3);
 		else
 			Flip();
 	}
@@ -143,8 +143,8 @@ public class ChargerController : Enemy, IBehaviourController
 	protected override void OnPlayerStomp(Player p)
 	{
 		if (CurrentBehaviour == ChargeBehaviour)
-			SetVelocity(rb.velocity / 3);
-		else if (!invulnerable)
+			SetVelocity(_rb.velocity / 3);
+		else if (!_invulnerable)
 			Flip();
 		base.OnPlayerStomp(p);
 
@@ -163,7 +163,7 @@ public class ChargerController : Enemy, IBehaviourController
 	}
 	public void SetVelocity(Vector2 newVelocity)
 	{
-		rb.velocity = newVelocity;
+		_rb.velocity = newVelocity;
 	}
 
 	private void OnDrawGizmos()

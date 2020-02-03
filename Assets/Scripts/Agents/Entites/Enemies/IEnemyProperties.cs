@@ -4,6 +4,6 @@
 	bool CanBeStomped { get; }
 	bool UseColliderAsTrigger { get; }
 	float StompYSpeed { get; }
-	float KnockBackIntesity { get; }
+	float KnockBackIntensity { get; }
 }
 

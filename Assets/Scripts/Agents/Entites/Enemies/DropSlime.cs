@@ -72,7 +72,7 @@ public class DropSlime : Enemy
 
 		_groundCheckOffset = new Vector2(0, -12f);
 		_bottomColSize[0] = (selfCol as CapsuleCollider2D).size[0];
-		rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
+		_rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
 		_groundPos = GetGroundPosition();
 		_preWarnOffsetVector.x = _preWarnOffset;
 		_groundedVisionRangeVector.y = _groundedVisionRange;
@@ -140,10 +140,10 @@ public class DropSlime : Enemy
 
 	private void OnDrop()
 	{
-		if (rb.velocity.y >= 0)
+		if (_rb.velocity.y >= 0)
 		{
-			rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-			rb.velocity = new Vector2(0, _dropSpeed);
+			_rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+			_rb.velocity = new Vector2(0, _dropSpeed);
 			_thrustSystem.Emit(5);
 			_anim.SetTrigger("Attack");
 		}
@@ -152,8 +152,8 @@ public class DropSlime : Enemy
 	private void OnLand()
 	{
 		transform.position = _groundPos - (_groundCheckOffset * transform.localScale.x);
-		rb.velocity = new Vector2(0, 0);
-		rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+		_rb.velocity = new Vector2(0, 0);
+		_rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
 		selfCol.offset = _bottomColOffset;
 		(selfCol as CapsuleCollider2D).size = _bottomColSize;
 

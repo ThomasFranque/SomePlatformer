@@ -70,17 +70,17 @@ public class Player : Entity
 
 	private float GetElapsedTime(float timeToElapse) => Time.time - timeToElapse;
 	// Properties
-	public Rigidbody2D RigidBody2D => rb;
+	public Rigidbody2D RigidBody2D => _rb;
 	public	bool Dead { get; private set; }
 	private bool HAxisFullyPressed => !(hAxis > -0.99f && hAxis < 0.99f);
 	private bool ReadInput => _readInputs && !KnockedBack && _interactionReadInputs;
 	public	bool PushingWall => OnGround && OnWall && hAxis != 0;
-	public	bool WallSlinding => OnWall && !OnGround && rb.velocity.y <= 0.0f;
+	public	bool WallSlinding => OnWall && !OnGround && _rb.velocity.y <= 0.0f;
 	public  bool IsDashing => (GetElapsedTime(timeOfDash)) < dashTime;
 	private bool CanSlideOnWall => OnWall && canWallJump && !_cantSlideWall && !KnockedBack;
 	private bool GroundJumpAllowed => ((OnGround && !OnWall) || (OnGround && OnWall)) && canGroundJump;
 	private bool WallJumpAllowed => WallSlinding && canWallJump && !_cantSlideWall;
-	private bool IsJumping => (GetElapsedTime(timeOfJump)) < jumpTime && rb.velocity[1] > 0 || _stompJump;
+	private bool IsJumping => (GetElapsedTime(timeOfJump)) < jumpTime && _rb.velocity[1] > 0 || _stompJump;
 	private bool DashOnCooldown => (GetElapsedTime(timeOfDash)) < dashCooldown + dashTime;
 	private bool CanDash => !GroundAttackAnimationPlaying && !DashOnCooldown && _hitGroundAfterDash;
 	public bool GroundAttackAnimationPlaying
@@ -157,7 +157,7 @@ public class Player : Entity
 		//! REFACTURE THIS METHOD, LIKE, URGENTLY ////
 		//! //////////////////////////////////////////
 		
-		Vector2 currentVelocity = rb.velocity;
+		Vector2 currentVelocity = _rb.velocity;
 
 		if (!IsDashing)
 		{
@@ -190,7 +190,7 @@ public class Player : Entity
 				// Jump intention
 				if (GroundJumpAllowed)
 				{
-					rb.gravityScale = 10.0f;
+					_rb.gravityScale = 10.0f;
 					currentVelocity.y = jumpVelocity;
 					timeOfJump = Time.time;
 					canGroundJump = false;
@@ -199,7 +199,7 @@ public class Player : Entity
 				// Wall jump
 				else if (WallJumpAllowed)
 				{
-					rb.gravityScale = 10.0f;
+					_rb.gravityScale = 10.0f;
 					currentVelocity.y = jumpVelocity / 1.3f;
 					timeOfJump = Time.time + jumpTime / 2;
 					canWallJump = false;
@@ -216,14 +216,14 @@ public class Player : Entity
 				// Rising and pressing space
 				else if (IsJumping)
 				{
-					rb.gravityScale = 20f;
+					_rb.gravityScale = 20f;
 				}
 				// Falling with space pressed
 				else
 				{
 					if (!OnGround && currentVelocity[1] > 0)
 						currentVelocity[1] -= 4;
-					rb.gravityScale = 30.0f;
+					_rb.gravityScale = 30.0f;
 				}
 			}
 			// Jump not pressed
@@ -246,11 +246,11 @@ public class Player : Entity
 					currentVelocity[0] = 0;
 					currentVelocity[1] = -1 * (_WALL_SLIDE_FALLOFF_FACTOR * _timesWallJumped);
 
-					rb.gravityScale = 0.0f;
+					_rb.gravityScale = 0.0f;
 				}
 				else
 				{
-					rb.gravityScale = 60.0f;
+					_rb.gravityScale = 60.0f;
 				}
 
 				// MAKE METHOD ONLAND() IN THE FUTURE
@@ -261,7 +261,7 @@ public class Player : Entity
 					_canAirAttack = true;
 					_hitGroundAfterDash = true;
 					_stompJump = false;
-					rb.gravityScale = 60.0f; 
+					_rb.gravityScale = 60.0f; 
 				}
 
 				if (OnWall) _hitGroundAfterDash = true;
@@ -313,7 +313,7 @@ public class Player : Entity
 	private void UpdateAnimator()
 	{
 		_anim.SetFloat("hAxis", hAxis);
-		_anim.SetFloat("yVeloc", rb.velocity.y);
+		_anim.SetFloat("yVeloc", _rb.velocity.y);
 		_anim.SetBool("grounded", OnGround);
 		_anim.SetBool("canMove", canMove);
 		_anim.SetBool("crouched", crouchPressed);
@@ -358,7 +358,7 @@ public class Player : Entity
 		if (CanGroundAttack)
 		{
 			timeOfAttack = Time.time;
-			Vector2 currentVelocity = rb.velocity;
+			Vector2 currentVelocity = _rb.velocity;
 
 			if (OnGround)
 			{
@@ -409,9 +409,9 @@ public class Player : Entity
 	{
 		_dashVelocityChange = false;
 		if (!suppress)
-			return new Vector2(transform.rotation == Quaternion.identity ? dashVelocity / 2 : -dashVelocity / 2, 0);
+			return new Vector2(transform.rotation == Quaternion.identity ? dashVelocity / 2 : -dashVelocity / 2, -10);
 		else
-			return rb.velocity;
+			return _rb.velocity;
 	}
 	private void StopDash()
 	{
@@ -436,11 +436,11 @@ public class Player : Entity
 		if (IsDashing)
 			StopDash();
 		_stompJump = true;
-		SetVelocity(new Vector2(rb.velocity.x, newYSpeed));
+		SetVelocity(new Vector2(_rb.velocity.x, newYSpeed));
 	} 
 	public void SetVelocity(Vector2 newVelocity)
 	{
-		rb.velocity = newVelocity;
+		_rb.velocity = newVelocity;
 	}
 	public void SetInputReading(bool active)
 	{
@@ -474,13 +474,13 @@ public class Player : Entity
 
 	public override void KnockBack(bool cameFromRight, float knockSpeed)
 	{
-		if (invulnerable) return;
+		if (_invulnerable) return;
 
 		base.KnockBack(cameFromRight, knockSpeed);
 	}
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
-		if (!invulnerable)
+		if (!_invulnerable)
 		{
 			base.OnHit(cameFromRight, knockSpeed, dmg);
 

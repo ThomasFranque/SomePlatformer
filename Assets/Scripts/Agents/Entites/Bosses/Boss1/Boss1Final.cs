@@ -44,12 +44,7 @@ public class Boss1Final : MonoBehaviour
 		_bossPhysical.SetHurtsPlayer(false);
 		_bossPhysical.SetCanBeStomped(false);
 	}
-
-	// Update is called once per frame
-	private void Update()
-	{
-
-	}
+	
 	// Called on jump animation Event
 	private void OnJumpEnd()
 	{

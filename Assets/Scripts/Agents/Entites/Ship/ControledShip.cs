@@ -37,7 +37,7 @@ public class ControledShip : Entity
 
     private void FixedUpdate()
     {
-        Vector2 newVelocity = rb.velocity;
+        Vector2 newVelocity = _rb.velocity;
 
 		float _calculatedAcceleration = _thisShipShoot.IsShooting ? 
 		_acceleration / _slowWhileShootingAmmount : 
@@ -56,11 +56,11 @@ public class ControledShip : Entity
 
         CapVector(ref newVelocity);
 
-        rb.velocity = newVelocity;
+        _rb.velocity = newVelocity;
 
-        if (rb.velocity != Vector2.zero)
+        if (_rb.velocity != Vector2.zero)
         {
-            Vector2 v = rb.velocity;
+            Vector2 v = _rb.velocity;
             float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         }

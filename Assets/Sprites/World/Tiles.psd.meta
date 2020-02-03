@@ -249,12 +249,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4, y: 4}
-        - {x: -4, y: -4}
-        - {x: 2, y: -4}
-        - {x: 4, y: -3}
-        - {x: 4, y: 4}
+      outline: []
       physicsShape:
       - - {x: -3, y: 3}
         - {x: -4, y: 2}

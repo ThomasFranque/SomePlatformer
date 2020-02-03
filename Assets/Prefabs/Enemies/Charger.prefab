@@ -171,10 +171,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 5
   deathParticle: {fileID: 2735059813066718262}
-  _selfKnockBackAmmount: {x: 0.3, y: 2}
-  _invulnerabilityTime: 0.5
+  _selfKnockBackAmount: {x: 1, y: 1}
+  _invulnerabilityTime: 0
   _knockBackTime: 0.5
+  _soundClips: {fileID: 0}
   _selfProperties: {fileID: 11400000, guid: c0bfd9aa9f103d64d88b622c201fddb4, type: 2}
+  _hitColor: {r: 1, g: 1, b: 1, a: 1}
   _hurtsPlayer: 1
   _canBeStomped: 1
   _useColliderAsTrigger: 0

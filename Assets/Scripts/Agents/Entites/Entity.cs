@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,20 +11,22 @@ public class Entity : MonoBehaviour, ICanBeHit
 	[Header("Entity")]
 	[SerializeField] private int _hp = 3;
 	[SerializeField] protected ParticleSystem deathParticle;
-	[SerializeField] protected Vector2 _selfKnockBackAmmount = new Vector2(32.0f, 2.5f);
+	[SerializeField] protected Vector2 _selfKnockBackAmount = new Vector2(32.0f, 2.5f);
 	[SerializeField] protected float _invulnerabilityTime = 0.5f;
 	[SerializeField] protected float _knockBackTime = 0.5f;
 
 	[SerializeField] protected SoundClips _soundClips;
 
 	protected Animator _anim;
+	protected Color _srBaseColor;
 
 	public int HP { get => _hp; set { _hp = value; } }
+	public bool Dead => HP <= 0;
 
-	private float knockBackTimer;
+	private float _knockBackTimer;
 
-	protected Rigidbody2D rb;
-	protected SpriteRenderer sr;
+	protected Rigidbody2D _rb;
+	protected SpriteRenderer _sr;
 
 	protected Collider2D selfCol;
 
@@ -34,16 +37,14 @@ public class Entity : MonoBehaviour, ICanBeHit
 	protected Vector2 _groundCheckBoxSize = new Vector2 (.15f, .25f);
 	protected Vector3 _groundCheckOffset = new Vector2 (0.0f, 0.0f);
 
-	protected Stack<string> ignoreCollisionTags;
-
-	protected bool invulnerable;
-	protected bool TurnedRight => transform.right.x > 0.0f;
+	protected bool _invulnerable;
+	public bool FacingRight => transform.right.x > 0.0f;
 
 	protected bool KnockedBack
 	{
 		get
 		{
-			if (knockBackTimer > 0.0f)
+			if (_knockBackTimer > 0.0f)
 				return true;
 			return false;
 		}
@@ -68,35 +69,35 @@ public class Entity : MonoBehaviour, ICanBeHit
 
 	protected virtual void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
+		_rb = GetComponent<Rigidbody2D>();
 		selfCol = GetComponent<Collider2D>();
 
-		sr = GetComponent<SpriteRenderer>();
+		_sr = GetComponent<SpriteRenderer>();
 		_anim = GetComponent<Animator>();
 
 		if (_anim == null)
 			_anim = GetComponentInChildren<Animator>();
-		if (sr == null)
-			sr = GetComponentInChildren<SpriteRenderer>();
+		if (_sr == null)
+			_sr = GetComponentInChildren<SpriteRenderer>();
 		if (deathParticle == null)
 			deathParticle = GetComponentInChildren<ParticleSystem>();
-		ignoreCollisionTags = new Stack<string>();
 
+		_srBaseColor = _sr.color;
 		_blink = new GFXBlink();
 		_soundPlayer = new SoundPlayer();
 	}
 	protected virtual void Update()
 	{
 		UpdateKnockback();
-		UpdateInvunerabilityEffect();
+		UpdateInvulnerabilityEffect();
 	}
 
 	protected void CapMaxYVelocity()
 	{
-		if (rb.velocity.y > 150)
-			rb.velocity = new Vector2 (rb.velocity.x, 150);
-		if (rb.velocity.y < -120)
-			rb.velocity = new Vector2(rb.velocity.x, -120);
+		if (_rb.velocity.y > 150)
+			_rb.velocity = new Vector2 (_rb.velocity.x, 150);
+		if (_rb.velocity.y < -120)
+			_rb.velocity = new Vector2(_rb.velocity.x, -120);
 	}
 
 	protected virtual void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
@@ -104,7 +105,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 		//Debug.Log($"{name} was HIT!");
 
 		HP -= dmg;
-		knockBackTimer = _knockBackTime;
+		_knockBackTimer = _knockBackTime;
 
 		KnockBack(cameFromRight, knockSpeed);
 
@@ -117,7 +118,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 
 	protected void SetInvulnerability(bool active)
 	{
-		invulnerable = active;
+		_invulnerable = active;
 		if (gameObject.activeSelf)
 			StartCoroutine(CSetInvulnerability(!active));
 	}
@@ -137,23 +138,23 @@ public class Entity : MonoBehaviour, ICanBeHit
 	private IEnumerator CSetInvulnerability(bool active)
 	{
 		yield return new WaitForSeconds(_invulnerabilityTime);
-		invulnerable = active;
+		_invulnerable = active;
 	}
 
-	private void UpdateInvunerabilityEffect()
+	protected virtual void UpdateInvulnerabilityEffect()
 	{
-		//Blink when necessary (invunerable)
-		if (invulnerable)
-			_blink.DoBlink(sr, 0.04f);
-		else if (!sr.enabled && !invulnerable)
-			sr.enabled = true;
+		//Blink when necessary (invulnerable)
+		if (_invulnerable)
+			_blink.DoBlink(_sr, 0.04f);
+		else if (!_sr.enabled && !_invulnerable)
+			_sr.enabled = true;
 	}
 
 	private void UpdateKnockback()
 	{
 		// Knockback
-		if (knockBackTimer > 0.00f)
-			knockBackTimer -= Time.deltaTime;
+		if (_knockBackTimer > 0.00f)
+			_knockBackTimer -= Time.deltaTime;
 	}
 
 	public void Hit(bool cameFromRight, float knockSpeed, byte damage = 1)
@@ -163,41 +164,58 @@ public class Entity : MonoBehaviour, ICanBeHit
 
 	public void InstaKill()
 	{
-		HP -= HP;
+		Hit(true, 0, (byte)HP);
 	}
 
 	public virtual void KnockBack(bool cameFromRight, float knockSpeed)
 	{
-		if (invulnerable) return;
+		if (_invulnerable) return;
 
-		Vector2 finalKnock = _selfKnockBackAmmount;
+		Vector2 finalKnock = _selfKnockBackAmount;
 		finalKnock.x = cameFromRight ? -finalKnock.x : finalKnock.x;
-		if (rb != null)
-			rb.velocity = finalKnock * knockSpeed;
+		if (_rb != null)
+			_rb.velocity = finalKnock * knockSpeed;
 	}
 	public virtual void AddictiveKnockBack(bool cameFromRight, float knockSpeed)
 	{
-		Vector2 finalKnock = _selfKnockBackAmmount;
+		Vector2 finalKnock = _selfKnockBackAmount;
 		finalKnock.x = cameFromRight ? -finalKnock.x : finalKnock.x;
 
-		if (rb != null)
-			rb.velocity += finalKnock * knockSpeed;
+		if (_rb != null)
+			_rb.velocity += finalKnock * knockSpeed;
 	}
 
 	private void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "Player")
 			OnPlayerCollision(col);
-		else if (col.gameObject.tag == "Tilemap")
-			OnEnterGroundCollision();
 	}
-
-	protected virtual void OnEnterGroundCollision() { }
-	protected virtual void OnExitGroundCollision() { }
 
 	protected void SetGravityScale(float newG)
 	{
-		
+		_rb.gravityScale = newG;
+	}
+	
+	protected void SetSpriteColor(Color newColor)
+	{
+		_sr.color = newColor;
+	}
+
+	protected Color StoreCurrentSRColor()
+	{
+		_srBaseColor = _sr.color;
+		return _srBaseColor;
+	}
+
+	protected void WaitBeforeAction(Action action, float seconds)
+	{
+		StartCoroutine(CWaitBeforeAction(action, seconds));
+	}
+
+	private IEnumerator CWaitBeforeAction(Action action, float seconds)
+	{
+		yield return new WaitForSeconds(seconds);
+		action?.Invoke();
 	}
 
 	private void OnDrawGizmos()

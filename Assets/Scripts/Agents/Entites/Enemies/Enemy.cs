@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+	private const float _HIT_FLASH_DURATION = 0.06f;
+	private const byte _FLASHES_WHEN_HIT = 1;
 	private const float _STOMP_CENTER_Y_OFFSET = 0.0f;
 	private const float _TIME_BEFORE_FINAL_DEATH = .15f;
 
 	[Header("Enemy")]
 	[SerializeField] protected EnemyProperties _selfProperties;
 
+	[SerializeField] private Color _hitColor = Color.white;
 	[SerializeField] protected bool _hurtsPlayer = true;
 	[SerializeField] protected bool _canBeStomped = true;
 	[SerializeField] protected bool _useColliderAsTrigger = false;
 	[SerializeField] private float _stompYSpeed = 250.0f;
 	[SerializeField] private float _knockIntensity = 50.0f;
+	[SerializeField] private byte _damage = 1;
 
 	protected bool _colliderTouchingSolidGround;
 
@@ -22,7 +26,6 @@ public class Enemy : Entity
 	{
 		base.Start();
 		GetEnemyProperties();
-		_anim = GetComponentInChildren<Animator>();
 	}
 
 	protected void GetEnemyProperties()
@@ -31,9 +34,11 @@ public class Enemy : Entity
 		{
 			_hurtsPlayer = _selfProperties.HurtsPlayer;
 			_canBeStomped = _selfProperties.CanBeStomped;
+			_hitColor = _selfProperties.HitColor;
 			_useColliderAsTrigger = _selfProperties.UseColliderAsTrigger;
 			_stompYSpeed = _selfProperties.StompYSpeed;
-			_knockIntensity = _selfProperties.KnockBackIntesity;
+			_knockIntensity = _selfProperties.KnockBackIntensity;
+			_damage = _selfProperties.Damage;
 		}
 		else
 			Debug.LogWarning($"Enemy Properties on {name.ToUpper()} not assigned. Using default values.\n Please create one from the asset menu.");
@@ -41,9 +46,10 @@ public class Enemy : Entity
 
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
-		if (invulnerable) return;
+		if (_invulnerable) return;
 		CameraActions.ActiveCamera.Shake(10 * dmg, 20 * dmg, 0.06f);
 		deathParticle?.Emit(Random.Range(3 * dmg, 5 * dmg));
+		StartCoroutine(Flash());
 
 		base.OnHit(cameFromRight, knockSpeed, dmg);
 		SetInvulnerability(true);
@@ -51,7 +57,7 @@ public class Enemy : Entity
 
 	protected override void OnDeath(byte dmg = 1)
 	{
-			StartCoroutine(CDeathSequence(dmg));
+		StartCoroutine(CDeathSequence(dmg));
 	}
 
 	protected override void OnPlayerCollision(Collision2D col)
@@ -91,13 +97,10 @@ public class Enemy : Entity
 			if (_hurtsPlayer) HitPlayer(col);
 
 		}
-		else if (col.gameObject.tag == "Tilemap") 
-			OnTriggerExitGroundCollision();
 	}
 	private void OnTriggerExit2D(Collider2D col)
 	{
-		if (col.gameObject.tag == "Tilemap")
-			OnTriggerEnterGroundCollision();
+
 	}
 
 	private void HitPlayer(Collider2D col)
@@ -108,7 +111,7 @@ public class Enemy : Entity
 			bool cameFromRight = p.transform.position.x < transform.position.x;
 			OnHitPlayer();
 
-			p.Hit(cameFromRight, _knockIntensity);
+			p.Hit(cameFromRight, _knockIntensity, _damage);
 		}
 	}
 
@@ -123,38 +126,35 @@ public class Enemy : Entity
 		Hit(true, 0.0f);
 	}
 
-	protected virtual void OnTriggerEnterGroundCollision()
-	{
-		_colliderTouchingSolidGround = true;
-	}
-	protected virtual void OnTriggerExitGroundCollision()
-	{
-		_colliderTouchingSolidGround = false;
-	}
-
-	protected override void OnEnterGroundCollision()
-	{
-		base.OnEnterGroundCollision();
-		_colliderTouchingSolidGround = true;
-	}
-	protected override void OnExitGroundCollision()
-	{
-		base.OnExitGroundCollision();
-		_colliderTouchingSolidGround = false;
-	}
-
 	private void OnCollisionStay2D(Collision2D collision)
 	{
 		if (collision.transform.CompareTag("Player"))
 			OnPlayerCollision(collision);
 	}
 
+	protected override void UpdateInvulnerabilityEffect(){}
+
 	private IEnumerator CDeathSequence(byte deathDmg)
 	{
 		_hurtsPlayer = false;
-		sr.color = Color.white;
+		_sr.color = Color.white;
 		yield return new WaitForSeconds(_TIME_BEFORE_FINAL_DEATH);
 		deathParticle?.Emit(Random.Range(35, 55));
 		base.OnDeath(deathDmg);
 	}
+
+	//https://www.reddit.com/r/Unity2D/comments/8xcw8g/how_can_i_make_a_sprite_blink_in_white_when/
+	protected IEnumerator Flash()
+    {
+		StoreCurrentSRColor();
+        for (int i = 0; i < _FLASHES_WHEN_HIT; i++)
+        {
+			_anim.enabled = false;
+            SetSpriteColor(_hitColor);
+            yield return new WaitForSeconds(_HIT_FLASH_DURATION);
+			if (!Dead) SetSpriteColor(_srBaseColor);
+			_anim.enabled = true;
+            yield return new WaitForSeconds(_HIT_FLASH_DURATION);
+        }
+    }
 }

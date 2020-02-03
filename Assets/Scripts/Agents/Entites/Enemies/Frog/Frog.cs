@@ -24,7 +24,7 @@ public class Frog : Enemy
 	{
 		base.Update();
 
-		_anim.SetFloat("YVeloc", rb.velocity[1]);
+		_anim.SetFloat("YVeloc", _rb.velocity[1]);
 	}
 
 	// Returns true if new rotation is turned right
@@ -57,7 +57,7 @@ public class Frog : Enemy
 	private void Jump()
 	{
 		MaybeRotate();
-		rb.velocity = _facingRight ? _jumpSpeed : InvertedJumpSpeed;
+		_rb.velocity = _facingRight ? _jumpSpeed : InvertedJumpSpeed;
 	}
 
 	private void Walk()
@@ -66,7 +66,7 @@ public class Frog : Enemy
 		Vector2 newVel = _jumpSpeed;
 		newVel.x *= _facingRight ? 2 : -2;
 		newVel.y = 0;
-		rb.velocity = newVel;
+		_rb.velocity = newVel;
 	}
 
 	private void MaybeRotate()

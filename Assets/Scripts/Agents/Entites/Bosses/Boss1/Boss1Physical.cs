@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Boss1Physical : Enemy
 {
+	[Header("Boss Properties")]
 	[SerializeField] private int _stage2MinHP = 20;
 	[SerializeField] private int _stage3MinHP = 10;
 
 	private Animator _bossAnimator;
 	private float _timeOfLastHit;
-	private bool _invulnerable;
 
 	private byte _currentStage = 1;
 	private bool Stage2Reached => HP <= _stage2MinHP;
@@ -23,8 +23,9 @@ public class Boss1Physical : Enemy
 		GetEnemyProperties();
 		_blink = new GFXBlink();
 		selfCol = GetComponent<Collider2D>();
-		sr = GetComponentInChildren<SpriteRenderer>();
+		_sr = GetComponentInChildren<SpriteRenderer>();
 		_bossAnimator = GetComponentInParent<Animator>();
+		_anim = _bossAnimator;
 	}
 
 	protected override void Update()
@@ -43,7 +44,6 @@ public class Boss1Physical : Enemy
 			_bossAnimator.SetTrigger("Final Stage");
 			_currentStage++;
 			Debug.Log("Boss Reached Stage 3");
-			Debug.Log(_currentStage);
 			return;
 		}
 		else if (Stage2Reached && _currentStage != 2)
@@ -76,6 +76,6 @@ public class Boss1Physical : Enemy
 	{
 		deathParticle.Emit(200);
 		deathParticle.transform.parent = null;
-		sr.gameObject.SetActive(false);
+		_sr.gameObject.SetActive(false);
 	}
 }

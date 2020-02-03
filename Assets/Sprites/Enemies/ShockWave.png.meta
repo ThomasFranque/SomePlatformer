@@ -1,25 +1,13 @@
 fileFormatVersion: 2
-guid: 4fc3e19818ad3664cab6bebaf284bfbc
+guid: 2cabcd45f8f4d3840abef645256e92a1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6758659953891390148
-    second: Boss1CutsceneTransition_0
+      213: 237110464073446617
+    second: ShockWave_0
   - first:
-      213: -5020707444037000440
-    second: Boss1CutsceneTransition_1
-  - first:
-      213: 7830313718157313060
-    second: Boss1CutsceneTransition_2
-  - first:
-      213: -8272995585713209262
-    second: Boss1CutsceneTransition_3
-  - first:
-      213: 4226938675805988534
-    second: Boss1CutsceneTransition_4
-  - first:
-      213: -4306209738928278908
-    second: Boss1CutsceneTransition_5
+      213: -2034312665777895792
+    second: ShockWave_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -104,13 +92,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boss1CutsceneTransition_0
+      name: ShockWave_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 32
-        height: 32
+        y: 8
+        width: 17
+        height: 8
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,83 +106,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e1e23e6f8c13e8488f907705f9bdd76
-      internalID: 6758659953891390148
+      spriteID: 0ac338de92f2aaf45a2489d479c182da
+      internalID: 237110464073446617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss1CutsceneTransition_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8866f536a58b374d8fe9dd3fe5c3a30
-      internalID: -5020707444037000440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boss1CutsceneTransition_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4334ac60d9d22db42b3f1228642ce489
-      internalID: 7830313718157313060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boss1CutsceneTransition_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2200f5088d0762746b71f4cb11972015
-      internalID: -8272995585713209262
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boss1CutsceneTransition_4
+      name: ShockWave_1
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 17
+        height: 8
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,29 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d96b3a81ebcdad4d97d8620dff44b3b
-      internalID: 4226938675805988534
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boss1CutsceneTransition_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eec98e4cb11b88b4c8cc066de03448a3
-      internalID: -4306209738928278908
+      spriteID: c357282703d16904faf56d8487d9ad32
+      internalID: -2034312665777895792
       vertices: []
       indices: 
       edges: []
@@ -241,7 +145,7 @@ TextureImporter:
     secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 1
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
