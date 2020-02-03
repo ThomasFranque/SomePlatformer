@@ -20,7 +20,7 @@ public class MeleeWeapon : MonoBehaviour
 
 	public bool OnCooldown { get; set; }
 
-	protected virtual void Start()
+	protected virtual void Awake()
 	{
 		OnCooldown = false;
 		player = GetComponentInParent<Player>();
@@ -90,7 +90,7 @@ public class MeleeWeapon : MonoBehaviour
 		{
 			ICanBeHit e = enemyCol.GetComponent<ICanBeHit>();
 
-			bool cameFromRight = enemyCol.transform.position.x < transform.position.x;
+			bool cameFromRight = enemyCol.transform.position.x < player.transform.position.x;
 
 			e?.Hit(cameFromRight, _knockSpeed, damage);
 

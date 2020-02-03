@@ -11,7 +11,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 	[Header("Entity")]
 	[SerializeField] private int _hp = 3;
 	[SerializeField] protected ParticleSystem deathParticle;
-	[SerializeField] protected Vector2 _selfKnockBackAmount = new Vector2(32.0f, 2.5f);
+	[SerializeField] protected Vector2 _selfKnockBackAmount = new Vector2(8.0f, 2.5f);
 	[SerializeField] protected float _invulnerabilityTime = 0.5f;
 	[SerializeField] protected float _knockBackTime = 0.5f;
 
