@@ -42,7 +42,7 @@ public class Enemy : Entity
 	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg)
 	{
 		if (invulnerable) return;
-		CameraActions.ActiveCamera.Shake(10 * dmg, 20 * dmg, 0.1f);
+		CameraActions.ActiveCamera.Shake(10 * dmg, 20 * dmg, 0.06f);
 		deathParticle?.Emit(Random.Range(3 * dmg, 5 * dmg));
 
 		base.OnHit(cameFromRight, knockSpeed, dmg);
