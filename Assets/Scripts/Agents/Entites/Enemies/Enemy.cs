@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : Entity
 {
 	private const float _STOMP_CENTER_Y_OFFSET = 0.0f;
+	private const float _TIME_BEFORE_FINAL_DEATH = .15f;
 
 	[Header("Enemy")]
 	[SerializeField] protected EnemyProperties _selfProperties;
@@ -50,8 +51,7 @@ public class Enemy : Entity
 
 	protected override void OnDeath(byte dmg = 1)
 	{
-		deathParticle?.Emit(Random.Range(35, 55));
-		base.OnDeath();
+			StartCoroutine(CDeathSequence(dmg));
 	}
 
 	protected override void OnPlayerCollision(Collision2D col)
@@ -147,5 +147,14 @@ public class Enemy : Entity
 	{
 		if (collision.transform.CompareTag("Player"))
 			OnPlayerCollision(collision);
+	}
+
+	private IEnumerator CDeathSequence(byte deathDmg)
+	{
+		_hurtsPlayer = false;
+		sr.color = Color.white;
+		yield return new WaitForSeconds(_TIME_BEFORE_FINAL_DEATH);
+		deathParticle?.Emit(Random.Range(35, 55));
+		base.OnDeath(deathDmg);
 	}
 }

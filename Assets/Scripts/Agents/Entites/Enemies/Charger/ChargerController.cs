@@ -154,7 +154,7 @@ public class ChargerController : Enemy, IBehaviourController
 	protected override void OnDeath(byte dmg = 1)
 	{
 		base.OnDeath(dmg);
-		Destroy(gameObject);
+		//Destroy(gameObject);
 	}
 
 	public void SetVelocity(float newX, float newY)

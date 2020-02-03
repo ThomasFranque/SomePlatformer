@@ -53,7 +53,7 @@ public class DialogBox : MonoBehaviour
 
 	public void Exit()
 	{
-		if (!_anim.GetCurrentAnimatorStateInfo(0).IsName("Hide"))
+		if (_anim != null && !_anim.GetCurrentAnimatorStateInfo(0).IsName("Hide"))
 			_anim.SetTrigger("Hide");
 	}
 

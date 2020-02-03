@@ -8,6 +8,8 @@ public class Boss1InitialInteraction : InteractionListener
     [SerializeField] private Cinemachine.CinemachineVirtualCamera _doorCam;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera _bossRoomCam;
 
+    private static bool _initialCutSeen;
+
     private Animator _bossAnimator;
 
     protected override void Start()
@@ -18,10 +20,12 @@ public class Boss1InitialInteraction : InteractionListener
 
     protected override void InteractionFinishedAction()
     {
+        _initialCutSeen = true;
     }
 
     protected override void InteractionStartedAction()
     {
+        _bossAnimator.SetBool("InitialCutSeen", _initialCutSeen);
         _bossAnimator.SetTrigger("Interacted");
         Player.Instance.SetInteractionInputReading(false);
     }
