@@ -9,6 +9,7 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private AudioClip _walkSound = null;
     [SerializeField] private AudioClip _jumpSound = null;
     [SerializeField] private AudioClip _wallJumpSound = null;
+    [SerializeField] private AudioClip _dashSound = null;
 
     private float _timeOfLastStepSound;
 
@@ -43,11 +44,16 @@ public class PlayerSound : MonoBehaviour
 
     public void PlayJumpSound()
     {
-        SoundMngr.Instance?.PlayOneShotLocalized(_jumpSound ,_audioSource);
+        SoundMngr.Instance?.PlayOneShotLocalized(_jumpSound, _audioSource);
     }
 
     public void PlayWallJumpSound()
     {
-        SoundMngr.Instance?.PlayOneShotLocalized(_wallJumpSound ,_audioSource);
+        SoundMngr.Instance?.PlayOneShotLocalized(_wallJumpSound, _audioSource);
+    }
+
+    public void PlayDashSound()
+    {
+        SoundMngr.Instance?.PlayOneShotLocalized(_dashSound, _audioSource);
     }
 }

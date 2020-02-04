@@ -90,6 +90,7 @@ MonoBehaviour:
   _walkSound: {fileID: 8300000, guid: 08b4df75be203e84a90021294140f576, type: 3}
   _jumpSound: {fileID: 8300000, guid: 9518217845a203547b7b19730988fb4f, type: 3}
   _wallJumpSound: {fileID: 8300000, guid: 3fca5998d5f45b7498b378c07f45bf75, type: 3}
+  _dashSound: {fileID: 8300000, guid: bfe140c30c54bab42b3bf357b77bc232, type: 3}
 --- !u!212 &7664014441684772525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -104,6 +105,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

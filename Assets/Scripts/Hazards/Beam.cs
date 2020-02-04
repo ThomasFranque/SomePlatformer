@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+#pragma warning disable 0618 
 public class Beam : Enemy
 {
 	private const float _RANGE = 54.0f;

@@ -2,27 +2,30 @@
 
 public class PlayerInventory
 {
-    public int StarDust { get; private set; }
+    public int Coins { get; private set; }
     public int XP { get; private set; }
 
     public PlayerInventory()
     {
-
+        Coins = 0;
+        XP = 0;
     }
 
-    public void AddStardust(int dustToAdd)
+    public void AddCoins(int coinsToAdd)
     {
-        StarDust += dustToAdd;
+        Coins += coinsToAdd;
+        Debug.Log($"Added {coinsToAdd} Coins.\nNow with {Coins} coins.");
     }
     public void AddXP(int xpToAdd)
     {
         XP += xpToAdd;
+        Debug.Log($"Added {xpToAdd} XP.\nNow with {XP} XP.");
     }
 
-    public void SpendStardust(int dustToSpend)
+    public void SpendStardust(int coinsToSpend)
     {
-        StarDust -= dustToSpend;
-        if (StarDust < 0) StarDust = 0;
+        Coins -= coinsToSpend;
+        if (Coins < 0) Coins = 0;
     }
     public void SpendXP(int xpToSpend)
     {

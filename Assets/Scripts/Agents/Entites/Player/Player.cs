@@ -69,10 +69,10 @@ public class Player : Entity
 	[SerializeField] private bool _readInputs = true;
 	private bool _interactionReadInputs = true;
 
+	public 	PlayerInventory Inventory => _inventory;
 	private float GetElapsedTime(float timeToElapse) => Time.time - timeToElapse;
 	// Properties
 	public Rigidbody2D RigidBody2D => _rb;
-	public	bool Dead { get; private set; }
 	private bool HAxisFullyPressed => !(hAxis > -0.99f && hAxis < 0.99f);
 	private bool ReadInput => _readInputs && !KnockedBack && _interactionReadInputs;
 	public	bool PushingWall => OnGround && OnWall && hAxis != 0;
@@ -106,6 +106,7 @@ public class Player : Entity
 	{
 		InteractableInRange = null;
 		Instance = this;
+		_inventory = new PlayerInventory();
 	}
 	// Start is called before the first frame update
 	protected override void Start()
@@ -116,7 +117,6 @@ public class Player : Entity
 		_meleeWeapon = GetComponentInChildren<MeleeWeapon>();
 		_pSound = GetComponent<PlayerSound>();
 
-		Dead = false;
 		canMove = true;
 		canGroundJump = true;
 		canWallJump = true;
@@ -270,6 +270,16 @@ public class Player : Entity
 					_rb.gravityScale = 60.0f; 
 				}
 
+				// else if (!OnGround && !OnWall)
+				// {
+				// 	if (Input.GetKeyDown(_downInput))
+				// 	{
+				// 		currentVelocity[0] = 0;
+				// 		currentVelocity[1] = -150;
+				// 		Debug.Log("Ground Pound");
+				// 	}
+				// }
+
 				if (OnWall) _hitGroundAfterDash = true;
 			}
 
@@ -419,6 +429,8 @@ public class Player : Entity
 		_hitGroundAfterDash = false;
 		_dashY = transform.position.y;
 		timeOfDash = Time.time;
+
+		_pSound.PlayDashSound();
 	}
 	private Vector2 OnDashEnd(bool suppress)
 	{

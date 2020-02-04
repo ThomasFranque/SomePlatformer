@@ -15,7 +15,7 @@ public class InWorldResourceProperties : ScriptableObject
     public Vector2 InitialBurstSpeedXRange => _initialBurstSpeedXRange;
     public Vector2 InitialBurstSpeedYRange => _initialBurstSpeedYRange;
     public bool LockRotation => _lockRotation;
-    public float InitialRotationAmount => _initialRotationAmount;
+    public float InitialRotationAmount => Random.Range(-_initialRotationAmount, _initialRotationAmount);
     public float Lifetime => _lifetime;
     public Color SpriteColor => _spriteColor;
     public Sprite Sprite => _sprite;
