@@ -14,6 +14,7 @@ public class Player : Entity
 	// variables
 	private MeleeWeapon _meleeWeapon;
 	private PlayerInventory _inventory;
+	private PlayerSound _pSound;
 
 	private Coroutine _ignoreHAxisCor;
 
@@ -113,6 +114,7 @@ public class Player : Entity
 
 		_anim = GetComponent<Animator>();
 		_meleeWeapon = GetComponentInChildren<MeleeWeapon>();
+		_pSound = GetComponent<PlayerSound>();
 
 		Dead = false;
 		canMove = true;
@@ -140,6 +142,7 @@ public class Player : Entity
 		CapMaxYVelocity();
 		UpdateAnimator();
 		UpdateDashY();
+		UpdateWalkSound();
 
 		// TEMP DEATH PROCEDURE //
 		if (HP <= 0 && !Dead)
@@ -195,6 +198,7 @@ public class Player : Entity
 					timeOfJump = Time.time;
 					canGroundJump = false;
 					canWallJump = false;
+					_pSound?.PlayJumpSound();
 				}
 				// Wall jump
 				else if (WallJumpAllowed)
@@ -212,6 +216,8 @@ public class Player : Entity
 					_ignoreHAxisCor = StartCoroutine(CIgnoreHAxisFor(_IGNORE_HAXIS_WALL_JUMP_TIME));
 
 					_timesWallJumped++;
+
+					_pSound?.PlayWallJumpSound();
 				}
 				// Rising and pressing space
 				else if (IsJumping)
@@ -353,6 +359,15 @@ public class Player : Entity
 		//else
 		//	_anim.SetBool("AttackChainEnd", true);
 	}
+
+	private void UpdateWalkSound()
+	{
+		if (hAxis != 0 && OnGround && !OnWall && !IsDashing)
+			_pSound?.WhileWalkInputPressed();
+		else 
+			_pSound?.WhileNotWalkInputPressed();
+	}
+
 	private void Attack()
 	{
 		if (CanGroundAttack)

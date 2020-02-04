@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextDialogIndicatorAnim: {fileID: 1445025437070191755}
+  _letterWriteSound: {fileID: 8300000, guid: 029365d704eab6349ae7af3fbe053002, type: 3}
 --- !u!95 &3798447408840921680
 Animator:
   serializedVersion: 3

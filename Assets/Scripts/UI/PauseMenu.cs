@@ -21,6 +21,7 @@ public class PauseMenu : ControlledCanvasMenu
 	[SerializeField] private GameObject _exitButton				= null;
 	[SerializeField] private GameObject _loadButton				= null;
 	[SerializeField] private GameObject _saveButton				= null;
+	[SerializeField] private AudioClip _menuOpenedSound 		= null;
 	private GameObject _pauseMenuHolder;
 	private LoadSave SaveMngr;
 	private GFXBlink blinkButtonFX;
@@ -62,7 +63,9 @@ public class PauseMenu : ControlledCanvasMenu
 		PauseMenuOpen += StopGameSpeed;
 		PauseMenuOpen += AssignListeners;
 		PauseMenuOpen += ToggleMenu;
+		PauseMenuOpen += PlayOpenSound;
 		PauseMenuClose += ToggleMenu;
+		PauseMenuClose += PlayOpenSound;
 		PauseMenuClose += ResetBlinking;
 		PauseMenuClose += RestartGameSpeed;
     }
@@ -222,6 +225,11 @@ public class PauseMenu : ControlledCanvasMenu
 		_exitButton.SetActive(true);
 		_saveButton.SetActive(true);
 		_loadButton.SetActive(true);
+	}
+
+	private void PlayOpenSound()
+	{
+		PlaySound(_menuOpenedSound);
 	}
 
 	private IEnumerator CButtonBlinkBeforeAction(Action action)

@@ -37,5 +37,24 @@ namespace Sound
         {
             _generalAudioSource.PlayOneShot(clip, _volume);
         }
+
+        public void PlaySoundGeneral(AudioClip clip, float volume = 1.0f, bool loop = false)
+        {
+            StopGeneralSound();
+            _generalAudioSource.clip = clip;
+            _generalAudioSource.loop = loop;
+            _generalAudioSource.volume = volume;
+            _generalAudioSource.Play();
+        }
+
+        public void StopGeneralSound()
+        {
+            _generalAudioSource.Stop();
+        }
+
+        public void PauseGeneralSound()
+        {
+            _generalAudioSource.Pause();
+        }
     }
 }

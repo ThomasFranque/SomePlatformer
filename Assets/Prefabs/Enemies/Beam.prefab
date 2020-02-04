@@ -52,14 +52,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 255
   deathParticle: {fileID: 0}
-  _selfKnockBackAmmount: {x: 0, y: -2.5}
+  _selfKnockBackAmount: {x: 8, y: 2.5}
   _invulnerabilityTime: 2.4
-  _KNOCK_BACK_TIME: 0.5
+  _knockBackTime: 0.5
+  _soundClips: {fileID: 0}
+  _selfProperties: {fileID: 0}
+  _hitColor: {r: 1, g: 0.6933962, b: 0.6933962, a: 1}
   _hurtsPlayer: 0
   _canBeStomped: 1
   _useColliderAsTrigger: 0
   _stompYSpeed: 270
   _knockIntensity: 10
+  _damage: 1
   _beamPrefab: {fileID: 1378241545689814757, guid: 2620d3f547ed432419d27025a9cc3538,
     type: 3}
   _beamChargingParticles: {fileID: 1304552954817365685}

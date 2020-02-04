@@ -753,6 +753,7 @@ MonoBehaviour:
   _exitButton: {fileID: 6121503398998092185}
   _loadButton: {fileID: 2458775158871474715}
   _saveButton: {fileID: 4017351641137577435}
+  _menuOpenedSound: {fileID: 8300000, guid: 239145980a7665347a06236aa3410ac4, type: 3}
 --- !u!1 &7801063316055494248
 GameObject:
   m_ObjectHideFlags: 0

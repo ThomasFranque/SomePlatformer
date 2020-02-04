@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Tilemap
   - ShipBullet
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Player
   - Enemy
   - Ignore Ground
-  - 
+  - Item
   - 
   - 
   - 

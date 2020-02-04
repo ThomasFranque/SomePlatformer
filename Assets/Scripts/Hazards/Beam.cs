@@ -222,7 +222,7 @@ public class Beam : Enemy
 	}
 	#endregion
 
-	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg) {}
+	protected override void OnHit(bool cameFromRight, float knockSpeed, byte dmg) {Flash();}
 
 	protected override void OnPlayerStomp(Player p)
 	{
