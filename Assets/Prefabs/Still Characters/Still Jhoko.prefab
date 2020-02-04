@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3351138692279573991}
   - component: {fileID: 3585726093602196314}
+  - component: {fileID: 37619383358729289}
   m_Layer: 0
   m_Name: Interaction Cam
   m_TagString: Untagged
@@ -67,6 +68,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5742990673606130144}
+--- !u!114 &37619383358729289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6677679263124198580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7664014441684772526
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +129,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputPopUpScript: {fileID: 8907822854561415347}
+  _interactionRange: {x: 24, y: 2}
+  _interactionOffset: {x: 0, y: 2}
   _dialogBoxScript: {fileID: 57448785004746538}
+  _delayOnTextDisplay: 0
+  _cameraChangeOnInteraction: 1
+  _hidePlayerUI: 1
   _firstDialog:
   - \B \B \B \B \B \B \B \B \W0.2 .\W0.2 .\W0.2 .
   - Oh, \W0.4 hi!
@@ -128,6 +146,8 @@ MonoBehaviour:
   - \L I Hope he likes my little asteroid.
   _interactionCams:
   - {fileID: 3585726093602196314}
+  _interactionListener: {fileID: 0}
+  _sounds: {fileID: 0}
 --- !u!212 &7664014441684772525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -142,6 +162,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -289,11 +310,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7664014441684772498}
     m_Modifications:
-    - target: {fileID: 1760370543616737211, guid: 8cb894bdcd049f148b02dded5bcf20d6,
-        type: 3}
-      propertyPath: m_Name
-      value: Dialog Box
-      objectReference: {fileID: 0}
     - target: {fileID: 1760370543616737209, guid: 8cb894bdcd049f148b02dded5bcf20d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -344,6 +360,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1760370543616737211, guid: 8cb894bdcd049f148b02dded5bcf20d6,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialog Box
+      objectReference: {fileID: 0}
     - target: {fileID: 1760370544108938539, guid: 8cb894bdcd049f148b02dded5bcf20d6,
         type: 3}
       propertyPath: m_Color.a
@@ -386,11 +407,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7664014441684772498}
     m_Modifications:
-    - target: {fileID: 1760370543616737211, guid: a07eacb026875fd4c9dd410d228d884c,
-        type: 3}
-      propertyPath: m_Name
-      value: Input Dialog Box
-      objectReference: {fileID: 0}
     - target: {fileID: 1760370543616737209, guid: a07eacb026875fd4c9dd410d228d884c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -446,10 +462,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1760370543616737211, guid: a07eacb026875fd4c9dd410d228d884c,
+        type: 3}
+      propertyPath: m_Name
+      value: Input Dialog Box
+      objectReference: {fileID: 0}
     - target: {fileID: 1760370544108938539, guid: a07eacb026875fd4c9dd410d228d884c,
         type: 3}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760370544116026228, guid: a07eacb026875fd4c9dd410d228d884c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1760370544116026230, guid: a07eacb026875fd4c9dd410d228d884c,
         type: 3}
@@ -470,11 +496,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1760370544116026228, guid: a07eacb026875fd4c9dd410d228d884c,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a07eacb026875fd4c9dd410d228d884c, type: 3}

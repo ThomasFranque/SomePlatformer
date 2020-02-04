@@ -66,7 +66,7 @@ public class Enemy : Entity
         if (!_useColliderAsTrigger && _canBeStomped)
         {
             Vector3 contactPoint = col.GetContact(0).point;
-            Vector3 center = selfCol.bounds.center;
+            Vector3 center = _selfCol.bounds.center;
 
             bool right = contactPoint.x < center.x;
             bool top = Player.Instance.transform.position.y > center.y + _STOMP_CENTER_Y_OFFSET;
@@ -85,7 +85,7 @@ public class Enemy : Entity
     {
         if (_useColliderAsTrigger && col.tag == "Player")
         {
-            Vector3 center = selfCol.bounds.center;
+            Vector3 center = _selfCol.bounds.center;
             bool top = Player.Instance.transform.position.y > center.y + _STOMP_CENTER_Y_OFFSET;
 
             if (top && _canBeStomped)
@@ -146,7 +146,6 @@ public class Enemy : Entity
     //https://www.reddit.com/r/Unity2D/comments/8xcw8g/how_can_i_make_a_sprite_blink_in_white_when/
     protected IEnumerator Flash()
     {
-        StoreCurrentSRColor();
         for (int i = 0; i < _FLASHES_WHEN_HIT; i++)
         {
             _anim.enabled = false;

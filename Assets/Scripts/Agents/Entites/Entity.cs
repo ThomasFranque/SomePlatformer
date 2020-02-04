@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 	protected Rigidbody2D _rb;
 	protected SpriteRenderer _sr;
 
-	protected Collider2D selfCol;
+	protected Collider2D _selfCol;
 
 	protected GFXBlink _blink;
 
@@ -70,7 +70,7 @@ public class Entity : MonoBehaviour, ICanBeHit
 	protected virtual void Start()
 	{
 		_rb = GetComponent<Rigidbody2D>();
-		selfCol = GetComponent<Collider2D>();
+		_selfCol = GetComponent<Collider2D>();
 
 		_sr = GetComponent<SpriteRenderer>();
 		_anim = GetComponent<Animator>();
@@ -85,6 +85,8 @@ public class Entity : MonoBehaviour, ICanBeHit
 		_srBaseColor = _sr.color;
 		_blink = new GFXBlink();
 		_soundPlayer = new SoundPlayer();
+
+        StoreCurrentSRColor();
 	}
 	protected virtual void Update()
 	{

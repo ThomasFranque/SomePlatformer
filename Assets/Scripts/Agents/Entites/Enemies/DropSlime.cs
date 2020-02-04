@@ -71,7 +71,7 @@ public class DropSlime : Enemy
 		_thrustSystem = GetComponentInChildren<ParticleSystem>();
 
 		_groundCheckOffset = new Vector2(0, -12f);
-		_bottomColSize[0] = (selfCol as CapsuleCollider2D).size[0];
+		_bottomColSize[0] = (_selfCol as CapsuleCollider2D).size[0];
 		_rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
 		_groundPos = GetGroundPosition();
 		_preWarnOffsetVector.x = _preWarnOffset;
@@ -154,8 +154,8 @@ public class DropSlime : Enemy
 		transform.position = _groundPos - (_groundCheckOffset * transform.localScale.x);
 		_rb.velocity = new Vector2(0, 0);
 		_rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
-		selfCol.offset = _bottomColOffset;
-		(selfCol as CapsuleCollider2D).size = _bottomColSize;
+		_selfCol.offset = _bottomColOffset;
+		(_selfCol as CapsuleCollider2D).size = _bottomColSize;
 
 		_sightEndLeft.position = transform.position + _groundedVisionRangeVector;
 		_sightEndRight.position = transform.position + _groundedVisionRangeVector;

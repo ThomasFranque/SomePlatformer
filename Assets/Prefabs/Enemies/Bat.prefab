@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 2
-  deathParticle: {fileID: 0}
+  deathParticle: {fileID: 7729774348482906480}
   _selfKnockBackAmount: {x: 4, y: 0.5}
   _invulnerabilityTime: 0.1
   _knockBackTime: 0.5
@@ -79,6 +79,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -243,6 +244,12 @@ PrefabInstance:
 --- !u!4 &1851588241961889623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7734445500054192293, guid: 8e2db6e3de1572d4087e721cb8b01dc8,
+    type: 3}
+  m_PrefabInstance: {fileID: 8278861338822111218}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7729774348482906480 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1846968801664755330, guid: 8e2db6e3de1572d4087e721cb8b01dc8,
     type: 3}
   m_PrefabInstance: {fileID: 8278861338822111218}
   m_PrefabAsset: {fileID: 0}

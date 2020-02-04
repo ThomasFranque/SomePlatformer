@@ -59,7 +59,7 @@ public class MeleeWeapon : MonoBehaviour
 	private void AttackSequence(Vector2 currentPVelocity, ParticleSystem ps, float xVel)
 	{
 
-		ps.Emit(10);
+		ps.Emit(45);
 
 		StartCoroutine(CCooldown());
 
