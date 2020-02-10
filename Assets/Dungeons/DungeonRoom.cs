@@ -11,7 +11,7 @@ namespace Dungeons
         private Vector2Int _roomIndex;
         private Tilemap _tilemap;
         private DungeonInfo _dungeonInfo;
-
+        private List<DungeonTileInfo> _roomTiles;
         private bool _isMainPath;
         private bool _isPathEntry;
         private bool _isPathEnd;
@@ -22,6 +22,7 @@ namespace Dungeons
 
         public void Initialize(bool[] openings, Vector2Int roomIndex, Tilemap tilemap, DungeonInfo dungeonInfo, bool isMainPath, bool isPathStart, bool isPathEnd)
         {
+            _roomTiles = new List<DungeonTileInfo>(_dungeonInfo.RoomSize.x * _dungeonInfo.RoomSize.y);
             _openings = openings;
             _roomIndex = roomIndex;
             _tilemap = tilemap;
@@ -49,11 +50,14 @@ namespace Dungeons
             {
                 for (int x = 0; x < _dungeonInfo.RoomSize.x; x++)
                 {
-                    if ((pivot.x == bottomLeft.x && !_openings[0]) ||
-                        (pivot.x == bottomLeft.x + _dungeonInfo.RoomSize.x - 1 && !_openings[1]) ||
-                        (pivot.y == bottomLeft.y && !_openings[3]) ||
-                        (pivot.y == bottomLeft.y + _dungeonInfo.RoomSize.y - 1 && !_openings[2]))
-                            SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                    if (pivot.x == bottomLeft.x && !_openings[0])
+                        SpawnTile(pivot, _dungeonInfo.DungeonTile, onLeftWall: true);
+                    else if (pivot.x == bottomLeft.x + _dungeonInfo.RoomSize.x - 1 && !_openings[1])
+                        SpawnTile(pivot, _dungeonInfo.DungeonTile, onRightWall: true);
+                    else if (pivot.y == bottomLeft.y && !_openings[3])
+                        SpawnTile(pivot, _dungeonInfo.DungeonTile, onBottomWall: true);
+                    else if (pivot.y == bottomLeft.y + _dungeonInfo.RoomSize.y - 1 && !_openings[2])
+                        SpawnTile(pivot, _dungeonInfo.DungeonTile, onTopWall: true);
 
                     pivot.x++;
                 }
@@ -67,7 +71,7 @@ namespace Dungeons
                 pivot = bottomLeft;
                 pivot.y += _dungeonInfo.RoomSize.y / 2;
                 SpawnTile(pivot, _dungeonInfo.DungeonTile);
-                pivot.x ++;
+                pivot.x++;
                 SpawnTile(pivot, _dungeonInfo.DungeonTile);
                 pivot = bottomLeft;
             }
@@ -80,7 +84,7 @@ namespace Dungeons
                 SpawnTile(pivot, _dungeonInfo.DungeonTile);
                 pivot.x--;
                 SpawnTile(pivot, _dungeonInfo.DungeonTile);
-                pivot = bottomLeft;                
+                pivot = bottomLeft;
             }
             // top
             if (_openings[2])
@@ -91,7 +95,7 @@ namespace Dungeons
                 SpawnTile(pivot, _dungeonInfo.DungeonTile);
                 pivot.y--;
                 SpawnTile(pivot, _dungeonInfo.DungeonTile);
-                pivot = bottomLeft;                
+                pivot = bottomLeft;
             }
             // bottom
             if (_openings[3])
@@ -105,31 +109,42 @@ namespace Dungeons
             }
         }
 
-        private void SpawnTile(Vector2Int position, TileBase tile)
+        private void SpawnTile(Vector2Int position, TileBase tile, bool onLeftWall = false, bool onRightWall = false, bool onTopWall = false, bool onBottomWall = false)
         {
             _tilemap.SetTile((Vector3Int)position, tile);
+            _roomTiles.Add(new DungeonTileInfo((Vector3Int)position, _tilemap, onLeftWall, onRightWall, onTopWall, onBottomWall));
         }
 
         public void Populate(bool forcePopulate = false)
         {
-            int rnd = Random.Range(0,4);
+            int rnd = Random.Range(0, 4);
+            do { rnd = Random.Range(1, 4); } while (rnd == 0 && forcePopulate);
+
             Vector3Int roomCenter = new Vector3Int(_roomIndex.x * _dungeonInfo.RoomSize.x, _roomIndex.y * _dungeonInfo.RoomSize.y, 0);
 
-            switch(rnd)
+            switch (rnd)
             {
                 case 0:
                     break;
                 case 1:
-                    GameObject.Instantiate(_dungeonInfo.GetRandomGroundEnemy, _tilemap.layoutGrid.CellToWorld(roomCenter), Quaternion.identity);
+                    SpawnObjectInCell(roomCenter, _dungeonInfo.GetRandomGroundEnemy);
                     break;
                 case 2:
-                    GameObject.Instantiate(_dungeonInfo.GetRandomAerialEnemy, _tilemap.layoutGrid.CellToWorld(roomCenter), Quaternion.identity);
+                    SpawnObjectInCell(roomCenter, _dungeonInfo.GetRandomAerialEnemy);
                     break;
                 case 3:
-                    GameObject.Instantiate(_dungeonInfo.GetRandomHazard, _tilemap.layoutGrid.CellToWorld(roomCenter), Quaternion.identity);
+                    SpawnObjectInCell(roomCenter, _dungeonInfo.GetRandomHazard);
                     break;
 
             }
+        }
+
+        public GameObject SpawnObjectInCell(Vector3Int cell, GameObject objectToSpawn)
+        {
+            return GameObject.Instantiate(
+                objectToSpawn, 
+                _tilemap.layoutGrid.CellToWorld(cell), 
+                Quaternion.identity);
         }
     }
 }

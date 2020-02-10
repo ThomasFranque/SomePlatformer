@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bat : Enemy
 {
-    private const float _MOVE_TOWARDS_Y_OFFSET = 8.0f;
+    private const float _MOVE_TOWARDS_Y_OFFSET = 6.0f;
     private const float _STOMP_SELF_Y_VELOCITY = -80.0f;
 
     [Header("Bat Properties")]

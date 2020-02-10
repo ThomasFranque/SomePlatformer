@@ -36,7 +36,7 @@ namespace Dungeons
             GrabTotalRoomSize();
             CreateDungeon();
             FillOutsides();
-            Finalize();
+            FinalizeGeneration();
             yield return null;
         }
 
@@ -455,7 +455,7 @@ namespace Dungeons
 
         }
 
-        private void Finalize()
+        private void FinalizeGeneration()
         {
             DungeonMaster newDM = new GameObject("Dungeon Master").AddComponent<DungeonMaster>();
 
