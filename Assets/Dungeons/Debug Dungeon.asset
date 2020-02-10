@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01d49dfc2e40654aa017a4327f46ec0, type: 3}
   m_Name: Debug Dungeon
   m_EditorClassIdentifier: 
-  _dungeonRoom: {fileID: 978546304921881775, guid: 1114d28473f82e34a84a52e25e7afc3a,
-    type: 3}
-  _maxDungeonSize: {x: 100, y: 100}
-  _maxRoomsPerPath: 100
-  _complexity: 0
+  _possibleTileSprites:
+  - {fileID: 4966251771811483203, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  - {fileID: 8126453587975457229, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  - {fileID: -3265930118070084959, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  - {fileID: 2842908515785971199, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  - {fileID: 1845899906368879107, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  - {fileID: -4553087954214238460, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  _dungeonRoomSize: {x: 15, y: 11}
+  _maxRoomsPerPath: 15
+  _complexity: 0.6
   _generateBranches: 1
   _branchesHaveBranches: 0
   _ascending: 0
   _backwards: 0
+  _isDebug: 1

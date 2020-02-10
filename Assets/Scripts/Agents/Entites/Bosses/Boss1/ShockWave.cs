@@ -11,6 +11,7 @@ public class ShockWave : Hazard
     {
 		MoveForward();
 		DecreaseScale();
+		if (transform.localScale.x <= 0) Destroy(gameObject);
 	}
 
 	private void DecreaseScale()

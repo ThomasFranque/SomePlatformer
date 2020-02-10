@@ -1,28 +1,103 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class DungeonRoom : MonoBehaviour
+namespace Dungeons
 {
-    private GameObject _leftWall;
-    private GameObject _rightWall;
-    private GameObject _topWall;
-    private GameObject _bottomWall;
-
-    private void Awake() 
+    public class DungeonRoom
     {
-        GameObject _wallsHolder = transform.GetChild(0).gameObject;
-        _leftWall = _wallsHolder.transform.GetChild(0).gameObject;    
-        _rightWall = _wallsHolder.transform.GetChild(1).gameObject;    
-        _topWall = _wallsHolder.transform.GetChild(2).gameObject;    
-        _bottomWall = _wallsHolder.transform.GetChild(3).gameObject;
-    }
+        //lrtb
+        private bool[] _openings;
+        private Vector2Int _roomIndex;
+        private Tilemap _tilemap;
+        private DungeonInfo _dungeonInfo;
 
-    public void SetOpenings(bool[] openings)
-    {
-        if (openings[0]) Destroy(_leftWall);
-        if (openings[1]) Destroy(_rightWall);
-        if (openings[2]) Destroy(_topWall);
-        if (openings[3]) Destroy(_bottomWall);
+        private void Awake()
+        {
+        }
+
+        public void Initialize(bool[] openings, Vector2Int roomIndex, Tilemap tilemap, DungeonInfo dungeonInfo)
+        {
+            _openings = openings;
+            _roomIndex = roomIndex;
+            _tilemap = tilemap;
+            _dungeonInfo = dungeonInfo;
+        }
+
+        public void SpawnRoom()
+        {
+            // Get bottom left
+            Vector2Int bottomLeft = new Vector2Int(_roomIndex.x * _dungeonInfo.RoomSize.x, _roomIndex.y * _dungeonInfo.RoomSize.y);
+            bottomLeft.x = bottomLeft.x - _dungeonInfo.RoomSize.x / 2;
+            bottomLeft.y = bottomLeft.y - _dungeonInfo.RoomSize.y / 2;
+
+            Vector2Int pivot = bottomLeft;
+
+            for (int y = 0; y < _dungeonInfo.RoomSize.y; y++)
+            {
+                for (int x = 0; x < _dungeonInfo.RoomSize.x; x++)
+                {
+                    if ((pivot.x == bottomLeft.x && !_openings[0]) ||
+                        (pivot.x == bottomLeft.x + _dungeonInfo.RoomSize.x - 1 && !_openings[1]) ||
+                        (pivot.y == bottomLeft.y && !_openings[3]) ||
+                        (pivot.y == bottomLeft.y + _dungeonInfo.RoomSize.y - 1 && !_openings[2]))
+                            SpawnTile(pivot, _dungeonInfo.DungeonTile);
+
+                    pivot.x++;
+                }
+                pivot.y++;
+                pivot.x = bottomLeft.x;
+            }
+
+            // Left
+            if (_openings[0])
+            {
+                pivot = bottomLeft;
+                pivot.y += _dungeonInfo.RoomSize.y / 2;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot.x ++;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot = bottomLeft;
+            }
+            //Right
+            if (_openings[1])
+            {
+                pivot = bottomLeft;
+                pivot.y += _dungeonInfo.RoomSize.y / 2;
+                pivot.x += _dungeonInfo.RoomSize.x;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot.x--;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot = bottomLeft;                
+            }
+            // top
+            if (_openings[2])
+            {
+                pivot = bottomLeft;
+                pivot.y += _dungeonInfo.RoomSize.y;
+                pivot.x += _dungeonInfo.RoomSize.x / 2;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot.y--;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot = bottomLeft;                
+            }
+            // bottom
+            if (_openings[3])
+            {
+                pivot = bottomLeft;
+                pivot.x += _dungeonInfo.RoomSize.x / 2;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot.y++;
+                SpawnTile(pivot, _dungeonInfo.DungeonTile);
+                pivot = bottomLeft;
+            }
+        }
+
+        private void SpawnTile(Vector2Int position, TileBase tile)
+        {
+            _tilemap.SetTile((Vector3Int)position, tile);
+            //_tilemap.GetTile()
+        }
     }
 }

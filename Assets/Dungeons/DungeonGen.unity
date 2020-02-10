@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -134,6 +135,7 @@ GameObject:
   - component: {fileID: 471003083}
   - component: {fileID: 471003082}
   - component: {fileID: 471003087}
+  - component: {fileID: 471003088}
   m_Layer: 0
   m_Name: Brain Camera
   m_TagString: MainCamera
@@ -170,6 +172,7 @@ MonoBehaviour:
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
   m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
     m_Time: 0.7
@@ -263,6 +266,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0abd5adbab18554983f2d16911295e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &471003088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471003081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_CameraOutput: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &589727856
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 100
   mNoiseOffsets: {x: 0, y: 0, z: 0}
@@ -536,6 +571,8 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -559,16 +596,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 589727857}
     m_Modifications:
-    - target: {fileID: 7664014441684772526, guid: 58330342f83be4e419e15be59588ea14,
-        type: 3}
-      propertyPath: m_Name
-      value: Controlled Jhoko
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664014441684772526, guid: 58330342f83be4e419e15be59588ea14,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7664014441684772498, guid: 58330342f83be4e419e15be59588ea14,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -624,25 +651,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7664014441684772526, guid: 58330342f83be4e419e15be59588ea14,
+        type: 3}
+      propertyPath: m_Name
+      value: Controlled Jhoko
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664014441684772526, guid: 58330342f83be4e419e15be59588ea14,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8680226185420534529, guid: 58330342f83be4e419e15be59588ea14,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664014441684772527, guid: 58330342f83be4e419e15be59588ea14,
-        type: 3}
-      propertyPath: _hp
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664014441684772499, guid: 58330342f83be4e419e15be59588ea14,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664014441684772499, guid: 58330342f83be4e419e15be59588ea14,
-        type: 3}
-      propertyPath: m_BodyType
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58330342f83be4e419e15be59588ea14, type: 3}
@@ -659,6 +681,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1325225101326321246, guid: 5d8ec750207433b45b7c823ca0a1962e,
+        type: 3}
+      propertyPath: m_Name
+      value: Dungeon Tilemap
+      objectReference: {fileID: 0}
     - target: {fileID: 1325225101928602033, guid: 5d8ec750207433b45b7c823ca0a1962e,
         type: 3}
       propertyPath: m_Name
@@ -721,9 +748,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325225101928602035, guid: 5d8ec750207433b45b7c823ca0a1962e,
         type: 3}
-      propertyPath: _dungeonInfo
-      value: 
-      objectReference: {fileID: 11400000, guid: c68694ed1a8158b43b9ded5c8a702302,
-        type: 2}
+      propertyPath: _debugMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d8ec750207433b45b7c823ca0a1962e, type: 3}

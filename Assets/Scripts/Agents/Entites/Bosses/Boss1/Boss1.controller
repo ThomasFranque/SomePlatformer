@@ -109,7 +109,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Jump
-  m_Speed: 0.8
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 791283736871642100}
@@ -249,7 +249,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Walk Away
-  m_Speed: 1.2
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1301964900212364047}
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46bbdd2b61bdb6a4899275dd2d661bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveTowardsSpeed: 3
+  _moveTowardsSpeed: 4
   _doShockWave: 0
   _shockWavePrefab: {fileID: 18202315645669166, guid: 744b4d672ff64f94d824496e1d99a9ea,
     type: 3}
@@ -464,7 +464,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Bounce
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7801217457198651347}
@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46bbdd2b61bdb6a4899275dd2d661bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveTowardsSpeed: 7
+  _moveTowardsSpeed: 12
   _doShockWave: 1
   _shockWavePrefab: {fileID: 18202315645669166, guid: 744b4d672ff64f94d824496e1d99a9ea,
     type: 3}
@@ -1165,7 +1165,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Jump 3
-  m_Speed: 1
+  m_Speed: 1.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8126289048157104202}
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4f270d9a22e7c4c9576f07dd1b5337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveTowardsSpeed: 3
+  _moveTowardsSpeed: 1.8
   _nextTriggerName: Wait
 --- !u!1101 &4983402653764064774
 AnimatorStateTransition:
@@ -1266,7 +1266,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wait2
-  m_Speed: 5
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1237169352774036731}
@@ -1403,7 +1403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4f270d9a22e7c4c9576f07dd1b5337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveTowardsSpeed: 1.2
+  _moveTowardsSpeed: 2
   _nextTriggerName: Rest
 --- !u!1102 &7356152179502121001
 AnimatorState:
@@ -1441,7 +1441,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Rest 2
-  m_Speed: 12
+  m_Speed: 6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3134627712768441954}
@@ -1537,7 +1537,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wait
-  m_Speed: 4
+  m_Speed: 6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4089200811063248415}

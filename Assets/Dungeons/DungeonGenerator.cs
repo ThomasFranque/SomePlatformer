@@ -2,32 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Dungeons
 {
 
     public class DungeonGenerator : MonoBehaviour
     {
-        private const int _CELLS_PER_ROOM_H = 30;
-        private const int _CELLS_PER_ROOM_V = 16;
         [SerializeField] private DungeonInfo _dungeonInfo;
-        [SerializeField] private Transform _roomsTransform;
-        [SerializeField] private bool _debugMode;
 
         // The calculated world scaled room size
         private Vector2 _totalRoomSize;
 
         private List<List<PathPosition>> _allPaths;
+        [SerializeField] private Tilemap _groundTilemap;
+        [SerializeField] private Tilemap _bgTilemap;
 
         // Start is called before the first frame update
         void Awake()
         {
             _allPaths = new List<List<PathPosition>>(10);
+            _dungeonInfo.CreateTiles();
 
             //UnityEngine.Random.InitState();
 
             GrabTotalRoomSize();
             CreateDungeon();
+            FillOutsides();
         }
 
         private void GrabTotalRoomSize()
@@ -38,8 +39,8 @@ namespace Dungeons
             Vector2 gridCellSize = grid.cellSize;
 
             _totalRoomSize = new Vector2(
-                (gridCellSize.x * _CELLS_PER_ROOM_H) + gridCellGap.x,
-                (gridCellSize.y * _CELLS_PER_ROOM_V) + gridCellGap.y);
+                (gridCellSize.x * _dungeonInfo.RoomSize.x) + gridCellGap.x,
+                (gridCellSize.y * _dungeonInfo.RoomSize.y) + gridCellGap.y);
         }
 
         private void CreateDungeon()
@@ -132,7 +133,8 @@ namespace Dungeons
             byte? lastDir = null;
             byte pathDir = dirs[UnityEngine.Random.Range(0, dirs.Length)];
             float rndNum;
-            while (Mathf.Abs(pathIndex.x) < Mathf.Abs(_dungeonInfo.Size.x) && Mathf.Abs(pathIndex.y) < Mathf.Abs(_dungeonInfo.Size.y) && loops < maxLoops && rooms < _dungeonInfo.MaxRoomsPerPath)
+            //while (Mathf.Abs(pathIndex.x) < Mathf.Abs(_dungeonInfo.Size.x) && Mathf.Abs(pathIndex.y) < Mathf.Abs(_dungeonInfo.Size.y) && loops < maxLoops && rooms < _dungeonInfo.MaxRoomsPerPath)
+            while (loops < maxLoops && rooms < _dungeonInfo.MaxRoomsPerPath)
             {
                 rndNum = UnityEngine.Random.Range(0.0f, 1.0f);
                 bool shouldChange = rndNum < _dungeonInfo.Complexity;
@@ -369,29 +371,90 @@ namespace Dungeons
 
                 // DungeonRoomInfo newRoomInfo = _dungeonInfo.GetRoomWithOpenings(p.Openings);
 
-                DungeonRoom newRoom =
-                Instantiate(
-                _dungeonInfo.DungeonRoom,
-                p.Position,
-                Quaternion.identity,
-                _roomsTransform).GetComponent<DungeonRoom>();
+                DungeonRoom newRoom = new DungeonRoom();
 
-                newRoom.SetOpenings(p.Openings);
+                newRoom.Initialize(p.Openings, p.Index, _groundTilemap, _dungeonInfo);
+                newRoom.SpawnRoom();
             }
+        }
+
+        private void FillOutsides()
+        {
+            List<Vector2Int> emptySpots = new List<Vector2Int>(_dungeonInfo.MaxRoomsPerPath * _dungeonInfo.MaxRoomsPerPath);
+            Vector2Int startIndex = Vector2Int.zero;
+            startIndex.x = -_dungeonInfo.MaxRoomsPerPath;
+            startIndex.y = -_dungeonInfo.MaxRoomsPerPath;
+
+            Vector2Int pivot = startIndex;
+
+            FindOccupied();
+            FillPivots();
+
+            void FindOccupied()
+            {
+                for (int y = 0; y < _dungeonInfo.MaxRoomsPerPath * 2; y++)
+                {
+                    for (int x = 0; x < _dungeonInfo.MaxRoomsPerPath * 2; x++)
+                    {
+                        bool occupied = false;
+                        foreach (List<PathPosition> c in _allPaths)
+                        {
+                            foreach (PathPosition p in c)
+                            {
+                                if (p.Index == pivot)
+                                    occupied = true;
+                            }
+                        }
+
+                        if (!occupied) emptySpots.Add(pivot);
+                        pivot.x++;
+                    }
+
+                    pivot.y++;
+                    pivot.x = startIndex.x;
+                }
+            }
+
+            void FillPivots()
+            {
+                foreach (Vector2Int spot in emptySpots)
+                {
+                    Vector2Int bottomLeft = new Vector2Int(spot.x * _dungeonInfo.RoomSize.x, spot.y * _dungeonInfo.RoomSize.y);
+                    bottomLeft.x = bottomLeft.x - _dungeonInfo.RoomSize.x / 2;
+                    bottomLeft.y = bottomLeft.y - _dungeonInfo.RoomSize.y / 2;
+
+                    pivot = bottomLeft;
+
+                    for (int y = 0; y < _dungeonInfo.RoomSize.y; y++)
+                    {
+                        for (int x = 0; x < _dungeonInfo.RoomSize.x; x++)
+                        {
+                            _bgTilemap.SetTile((Vector3Int)pivot, _dungeonInfo.DungeonTile);
+                            pivot.x++;
+                        }
+                        pivot.y++;
+                        pivot.x = bottomLeft.x;
+                    }
+                }
+
+            }
+
         }
 
         private void OnDrawGizmos()
         {
-            if (_debugMode)
+            if (_dungeonInfo.IsDebug)
             {
                 Gizmos.color = Color.magenta;
-                Gizmos.DrawWireCube(transform.position, (new Vector3(_totalRoomSize.x, _totalRoomSize.y) * (Vector2)_dungeonInfo.Size * 2));
+                //Gizmos.DrawWireCube(transform.position, (new Vector3(_totalRoomSize.x, _totalRoomSize.y) * (Vector2)_dungeonInfo.Size * 2));
 
                 if (_allPaths != null)
                 {
+                    int i = 0;
                     //bool toggle = false;
                     foreach (List<PathPosition> c in _allPaths)
                     {
+                        int j = 0;
                         foreach (PathPosition p in c)
                         {
                             if (p.IsBranchIntersection)
@@ -405,6 +468,8 @@ namespace Dungeons
                                     Gizmos.color = Color.magenta;
                                 else
                                     Gizmos.color = Color.red;
+                                if (j - 1 >= 0)
+                                    Gizmos.DrawLine(p.Position, c[j - 1].Position);
                                 Gizmos.DrawSphere(p.Position, 6.0f);
                             }
                             else if (p == c[0])
@@ -413,14 +478,20 @@ namespace Dungeons
                                     Gizmos.color = Color.green;
                                 else
                                     Gizmos.color = Color.cyan;
+                                Gizmos.DrawLine(p.Position, c[j + 1].Position);
                                 Gizmos.DrawSphere(p.Position, 6.0f);
                             }
                             else
                             {
                                 if (c == _allPaths[0])
                                     Gizmos.color = Color.white;
-                                else Gizmos.color = Color.grey;
+                                else
+                                {
+                                    Gizmos.color = Color.grey;
+                                }
 
+                                if (j - 1 >= 0)
+                                    Gizmos.DrawLine(p.Position, c[j - 1].Position);
                                 Gizmos.DrawWireSphere(p.Position, 4.5f);
                             }
 
@@ -440,7 +511,9 @@ namespace Dungeons
 
                             //toggle = !toggle;
                             //Gizmos.DrawWireCube(v, _totalRoomSize);
+                            j++;
                         }
+                        i++;
                     }
                 }
             }
