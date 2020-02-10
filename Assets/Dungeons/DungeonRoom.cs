@@ -22,7 +22,6 @@ namespace Dungeons
 
         public void Initialize(bool[] openings, Vector2Int roomIndex, Tilemap tilemap, DungeonInfo dungeonInfo, bool isMainPath, bool isPathStart, bool isPathEnd)
         {
-            _roomTiles = new List<DungeonTileInfo>(_dungeonInfo.RoomSize.x * _dungeonInfo.RoomSize.y);
             _openings = openings;
             _roomIndex = roomIndex;
             _tilemap = tilemap;
@@ -30,6 +29,7 @@ namespace Dungeons
             _isMainPath = isMainPath;
             _isPathEntry = isPathStart;
             _isPathEnd = isPathEnd;
+            _roomTiles = new List<DungeonTileInfo>(_dungeonInfo.RoomSize.x * _dungeonInfo.RoomSize.y);
         }
 
         public void SpawnRoom()

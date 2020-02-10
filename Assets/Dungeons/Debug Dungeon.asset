@@ -26,7 +26,6 @@ MonoBehaviour:
   _possibleGroundEnemies:
   - {fileID: 663707136984451584, guid: 7e6be9debc7295643b66d21eec0b0a7e, type: 3}
   - {fileID: 6713891155284336450, guid: 20d94e78eac62f34188203af9c9226bb, type: 3}
-  - {fileID: 1689875623251710900, guid: e43e3aa5323f65f4b8bed0d5a598de30, type: 3}
   _possibleHazards:
   - {fileID: 7140119017280272085, guid: 364059da064a7594c98edd7eb53aecc4, type: 3}
   - {fileID: 5872535570739615934, guid: 822aba7b2db68384a9d9254bad8c37f6, type: 3}
