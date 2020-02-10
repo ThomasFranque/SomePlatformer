@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01d49dfc2e40654aa017a4327f46ec0, type: 3}
   m_Name: Debug Dungeon
   m_EditorClassIdentifier: 
+  _dungeonColor: {r: 0.3066038, g: 0.61253536, b: 1, a: 1}
   _possibleTileSprites:
   - {fileID: 4966251771811483203, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
   - {fileID: 8126453587975457229, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
@@ -19,8 +20,18 @@ MonoBehaviour:
   - {fileID: 2842908515785971199, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
   - {fileID: 1845899906368879107, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
   - {fileID: -4553087954214238460, guid: 32f7dd506d274a54796586e116d1ecf8, type: 3}
+  _possibleAerialEnemies:
+  - {fileID: 8278861339047336042, guid: 10545585dbe58f246afa30abbbe83c00, type: 3}
+  - {fileID: 742330244151831368, guid: c7ac08a8dbf224846aac2ae5af08f692, type: 3}
+  _possibleGroundEnemies:
+  - {fileID: 663707136984451584, guid: 7e6be9debc7295643b66d21eec0b0a7e, type: 3}
+  - {fileID: 6713891155284336450, guid: 20d94e78eac62f34188203af9c9226bb, type: 3}
+  - {fileID: 1689875623251710900, guid: e43e3aa5323f65f4b8bed0d5a598de30, type: 3}
+  _possibleHazards:
+  - {fileID: 7140119017280272085, guid: 364059da064a7594c98edd7eb53aecc4, type: 3}
+  - {fileID: 5872535570739615934, guid: 822aba7b2db68384a9d9254bad8c37f6, type: 3}
   _dungeonRoomSize: {x: 15, y: 11}
-  _maxRoomsPerPath: 15
+  _maxRoomsPerPath: 5
   _complexity: 0.6
   _generateBranches: 1
   _branchesHaveBranches: 0

@@ -7,25 +7,36 @@ namespace Dungeons
 {
     public class DungeonRoom
     {
-        //lrtb
         private bool[] _openings;
         private Vector2Int _roomIndex;
         private Tilemap _tilemap;
         private DungeonInfo _dungeonInfo;
 
+        private bool _isMainPath;
+        private bool _isPathEntry;
+        private bool _isPathEnd;
+
         private void Awake()
         {
         }
 
-        public void Initialize(bool[] openings, Vector2Int roomIndex, Tilemap tilemap, DungeonInfo dungeonInfo)
+        public void Initialize(bool[] openings, Vector2Int roomIndex, Tilemap tilemap, DungeonInfo dungeonInfo, bool isMainPath, bool isPathStart, bool isPathEnd)
         {
             _openings = openings;
             _roomIndex = roomIndex;
             _tilemap = tilemap;
             _dungeonInfo = dungeonInfo;
+            _isMainPath = isMainPath;
+            _isPathEntry = isPathStart;
+            _isPathEnd = isPathEnd;
         }
 
         public void SpawnRoom()
+        {
+            SpawnRoomSurrounds();
+        }
+
+        private void SpawnRoomSurrounds()
         {
             // Get bottom left
             Vector2Int bottomLeft = new Vector2Int(_roomIndex.x * _dungeonInfo.RoomSize.x, _roomIndex.y * _dungeonInfo.RoomSize.y);
@@ -97,7 +108,28 @@ namespace Dungeons
         private void SpawnTile(Vector2Int position, TileBase tile)
         {
             _tilemap.SetTile((Vector3Int)position, tile);
-            //_tilemap.GetTile()
+        }
+
+        public void Populate(bool forcePopulate = false)
+        {
+            int rnd = Random.Range(0,4);
+            Vector3Int roomCenter = new Vector3Int(_roomIndex.x * _dungeonInfo.RoomSize.x, _roomIndex.y * _dungeonInfo.RoomSize.y, 0);
+
+            switch(rnd)
+            {
+                case 0:
+                    break;
+                case 1:
+                    GameObject.Instantiate(_dungeonInfo.GetRandomGroundEnemy, _tilemap.layoutGrid.CellToWorld(roomCenter), Quaternion.identity);
+                    break;
+                case 2:
+                    GameObject.Instantiate(_dungeonInfo.GetRandomAerialEnemy, _tilemap.layoutGrid.CellToWorld(roomCenter), Quaternion.identity);
+                    break;
+                case 3:
+                    GameObject.Instantiate(_dungeonInfo.GetRandomHazard, _tilemap.layoutGrid.CellToWorld(roomCenter), Quaternion.identity);
+                    break;
+
+            }
         }
     }
 }

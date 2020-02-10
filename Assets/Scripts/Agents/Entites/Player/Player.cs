@@ -521,7 +521,7 @@ public class Player : Entity
 			{
 				OnDeath();
 			}
-			else
+			else if(gameObject.activeSelf)
 			{
 				deathParticle.Emit(UnityEngine.Random.Range(15, 25));
 				SetInvulnerability(true);

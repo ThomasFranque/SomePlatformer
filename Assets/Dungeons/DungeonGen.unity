@@ -689,7 +689,7 @@ PrefabInstance:
     - target: {fileID: 1325225101928602033, guid: 5d8ec750207433b45b7c823ca0a1962e,
         type: 3}
       propertyPath: m_Name
-      value: Dungeon
+      value: Dungeon Generator
       objectReference: {fileID: 0}
     - target: {fileID: 1325225101928602034, guid: 5d8ec750207433b45b7c823ca0a1962e,
         type: 3}

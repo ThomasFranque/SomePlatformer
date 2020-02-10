@@ -29,7 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1325225101928602034}
+  m_Father: {fileID: 668393587200108557}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &151047467778966919
@@ -147,7 +147,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1325225101928602034}
+  m_Father: {fileID: 668393587200108557}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &2055567773568114831
@@ -261,9 +261,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1325225101928602034}
   - component: {fileID: 1325225101928602035}
-  - component: {fileID: 9159172314733913250}
   m_Layer: 0
-  m_Name: Dungeon
+  m_Name: Dungeon Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,8 +279,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1325225101326321247}
-  - {fileID: 6945386988507497542}
+  - {fileID: 668393587200108557}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -300,13 +298,46 @@ MonoBehaviour:
   _dungeonInfo: {fileID: 11400000, guid: c68694ed1a8158b43b9ded5c8a702302, type: 2}
   _groundTilemap: {fileID: 3667973600971769762}
   _bgTilemap: {fileID: 5971788650576055821}
---- !u!156049354 &9159172314733913250
+--- !u!1 &2678865564488458004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 668393587200108557}
+  - component: {fileID: 5647693375124338144}
+  m_Layer: 0
+  m_Name: Dungeon Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &668393587200108557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678865564488458004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1325225101326321247}
+  - {fileID: 6945386988507497542}
+  m_Father: {fileID: 1325225101928602034}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!156049354 &5647693375124338144
 Grid:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1325225101928602033}
+  m_GameObject: {fileID: 2678865564488458004}
   m_Enabled: 1
   m_CellSize: {x: 8, y: 8, z: 0}
   m_CellGap: {x: -0.001, y: -0.001, z: 0}

@@ -22,13 +22,22 @@ namespace Dungeons
         void Awake()
         {
             _allPaths = new List<List<PathPosition>>(10);
+            _groundTilemap.color = _dungeonInfo.Color;
+            _bgTilemap.color = _dungeonInfo.Color;
             _dungeonInfo.CreateTiles();
 
             //UnityEngine.Random.InitState();
 
+            StartCoroutine(CGenerate());
+        }
+
+        private IEnumerator CGenerate()
+        {
             GrabTotalRoomSize();
             CreateDungeon();
             FillOutsides();
+            Finalize();
+            yield return null;
         }
 
         private void GrabTotalRoomSize()
@@ -53,6 +62,7 @@ namespace Dungeons
             do
             {
                 newPath = CreateNewPath(startPathPos, true);
+                GC.Collect();
             } while (newPath.Count == 0);
 
             AddPathToAllPaths(newPath);
@@ -364,17 +374,20 @@ namespace Dungeons
             }
         }
 
-        private void SpawnRoomsInPathPositions(ICollection<PathPosition> pathPositions)
+        private void SpawnRoomsInPathPositions(List<PathPosition> pathPositions)
         {
+            bool isMainPath = pathPositions == _allPaths[0];
+            PathPosition pathEntry = pathPositions[0];
+            PathPosition pathEnd = pathPositions[pathPositions.Count - 1];
             foreach (PathPosition p in pathPositions)
             {
-
                 // DungeonRoomInfo newRoomInfo = _dungeonInfo.GetRoomWithOpenings(p.Openings);
 
                 DungeonRoom newRoom = new DungeonRoom();
 
-                newRoom.Initialize(p.Openings, p.Index, _groundTilemap, _dungeonInfo);
+                newRoom.Initialize(p.Openings, p.Index, _groundTilemap, _dungeonInfo, isMainPath, p == pathEntry, p == pathEnd);
                 newRoom.SpawnRoom();
+                newRoom.Populate();
             }
         }
 
@@ -389,6 +402,7 @@ namespace Dungeons
 
             FindOccupied();
             FillPivots();
+            Debug.LogWarning("BG Filled");
 
             void FindOccupied()
             {
@@ -438,6 +452,17 @@ namespace Dungeons
                 }
 
             }
+
+        }
+
+        private void Finalize()
+        {
+            DungeonMaster newDM = new GameObject("Dungeon Master").AddComponent<DungeonMaster>();
+
+            transform.GetChild(0).transform.parent = newDM.transform;
+            newDM.Initialize(_dungeonInfo);
+            Destroy(gameObject);            
+            GC.Collect();
 
         }
 
